@@ -148,7 +148,7 @@ abstract public class SimulationPanel extends JPanel{
 
 		return (double)gridCount/allGrid;
 	}
-
+	
 	/**
 	 * ターゲットを捕獲したかを返すメソッド
 	 * @return true:捕獲完了　false:未捕獲
