@@ -108,7 +108,7 @@ public class Agent {
                 if (next == null
                         || getAngle(robots[i], Math.toRadians(0)) < getAngle(
                         next, Math.toRadians(0))
-                        && ContainNumInList((List) logList, robots) < ContainNumInList((List) logList, arobot))
+                        && ContainNumInList(logList, robots[i]) < ContainNumInList(logList, arobot))
                     next = robots[i];
             }
         }
@@ -138,9 +138,9 @@ public class Agent {
      * @param searchO　検索対象
      * @return リストに含まれる検索対象の数
      */
-    private int ContainNumInList(List<Object> l, Object searchO) {
+    private int ContainNumInList(ArrayList<AgentRobot2> l, AgentRobot2 searchO) {
         int n = 0;
-        for (Object o : l) {
+        for (AgentRobot2 o : l){
             if (searchO == o)
                 n++;
         }
