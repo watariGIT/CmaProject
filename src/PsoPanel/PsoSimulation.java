@@ -1,0 +1,118 @@
+package PsoPanel;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import SuperPack.Result;
+import SuperPack.Robot;
+import SuperPack.SimulationPanel;
+import SuperPack.enemy;
+
+/**
+ * PSOのシミュレータクラス
+ *
+ * @author Watari
+ *
+ */
+public class PsoSimulation extends SimulationPanel {
+
+	private ArrayList<Point> ciProcess;
+
+	public PsoSimulation() {
+		robot = new PsoRobot[num];
+		multiTarget = new enemy[targetNum];
+
+		for (int i = 0; i < targetNum; i++)
+			multiTarget[i] = new enemy();
+		for (int i = 0; i < num; i++)
+			robot[i] = new PsoRobot(this);
+		for (int i = 0; i < num; i++)
+			robot[i].setCI();
+		ciProcess = new ArrayList<Point>();
+	}
+
+	/**
+	 * 読み込んだファイルから、フィールドを再現するメソッド
+	 * @param fileString
+	 */
+	public void readFile(String fileString){
+		Pattern allPattern = Pattern.compile("^\\d+\\|\\d+\\|\\d+\\|"
+				+"(T\\d+,\\d+)+\\|"
+				+"(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+(\\.\\d+)?)+$");
+		//ファイル全体の正規表現チェック
+		if(allPattern.matcher(fileString).matches()){
+			//捕獲数と通信回数とステップ数の抽出
+			Pattern pattern=Pattern.compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(.*)\\|(.*)$");
+			Matcher matcher=pattern.matcher(fileString);
+			if(matcher.matches()){
+				System.out.println("捕獲数:"+matcher.group(1));
+				System.out.println("通信回数:"+matcher.group(2));
+				System.out.println("ステップ数:"+matcher.group(3));
+				System.out.println("ターゲット表現文字列:"+matcher.group(4));
+				System.out.println("ロボット表現文字列:"+matcher.group(5));
+
+				//捕獲数・通信回数・ステップ数の読み込み
+				huntedTarget=Integer.parseInt(matcher.group(1));
+				comunication_num = Integer.parseInt(matcher.group(2));
+				count = Integer.parseInt(matcher.group(3));
+
+				//ターゲットの抽出
+				String[] targetStringArray = matcher.group(4).split("T", 0);//[0]は空文字列
+				multiTarget = new enemy[targetStringArray.length-1];
+				targetNum = targetStringArray.length-1;
+
+				for(int i=1;i<targetStringArray.length;i++){
+					multiTarget[i-1]= new enemy(targetStringArray[i]);
+				}
+
+				//ロボットの抽出
+				String[] robotStringArray = matcher.group(5).split("R", 0);//[R]は空文字列
+				robot = new Robot[robotStringArray.length-1];
+
+				for(int i=1;i<robotStringArray.length;i++){
+					robot[i-1] = new PsoRobot(this,robotStringArray[i]);
+				}
+			}
+
+		}else{
+			System.out.println("ファイルが正しくありません。");
+		}
+	}
+
+	public boolean step() {
+		if(huntedTarget < targetNum){
+			count++;
+			for (int i = 0; i < num; i++) {
+				robot[i].move();
+			}
+			ciProcess.add(new Point(robot[0].CI));
+			if(getEnd() && huntedTarget < targetNum){
+				huntedTarget++;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void reset() {
+		count = 0;
+		comunication_num = 0;
+		huntedTarget = 0;
+
+		for (int i = 0; i < targetNum; i++)
+			multiTarget[i] = new enemy();
+		for (int i = 0; i < num; i++)
+			robot[i].reset();
+		for (int i = 0; i < num; i++)
+			robot[i].setCI();
+		ciProcess = new ArrayList<Point>();
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	}
+}
