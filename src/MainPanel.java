@@ -1,12 +1,10 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,10 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
-import AgentPanel.Agent;
 import AgentPanel.MultiAgentSimulation2;
 import PsoPanel.PsoSimulation;
 import SuperPack.Result;
@@ -315,7 +310,7 @@ public class MainPanel extends JFrame implements ActionListener, Runnable {
 				FileWriter outFileWriter = new FileWriter(outFile);
 				String failStr = canvas4.getFailData();
 				outFileWriter.write(failStr);
-				System.out.println(failStr);;
+				System.out.println(failStr);
 				outFileWriter.close();
 			} catch (IOException e1) {
 				System.out.println(outFile + "が書き込めません。" + e1.getMessage());

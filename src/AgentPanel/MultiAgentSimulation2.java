@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import SuperPack.Result;
-import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 import SuperPack.enemy;
 

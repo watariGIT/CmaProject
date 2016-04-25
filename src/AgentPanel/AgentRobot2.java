@@ -3,8 +3,6 @@ package AgentPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.SimulationPanel;

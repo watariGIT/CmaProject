@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.SimulationPanel;
-import com.sun.corba.se.impl.orbutil.ObjectWriter;
 
 public class Agent {
     public Point CI;

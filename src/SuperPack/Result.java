@@ -1,5 +1,4 @@
 package SuperPack;
-import javax.swing.JTextArea;
 
 public class Result {
 	public double comunication_num = 0;// 通信回数
