@@ -16,8 +16,8 @@ import SuperPack.enemy;
  *
  */
 public class MultiAgentSimulation2 extends SimulationPanel{
-	public AgentList multi; //エージェントのリスト
-	int agentNum;			//エージェントのマック数
+	private AgentList multi; //エージェントのリスト
+	private int agentNum;			//エージェントのマック数
 
 	/**
 	 * コンストラクタ

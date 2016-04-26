@@ -30,9 +30,9 @@ import SuperPack.SimulationPanel;
  * @author Watari
  * 
  */
-public class MainPanel extends JFrame implements ActionListener, Runnable {
-	Thread thread = null;
-	static JLabel label;
+class MainPanel extends JFrame implements ActionListener, Runnable {
+	private Thread thread = null;
+	private static JLabel label;
 	private boolean runFlag = false;
 	private SimulationPanel canvas;
 	private SimulationPanel canvas4;
@@ -41,7 +41,7 @@ public class MainPanel extends JFrame implements ActionListener, Runnable {
 		MainPanel game = new MainPanel();
 	}
 
-	public MainPanel() {
+	private MainPanel() {
 		setTitle("PSOagent Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

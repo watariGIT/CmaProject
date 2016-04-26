@@ -5,16 +5,16 @@ import java.awt.Graphics;
 import SuperPack.Robot;
 
 
-public class AgentList {
-	public Agent agent;
-	public AgentList next; 
+class AgentList {
+	private Agent agent;
+	private AgentList next;
 	
 	AgentList(){
 		agent=null;
 		next=null;
 	}
 	
-	AgentList(Agent a){
+	private AgentList(Agent a){
 		agent=a;
 		next=null;
 	}
@@ -36,7 +36,7 @@ public class AgentList {
 	 * robot上にある重複しているエ－ジェントを削除する再帰関数
 	 *
 	 * @param robot　エージェントの配下にあるロボット
-	 * @return　削除後のエージェントのリスト
+	 * @return 削除後のエージェントのリスト
      */
 	AgentList deleteOverlapAgent(AgentRobot2 robot) {
 		if (agent != null && next != null && agent.arobot == robot) {
@@ -58,7 +58,7 @@ public class AgentList {
 	}
 
 
-	AgentList delAgent(Agent a){
+	private AgentList delAgent(Agent a){
 		if(a==agent)
 			return next;
 		if(next==null)
@@ -84,13 +84,13 @@ public class AgentList {
 		return next.getLast();
 	}
 	
-	public int getNum(){
+	private int getNum(){
 		if(next==null)
 			return 1;
 		return next.getNum()+1;
 	}
 	
-	public void robotLogReset(){
+	void robotLogReset(){
 		if(agent!=null)
 		agent.logReset();
 		if(next!=null){
@@ -98,7 +98,7 @@ public class AgentList {
 		}
 	}
 	
-	public Agent getAgent(AgentRobot2 robot){
+	Agent getAgent(AgentRobot2 robot){
 		if(agent!=null&&agent.arobot.equals(robot))
 			return agent;
 		if(next==null)

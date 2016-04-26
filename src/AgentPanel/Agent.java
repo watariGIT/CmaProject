@@ -9,14 +9,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import PsoPanel.PsoSimulation;
+import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
 public class Agent {
-    public Point CI;
+    private Point CI;
     public AgentRobot2 arobot;
     public static double Angle = Math.toRadians(0);
     private ArrayList<AgentRobot2> logList;
-    public final static int range = 200;
+    private final static int range = 200;
     int count[];
 
     private ArrayList<Point> ciProcess;
@@ -124,7 +125,7 @@ public class Agent {
         arobot.omega = 0.9;
 
         if (arobot.v.distance(new Point(0, 0)) == 0) {
-            arobot.v.setLocation((int) (Math.random() * arobot.maxv), (int) (Math.random() * arobot.maxv));
+            arobot.v.setLocation((int) (Math.random() * Robot.maxv), (int) (Math.random() * Robot.maxv));
         }
 
         ciProcess.add(new Point(CI));

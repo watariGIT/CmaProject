@@ -9,16 +9,16 @@ import SuperPack.SimulationPanel;
 import SuperPack.Robot;
 
 //TODO 方不一致の修正
-public class AgentRobot2 extends Robot{
+class AgentRobot2 extends Robot{
 	int agentCount = 0;
-	Color col=new Color(55,55,155);
+	private Color col=new Color(55,55,155);
 
-	public AgentRobot2(SimulationPanel as) {
+	AgentRobot2(SimulationPanel as) {
 		super(as);
 		CI=new Point(PI);
 	}
 
-	public AgentRobot2(SimulationPanel s,String robotString){
+	AgentRobot2(SimulationPanel s, String robotString){
 		super(s,robotString);
 	}
 
@@ -63,7 +63,7 @@ public class AgentRobot2 extends Robot{
 
     /**
      * GUI表示用の座標を得るメソッド
-     * @return　GUI上でのロボットの座標
+     * @return GUI上でのロボットの座標
      */
 	protected Point getSwingPoint() {
 		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size

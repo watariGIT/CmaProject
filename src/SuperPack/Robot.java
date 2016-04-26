@@ -12,8 +12,8 @@ import PsoPanel.PsoSimulation;
 public abstract class Robot {
 	public final static int maxv=10;
 	public double omega=0.9;
-	public double c1=2.0;
-	public double c2=2.0;
+	private double c1=2.0;
+	private double c2=2.0;
 	public Point p;
 	public Point v;
 	public Point PI;
@@ -22,7 +22,7 @@ public abstract class Robot {
 	public double distance;
 	public SimulationPanel field;
 
-	public Robot(SimulationPanel s) {
+	protected Robot(SimulationPanel s) {
 		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
 		do {
 			p.setLocation((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
@@ -35,7 +35,7 @@ public abstract class Robot {
 		angle = 0;
 	}
 	
-	public Robot(SimulationPanel s,String robotString){
+	protected Robot(SimulationPanel s,String robotString){
 		Matcher robotMatcher=Pattern.compile("^(\\d+),(\\d+)/([-]?\\d+),([-]?\\d+)/(\\d+),(\\d+)/(\\d+),(\\d+)/(\\d+\\.\\d+)$").matcher(robotString);
 		
 		if(robotMatcher.matches()){

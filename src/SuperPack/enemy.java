@@ -67,7 +67,7 @@ public class enemy {
 			g.fillRect(getPoint().x,getPoint().y,8,8);
 	}
 
-	public Point getPoint(){
+	private Point getPoint(){
 		return (new Point(p.x*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startx,
 				(SimulationPanel.size-p.y)*SimulationPanel.length/SimulationPanel.size+SimulationPanel.starty));
 	}
