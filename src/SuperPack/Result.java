@@ -4,27 +4,7 @@ public class Result {
 	private double comunication_num = 0;// 通信回数
 	private double count = 0;// ステップ数
 	private double distance = 0;// 移動距離
-	private int num; // 試行回数
 	private double density;
-
-	public Result() {
-		comunication_num = 0;
-		count = 0;
-		distance = 0;
-		num = 0;
-		density = 0;
-	}
-
-	/**
-	 * 結果の初期化 すべてのパラメータを０にする
-	 */
-	public void Reset() {
-		comunication_num = 0;
-		count = 0;
-		distance = 0;
-		num = 0;
-		density = 0;
-	}
 
 	public Result(double comunication_num, double count, double distance, double density) {
 		this.comunication_num = comunication_num;

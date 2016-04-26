@@ -19,7 +19,7 @@ public abstract class Robot {
 	public Point PI;
 	public Point CI;
 	public double angle;
-	public double distance;
+	double distance;
 	public SimulationPanel field;
 
 	protected Robot(SimulationPanel s) {
@@ -113,10 +113,6 @@ public abstract class Robot {
 		omega=0.9;
 		distance=0;
 		angle=0;
-	}
-	
-	public double getCI(){
-		return CI.distance(field.multiTarget[field.huntedTarget].p);
 	}
 	
 	public void paint(Graphics g){

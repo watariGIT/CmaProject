@@ -84,11 +84,7 @@ class AgentList {
 		return next.getLast();
 	}
 	
-	private int getNum(){
-		if(next==null)
-			return 1;
-		return next.getNum()+1;
-	}
+
 	
 	void robotLogReset(){
 		if(agent!=null)

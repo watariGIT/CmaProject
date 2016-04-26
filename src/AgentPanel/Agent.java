@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,13 +11,11 @@ import PsoPanel.PsoSimulation;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
-public class Agent {
+class Agent {
     private Point CI;
     public AgentRobot2 arobot;
-    public static double Angle = Math.toRadians(0);
     private ArrayList<AgentRobot2> logList;
     private final static int range = 200;
-    int count[];
 
     private ArrayList<Point> ciProcess;
     private ArrayList<Point> agentProcess;
@@ -27,12 +24,12 @@ public class Agent {
         CI = new Point();
         CI.setLocation(ag.p);
         arobot = ag;
-        logList = new ArrayList<AgentRobot2>();
+        logList = new ArrayList<>();
         logList.add(ag);
 
-        ciProcess = new ArrayList<Point>();
+        ciProcess = new ArrayList<>();
         ciProcess.add(new Point(CI));
-        agentProcess = new ArrayList<Point>();
+        agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
     }
 
@@ -44,6 +41,7 @@ public class Agent {
      */
     public Agent(MultiAgentSimulation2 s, String agentString) {
         Matcher agentMatcher = Pattern.compile("^AR(\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+\\.\\d+)/(\\d+),(\\d+)$").matcher(agentString);
+
         if (agentMatcher.matches()) {
             arobot = new AgentRobot2(s, agentMatcher.group(1));
             CI = new Point(Integer.parseInt(agentMatcher.group(2)), Integer.parseInt(agentMatcher.group(3)));
@@ -52,19 +50,11 @@ public class Agent {
             arobot = null;
             CI = new Point();
         }
-        logList = new ArrayList<AgentRobot2>();
-        ciProcess = new ArrayList<Point>();
-        ciProcess.add(new Point(CI));
-        agentProcess = new ArrayList<Point>();
-        agentProcess.add(arobot.p);
-    }
 
-    public void reset(AgentRobot2 ag) {
-        CI.setLocation(ag.p);
-        arobot = ag;
-        logList.clear();
-        logList.add(ag);
+        logList = new ArrayList<>();
+        ciProcess = new ArrayList<>();
         ciProcess.add(new Point(CI));
+        agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
     }
 
@@ -78,9 +68,8 @@ public class Agent {
 
     public void setCI() {
         //CIの更新
-
-        if (arobot.CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p) < CI
-                .distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)) {
+        if (arobot.CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)
+                < CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)) {
             CI.setLocation(arobot.PI);
 
             //ログをリセット
@@ -92,12 +81,7 @@ public class Agent {
     }
 
     public double getCI() {
-        return CI
-                .distance(arobot.field.multiTarget[arobot.field.huntedTarget].p);
-    }
-
-    public void move() {
-        arobot.move();
+        return CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p);
     }
 
     public void agentMove(AgentRobot2 robots[]) {
@@ -161,11 +145,14 @@ public class Agent {
     public void paint(Graphics g) {
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g.setColor(new Color(55, 55, 155));
-        g.drawOval(arobot.getSwingPoint().x - 8, arobot.getSwingPoint().y - 8,
-                16, 16);
+        g.drawOval(arobot.getSwingPoint().x - 8,
+                arobot.getSwingPoint().y - 8,
+                16,
+                16);
         g.drawOval((int) (arobot.getSwingPoint().x - range * scale),
-                (int) (arobot.getSwingPoint().y - range * scale), (int) (range
-                        * scale * 2), (int) (range * scale * 2));
+                (int) (arobot.getSwingPoint().y - range * scale),
+                (int) (range * scale * 2),
+                (int) (range * scale * 2));
     }
 
     @Override

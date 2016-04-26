@@ -5,8 +5,9 @@ import java.awt.Graphics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import SuperPack.Robot;
 import SuperPack.SimulationPanel;
-import SuperPack.enemy;
+import SuperPack.Enemy;
 
 
 
@@ -25,10 +26,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
      */
 	public MultiAgentSimulation2(int agentNum){
 		robot=new AgentRobot2[num];
-		multiTarget=new enemy[targetNum];
+		multiTarget=new Enemy[targetNum];
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new enemy();
+			multiTarget[i] = new Enemy();
 		for(int i=0;i<num;i++)
 			robot[i]=new AgentRobot2(this);
 		multi=new AgentList();
@@ -82,26 +83,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		huntedTarget=0;
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new enemy();
-		multi.clear();
-		for(int i=0;i<num;i++)
-			robot[i].reset();
-		for(int i=0;i<agentNum;i++)
-			multi.addAgent(new Agent((AgentRobot2) robot[i]));
-	}
-
-	public void setAgentNum(int agentNum){
-		this.agentNum=agentNum;
-		reset();
-	}
-
-	public void reset(int agentNum){
-		count=0;
-		this.comunication_num=0;
-		huntedTarget=0;
-
-		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new enemy();
+			multiTarget[i] = new Enemy();
 		multi.clear();
 		for(int i=0;i<num;i++)
 			robot[i].reset();
@@ -111,10 +93,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(255, 255, 255));
-		g.fillRect(startx, starty, length, length);
+		g.fillRect(startX, startY, length, length);
 
 		g.setColor(Color.BLACK);
-		g.drawRect(startx, starty, length, length);
+		g.drawRect(startX, startY, length, length);
 
 		for (int i = 0; i < huntedTarget + 1 && i < targetNum; i++) {
 			if (i == huntedTarget)
@@ -168,11 +150,11 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 				// ターゲットの抽出
 				String[] targetStringArray = matcher.group(5).split("T", 0);// [0]は空文字列
-				multiTarget = new enemy[targetStringArray.length - 1];
+				multiTarget = new Enemy[targetStringArray.length - 1];
 				targetNum = targetStringArray.length - 1;
 
 				for (int i = 1; i < targetStringArray.length; i++) {
-					multiTarget[i - 1] = new enemy(targetStringArray[i]);
+					multiTarget[i - 1] = new Enemy(targetStringArray[i]);
 				}
 
 				// ロボットの抽出
@@ -206,8 +188,8 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 		string+="|";
 
-		for(int i=0;i < robot.length;i++){
-			string+=robot[i];
+		for(Robot r:robot){
+			string+=r;
 		}
 
 		return string;

@@ -10,7 +10,6 @@ import SuperPack.Robot;
 
 //TODO 方不一致の修正
 class AgentRobot2 extends Robot{
-	int agentCount = 0;
 	private Color col=new Color(55,55,155);
 
 	AgentRobot2(SimulationPanel as) {
@@ -28,10 +27,10 @@ class AgentRobot2 extends Robot{
 		double Pi=PI.distance(field.multiTarget[field.huntedTarget].p);
 
 		//慣性定数の修正
-		if(Pi>oldPi-3){
-			omega=0.3;
+		if(Pi > oldPi - 3){
+			omega = 0.3;
 		}else{
-			omega=0.9;
+			omega = 0.9;
 		}
 
 		if(omega<0.0)omega=0.0;
@@ -67,9 +66,9 @@ class AgentRobot2 extends Robot{
      */
 	protected Point getSwingPoint() {
 		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size
-				+ SimulationPanel.startx, (PsoSimulation.size - p.y)
+				+ SimulationPanel.startX, (PsoSimulation.size - p.y)
 				* PsoSimulation.length / PsoSimulation.size
-				+ SimulationPanel.starty));
+				+ SimulationPanel.startY));
 	}
 
     public void setCI() {

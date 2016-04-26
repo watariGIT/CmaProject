@@ -15,7 +15,6 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import AgentPanel.MultiAgentSimulation2;
@@ -32,7 +31,6 @@ import SuperPack.SimulationPanel;
  */
 class MainPanel extends JFrame implements ActionListener, Runnable {
 	private Thread thread = null;
-	private static JLabel label;
 	private boolean runFlag = false;
 	private SimulationPanel canvas;
 	private SimulationPanel canvas4;
@@ -53,7 +51,6 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		ta.setLineWrap(true);
 		ta.setEditable(false);
 		*/
-		label = new JLabel();
 
 		JPanel mainp = (JPanel) getContentPane();
 		JPanel sp = new JPanel();
@@ -158,6 +155,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
+					System.out.printf(e.getMessage());
 				}
 			}
 			repaint();
