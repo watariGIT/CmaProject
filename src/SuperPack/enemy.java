@@ -5,17 +5,17 @@ import java.awt.Point;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class enemy {
+public class Enemy {
 	public Point p;
 
-	public enemy(){
+	public Enemy(){
 		p=new Point();
 		p.setLocation((int)(Math.random()*SimulationPanel.size),
 				(int)(Math.random()*SimulationPanel.size));
 	}
 
 
-	public enemy(String targetString){
+	public Enemy(String targetString){
 		p=new Point();
 
 		Matcher targetMatcher=Pattern.compile("^(\\d+),(\\d+)$").matcher(targetString);
@@ -30,11 +30,11 @@ public class enemy {
 
 	/**
 	 * フィールドをgrainSizeで分割し、[x,y]の範囲でランダムにターゲットを配置する。
-	 * @param x
-	 * @param y
-	 * @param grainSize
+	 * @param x 分割したフィールドのx
+	 * @param y 分割したフィールドのy
+	 * @param grainSize 分割する数
 	 */
-	public enemy(int x,int y,int grainSize){
+	public Enemy(int x, int y, int grainSize){
 		if(x < 0)
 			x=0;
 		if(x > grainSize)
@@ -68,8 +68,8 @@ public class enemy {
 	}
 
 	private Point getPoint(){
-		return (new Point(p.x*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startx,
-				(SimulationPanel.size-p.y)*SimulationPanel.length/SimulationPanel.size+SimulationPanel.starty));
+		return (new Point(p.x*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startX,
+				(SimulationPanel.size-p.y)*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startY));
 	}
 
 	@Override

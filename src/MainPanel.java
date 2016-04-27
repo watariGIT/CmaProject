@@ -164,8 +164,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
 	/**
 	 * 詳細な結果を外部に出力する
-	 * @param fw
-	 * @param results
+	 * @param fw ファイルライタ
+	 * @param results 結果の配列
 	 */
 	private void outputCsv(FileWriter fw, Result[] results) {
 		//結果を出力

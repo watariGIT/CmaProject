@@ -34,10 +34,7 @@ public class PsoSimulation extends SimulationPanel {
 		ciProcess = new ArrayList<>();
 	}
 
-	/**
-	 * 読み込んだファイルから、フィールドを再現するメソッド
-	 * @param fileString
-	 */
+	@Override
 	public void readFile(String fileString){
 		Pattern allPattern = Pattern.compile("^\\d+\\|\\d+\\|\\d+\\|"
 				+"(T\\d+,\\d+)+\\|"

@@ -87,7 +87,7 @@ abstract public class SimulationPanel extends JPanel{
 
 	/**
 	 * 捕獲失敗時のデータの出力
-	 * @return
+	 * @return 失敗した時のフィールドの状況を表す文字列
 	 */
 
 	public String getFailData() {
@@ -129,7 +129,7 @@ abstract public class SimulationPanel extends JPanel{
 	 * 値が高いほど分散している。
 	 *
 	 * 計算式：ロボットのいるグリッドの数/全体のグリッドの数
-	 * @return
+	 * @return 分散度
 	 */
 	private double robotDensity(int grid){
 		int gridCount=0;
@@ -168,7 +168,7 @@ abstract public class SimulationPanel extends JPanel{
 
 	/**
 	 * 読み込んだファイルから、フィールドを再現するメソッド
-	 * @param fileString
+	 * @param fileString 読み込むファイル名
 	 */
 	public abstract void readFile(String fileString);
 

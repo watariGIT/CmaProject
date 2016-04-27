@@ -110,11 +110,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		multi.paint(g);
 	}
 
-	/**
-	 * 読み込んだファイルから、フィールドを再現するメソッド
-	 *
-	 * @param fileString
-	 */
+	@Override
 	public void readFile(String fileString) {
 		Pattern allPattern = Pattern
 				.compile("^\\d+\\|\\d+\\|\\d+\\|"
