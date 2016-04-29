@@ -23,19 +23,19 @@ class PsoRobot extends Robot{
 			CI.setLocation(p);
 			for (int i = 0; i < PsoSimulation.num; i++) {
 				if (this != field.robot[i])
-					comunication(field.robot[i]);
+					communication(field.robot[i]);
 			}
 		}
 	}
 
-	private void comunication(Robot r) {
+	private void communication(Robot r) {
 		r.CI = CI;
-		field.comunication_num++;
+		field.communication_num++;
 	}
 
 	protected Point getSwingPoint() {
-		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startx,
-				(PsoSimulation.size - p.y) * PsoSimulation.length / PsoSimulation.size + PsoSimulation.starty));
+		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startX,
+				(PsoSimulation.size - p.y) * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startY));
 	}
 
 }

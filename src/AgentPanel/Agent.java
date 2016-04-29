@@ -106,7 +106,7 @@ class Agent {
         //次のロボットが確定した場合
         if (next != null) {
             arobot = next;
-            arobot.field.comunication_num++;
+            arobot.field.communication_num++;
         }
 
         //ログに現在のロボットを追加

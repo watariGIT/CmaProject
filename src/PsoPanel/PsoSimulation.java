@@ -53,7 +53,7 @@ public class PsoSimulation extends SimulationPanel {
 
 				//捕獲数・通信回数・ステップ数の読み込み
 				huntedTarget=Integer.parseInt(matcher.group(1));
-				comunication_num = Integer.parseInt(matcher.group(2));
+				communication_num = Integer.parseInt(matcher.group(2));
 				count = Integer.parseInt(matcher.group(3));
 
 				//ターゲットの抽出
@@ -96,7 +96,7 @@ public class PsoSimulation extends SimulationPanel {
 
 	public void reset() {
 		count = 0;
-		comunication_num = 0;
+		communication_num = 0;
 		huntedTarget = 0;
 
 		for (int i = 0; i < targetNum; i++)

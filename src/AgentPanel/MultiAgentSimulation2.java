@@ -79,7 +79,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 	public void reset(){
 		count=0;
-		this.comunication_num=0;
+		this.communication_num =0;
 		huntedTarget=0;
 
 		for (int i = 0; i < targetNum; i++)
@@ -133,7 +133,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 				// 捕獲数・通信回数・ステップ数の読み込み
 				huntedTarget = Integer.parseInt(matcher.group(1));
-				comunication_num = Integer.parseInt(matcher.group(2));
+				communication_num = Integer.parseInt(matcher.group(2));
 				count = Integer.parseInt(matcher.group(3));
 				//エージェントの抽出
 				String[] agentStringArray = matcher.group(4).split(":", 0);// [0]は空文字列
@@ -177,7 +177,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	@Override
 	public String toString(){
 		String string="";
-		string+=huntedTarget+"|"+comunication_num+"|"+count+"|"+multi+"|";
+		string+=huntedTarget+"|"+ communication_num +"|"+count+"|"+multi+"|";
 		for(int i=0;i < targetNum;i++){
 			string+=multiTarget[i];
 		}
