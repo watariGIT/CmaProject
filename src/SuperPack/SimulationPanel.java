@@ -4,21 +4,24 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 
 
 abstract public class SimulationPanel extends JPanel{
 	public static int startX = 20;
 	public static int startY = 10;
 	public final static int length = 250;
-	public final static int size =1000;
-	public static int num = 100;			//ロボットの初期台数
+	public final static int size = 1000;
+	public static int num = 100;            //ロボットの初期台数
+	private final static int maxCount = 10000;//最大の捕獲時間
 
-	protected static int targetNum=20;		//ターゲットの数
-	public int huntedTarget=0;				//捕獲したターゲットの数
-	private final static int maxCount=10000;//最大の捕獲時間
+	//FIXME ここいる？
+	protected static int targetNum = 20;        //ターゲットの数
+	public int huntedTarget = 0;                //捕獲したターゲットの数　
+
 
 	public Robot[] robot;
-	public Enemy[] multiTarget;
+	public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
 
 	public int communication_num =0; 			//通信回数
 	protected int count=0; 					//ステップ数
@@ -26,13 +29,17 @@ abstract public class SimulationPanel extends JPanel{
 	protected SimulationPanel(){
 	}
 
-	public void copy(SimulationPanel s){
-		for(int i=0;i<num;i++){
+	/**
+	 * ディープコピーを行うメソッド
+	 * @param s コピー元
+     */
+	public void copy(SimulationPanel s) {
+		for (int i = 0; i < num; i++) {
 			robot[i].copy(s.robot[i]);
 		}
 
-		for(int i=0;i<targetNum;i++){
-			multiTarget[i].p.setLocation(s.multiTarget[i].p);
+		for (int i = 0; i < targetNum; i++) {
+			targetList = new ArrayList<>(targetList);
 		}
 	}
 
@@ -43,7 +50,6 @@ abstract public class SimulationPanel extends JPanel{
 		reset();
 		return true;
 	}
-
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(255,255,255));
 		g.fillRect(startX,startY,length,length);
@@ -51,16 +57,15 @@ abstract public class SimulationPanel extends JPanel{
 		g.setColor(Color.BLACK);
 		g.drawRect(startX,startY,length,length);
 
-		for(int i=0;i<huntedTarget+1 && i < targetNum;i++){
-			if(i==huntedTarget)
-				multiTarget[i].paint(g,true);
-			else
-				multiTarget[i].paint(g,false);
+		//ターゲットの描写
+		for(Enemy target:targetList){
+			target.paint(g,true);
 		}
 
 		for(int i=0;i<num;i++)
 			robot[i].paint(g);
 	}
+
 
 	public Result[] setLog(){
 		Result[] results = new Result[targetNum];
@@ -156,7 +161,7 @@ abstract public class SimulationPanel extends JPanel{
 	 */
 	protected boolean getEnd(){
 		for(int i=0;i<num;i++){
-			if(robot[i].p.distance(multiTarget[huntedTarget].p) <= 0.0 ) {
+			if(targetList.size() == 0) {
 				return true;
 			}
 		}
@@ -181,8 +186,8 @@ abstract public class SimulationPanel extends JPanel{
 	public String toString(){
 		String string="";
 		string+=huntedTarget+"|"+ communication_num +"|"+count+"|";
-		for(int i=0;i < targetNum;i++){
-			string+=multiTarget[i];
+		for(Enemy target:targetList){
+			string+= target.toString();
 		}
 		string+="|";
 		for (Robot aRobot : robot) {
