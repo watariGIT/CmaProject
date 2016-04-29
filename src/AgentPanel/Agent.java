@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import PsoPanel.PsoSimulation;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
-
+//FIXME distance -> fitness function
 class Agent {
     private Point CI;
     public AgentRobot2 arobot;
@@ -20,7 +20,7 @@ class Agent {
     private ArrayList<Point> ciProcess;
     private ArrayList<Point> agentProcess;
 
-    public Agent(AgentRobot2 ag) {
+    Agent(AgentRobot2 ag) {
         CI = new Point();
         CI.setLocation(ag.p);
         arobot = ag;
@@ -39,7 +39,7 @@ class Agent {
      *
      * @param agentString 　エージェント情報文字列
      */
-    public Agent(MultiAgentSimulation2 s, String agentString) {
+    Agent(MultiAgentSimulation2 s, String agentString) {
         Matcher agentMatcher = Pattern.compile("^AR(\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+\\.\\d+)/(\\d+),(\\d+)$").matcher(agentString);
 
         if (agentMatcher.matches()) {
@@ -58,15 +58,15 @@ class Agent {
         agentProcess.add(arobot.p);
     }
 
-    public void logReset() {
+    void logReset() {
         logList.clear();
     }
 
-    public void setRobot(AgentRobot2 ag) {
+    void setRobot(AgentRobot2 ag) {
         arobot = ag;
     }
 
-    public void setCI() {
+    void setCI() {
         //CIの更新
         if (arobot.CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)
                 < CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)) {
@@ -80,11 +80,16 @@ class Agent {
         }
     }
 
-    public double getCI() {
+    /**
+     * AgentのCIからのfitness function
+     * の値を取得
+     * @return fitness function
+     */
+    double getCI() {
         return CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p);
     }
 
-    public void agentMove(AgentRobot2 robots[]) {
+    void agentMove(AgentRobot2 robots[]) {
         AgentRobot2 next = null;
 
         //次の行き先の決定
@@ -142,7 +147,7 @@ class Agent {
         return r;
     }
 
-    public void paint(Graphics g) {
+    void paint(Graphics g) {
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g.setColor(new Color(55, 55, 155));
         g.drawOval(arobot.getSwingPoint().x - 8,

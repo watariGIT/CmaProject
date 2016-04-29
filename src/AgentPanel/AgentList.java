@@ -18,18 +18,26 @@ class AgentList {
 		agent=a;
 		next=null;
 	}
-	
-	void addAgent(Agent a){
-		getLast().next=new AgentList(a);
+
+	/**
+	 * Agentのついか
+	 * @param agent 追加するAgent
+     */
+	void addAgent(Agent agent){
+		getLast().next=new AgentList(agent);
 	}
 
-	void agentMove(Robot[] robot){
+	/**
+	 * AgentListのすべてのAgentを移動
+	 * @param robots ロボットの群れ
+     */
+	void agentMove(Robot[] robots){
 		if(agent!=null){
-			agent.agentMove((AgentRobot2[]) robot);
+			agent.agentMove((AgentRobot2[]) robots);
 			agent.setCI();
 		}
 		if(next!=null)
-			next.agentMove(robot);
+			next.agentMove(robots);
 	}
 
 	/**
@@ -83,7 +91,6 @@ class AgentList {
 			return this;
 		return next.getLast();
 	}
-	
 
 	
 	void robotLogReset(){
@@ -93,7 +100,12 @@ class AgentList {
 			next.robotLogReset();
 		}
 	}
-	
+
+	/**
+	 * 指定したrobot上にあるagentの取得
+	 * @param robot 検索するrobot
+	 * @return robot上にあるagent
+     */
 	Agent getAgent(AgentRobot2 robot){
 		if(agent!=null&&agent.arobot.equals(robot))
 			return agent;

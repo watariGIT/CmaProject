@@ -8,7 +8,6 @@ import PsoPanel.PsoSimulation;
 import SuperPack.SimulationPanel;
 import SuperPack.Robot;
 
-//TODO 方不一致の修正
 class AgentRobot2 extends Robot{
 	private Color col=new Color(55,55,155);
 
