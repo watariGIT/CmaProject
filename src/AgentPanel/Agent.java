@@ -68,8 +68,8 @@ class Agent {
 
     void setCI() {
         //CIの更新
-        if (arobot.CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)
-                < CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p)) {
+        if (arobot.CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p)
+                < CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p)) {
             CI.setLocation(arobot.PI);
 
             //ログをリセット
@@ -86,7 +86,7 @@ class Agent {
      * @return fitness function
      */
     double getCI() {
-        return CI.distance(arobot.field.multiTarget[arobot.field.huntedTarget].p);
+        return CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p);
     }
 
     void agentMove(AgentRobot2 robots[]) {

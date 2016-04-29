@@ -19,7 +19,7 @@ class PsoRobot extends Robot{
 	public void setCI() {
 		if (CI == null)
 			CI = new Point(p);
-		if (p.distance(field.multiTarget[field.huntedTarget].p) < CI.distance(field.multiTarget[field.huntedTarget].p)) {
+		if (p.distance(field.targetList[field.huntedTarget].p) < CI.distance(field.targetList[field.huntedTarget].p)) {
 			CI.setLocation(p);
 			for (int i = 0; i < PsoSimulation.num; i++) {
 				if (this != field.robot[i])

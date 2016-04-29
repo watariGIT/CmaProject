@@ -26,7 +26,7 @@ public abstract class Robot {
 		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
 		do {
 			p.setLocation((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
-		} while (p.distance(s.multiTarget[s.huntedTarget].p) < 200);
+		} while (p.distance(s.targetList[s.huntedTarget].p) < 200);
 
 		PI = new Point(p);
 		v = new Point((int) (Math.random() * maxv), (int) (Math.random() * maxv));
@@ -55,7 +55,7 @@ public abstract class Robot {
 			p=new Point((int)(Math.random()*PsoSimulation.size),(int)(Math.random()*PsoSimulation.size));
 			do {
 			p.setLocation((int)(Math.random()*PsoSimulation.size),(int)(Math.random()*PsoSimulation.size));
-			}while(p.distance(s.multiTarget[s.huntedTarget].p)<200);
+			}while(p.distance(s.targetList[s.huntedTarget].p)<200);
 			
 			PI=new Point(p);
 			v=new Point((int)(Math.random()*maxv),(int)(Math.random()*maxv));
@@ -89,7 +89,7 @@ public abstract class Robot {
 		
 		distance+=oldP.distance(p); //TODO 	謎の変数
 		
-		if(p.distance(field.multiTarget[field.huntedTarget].p)<PI.distance(field.multiTarget[field.huntedTarget].p))
+		if(p.distance(field.targetList[field.huntedTarget].p)<PI.distance(field.targetList[field.huntedTarget].p))
 			PI.setLocation(p);
 		setCI();
 		angle=Math.atan2(dy,dx);
@@ -105,7 +105,7 @@ public abstract class Robot {
 	public void reset(){
 		do {
 			p.setLocation((int)(Math.random()*SimulationPanel.size),(int)(Math.random()*SimulationPanel.size));
-			}while(p.distance(field.multiTarget[field.huntedTarget].p)<200);
+			}while(p.distance(field.targetList[field.huntedTarget].p)<200);
 		
 		PI.setLocation(p);
 		v.setLocation((int)(Math.random()*maxv),(int)(Math.random()*maxv));

@@ -21,12 +21,15 @@ public class PsoSimulation extends SimulationPanel {
 
 	private ArrayList<Point> ciProcess;
 
+	/**
+	 * コンストラクタ
+	 */
 	public PsoSimulation() {
 		robot = new PsoRobot[num];
-		multiTarget = new Enemy[targetNum];
+		targetList = new Enemy[targetNum];
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new Enemy();
+			targetList[i] = new Enemy();
 		for (int i = 0; i < num; i++)
 			robot[i] = new PsoRobot(this);
 		for (int i = 0; i < num; i++)
@@ -58,11 +61,11 @@ public class PsoSimulation extends SimulationPanel {
 
 				//ターゲットの抽出
 				String[] targetStringArray = matcher.group(4).split("T", 0);//[0]は空文字列
-				multiTarget = new Enemy[targetStringArray.length-1];
+				targetList = new Enemy[targetStringArray.length-1];
 				targetNum = targetStringArray.length-1;
 
 				for(int i=1;i<targetStringArray.length;i++){
-					multiTarget[i-1]= new Enemy(targetStringArray[i]);
+					targetList[i-1]= new Enemy(targetStringArray[i]);
 				}
 
 				//ロボットの抽出
@@ -100,7 +103,7 @@ public class PsoSimulation extends SimulationPanel {
 		huntedTarget = 0;
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new Enemy();
+			targetList[i] = new Enemy();
 		for (int i = 0; i < num; i++)
 			robot[i].reset();
 		for (int i = 0; i < num; i++)

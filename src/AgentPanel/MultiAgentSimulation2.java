@@ -26,10 +26,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
      */
 	public MultiAgentSimulation2(int agentNum){
 		robot=new AgentRobot2[num];
-		multiTarget=new Enemy[targetNum];
+		targetList =new Enemy[targetNum];
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new Enemy();
+			targetList[i] = new Enemy();
 		for(int i=0;i<num;i++)
 			robot[i]=new AgentRobot2(this);
 		multi=new AgentList();
@@ -83,7 +83,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		huntedTarget=0;
 
 		for (int i = 0; i < targetNum; i++)
-			multiTarget[i] = new Enemy();
+			targetList[i] = new Enemy();
 		multi.clear();
 		for(int i=0;i<num;i++)
 			robot[i].reset();
@@ -100,9 +100,9 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 		for (int i = 0; i < huntedTarget + 1 && i < targetNum; i++) {
 			if (i == huntedTarget)
-				multiTarget[i].paint(g, true);
+				targetList[i].paint(g, true);
 			else
-				multiTarget[i].paint(g, false);
+				targetList[i].paint(g, false);
 		}
 
 		for (int i = 0; i < num; i++)
@@ -146,11 +146,11 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 				// ターゲットの抽出
 				String[] targetStringArray = matcher.group(5).split("T", 0);// [0]は空文字列
-				multiTarget = new Enemy[targetStringArray.length - 1];
+				targetList = new Enemy[targetStringArray.length - 1];
 				targetNum = targetStringArray.length - 1;
 
 				for (int i = 1; i < targetStringArray.length; i++) {
-					multiTarget[i - 1] = new Enemy(targetStringArray[i]);
+					targetList[i - 1] = new Enemy(targetStringArray[i]);
 				}
 
 				// ロボットの抽出
@@ -179,7 +179,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		String string="";
 		string+=huntedTarget+"|"+ communication_num +"|"+count+"|"+multi+"|";
 		for(int i=0;i < targetNum;i++){
-			string+=multiTarget[i];
+			string+= targetList[i];
 		}
 
 		string+="|";
