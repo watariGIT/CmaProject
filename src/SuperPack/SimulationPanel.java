@@ -20,7 +20,7 @@ abstract public class SimulationPanel extends JPanel{
 	public Robot[] robot;
 	public Enemy[] multiTarget;
 
-	public int comunication_num=0; 			//通信回数
+	public int communication_num =0; 			//通信回数
 	protected int count=0; 					//ステップ数
 
 	protected SimulationPanel(){
@@ -67,7 +67,7 @@ abstract public class SimulationPanel extends JPanel{
 
 		while(true){
 			if(step()){
-				results[huntedTarget-1] = new Result(comunication_num, count, distance(),robotDensity(5));
+				results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
 				System.out.println("huntedTarget"+huntedTarget);
 
 			}
@@ -180,7 +180,7 @@ abstract public class SimulationPanel extends JPanel{
 	@Override
 	public String toString(){
 		String string="";
-		string+=huntedTarget+"|"+comunication_num+"|"+count+"|";
+		string+=huntedTarget+"|"+ communication_num +"|"+count+"|";
 		for(int i=0;i < targetNum;i++){
 			string+=multiTarget[i];
 		}
