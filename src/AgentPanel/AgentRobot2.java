@@ -21,9 +21,9 @@ class AgentRobot2 extends Robot{
 	}
 
 	public void move(){
-		double oldPi=PI.distance(field.targetList[field.huntedTarget].p);
+		double oldPi=PI.distance(field.targetList.get(field.huntedTarget).p); //TODO fitnessFunctionの修正
 		super.move();
-		double Pi=PI.distance(field.targetList[field.huntedTarget].p);
+		double Pi=PI.distance(field.targetList.get(field.huntedTarget).p); //TODO fitnessFunctionの修正
 
 		//慣性定数の修正
 		if(Pi > oldPi - 3){
@@ -71,8 +71,9 @@ class AgentRobot2 extends Robot{
 	}
 
     public void setCI() {
-        if (p.distance(field.targetList[field.huntedTarget].p) <
-                CI.distance(field.targetList[field.huntedTarget].p)) {
+        if (p.distance(field.targetList.get(field.huntedTarget).p) <
+                CI.distance(field.targetList.get(field.huntedTarget).p)) {
+			//TODO fitnessFunctionの修正
             CI.setLocation(p);
         }
     }

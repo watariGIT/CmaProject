@@ -68,8 +68,9 @@ class Agent {
 
     void setCI() {
         //CIの更新
-        if (arobot.CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p)
-                < CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p)) {
+        //TODO fitnessFunctionの修正
+        if (arobot.CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p)
+                < CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p)) {
             CI.setLocation(arobot.PI);
 
             //ログをリセット
@@ -86,7 +87,8 @@ class Agent {
      * @return fitness function
      */
     double getCI() {
-        return CI.distance(arobot.field.targetList[arobot.field.huntedTarget].p);
+        //TODO fitnessFunctionの修正
+        return CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p);
     }
 
     void agentMove(AgentRobot2 robots[]) {
@@ -94,6 +96,7 @@ class Agent {
 
         //次の行き先の決定
         for (int i = 0; i < SimulationPanel.num; i++) {
+            //TODO fitnessFunctionの修正
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
                 if (next == null
                         || getAngle(robots[i], Math.toRadians(0)) < getAngle(
@@ -152,8 +155,7 @@ class Agent {
         g.setColor(new Color(55, 55, 155));
         g.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,
-                16,
-                16);
+                16, 16);
         g.drawOval((int) (arobot.getSwingPoint().x - range * scale),
                 (int) (arobot.getSwingPoint().y - range * scale),
                 (int) (range * scale * 2),

@@ -26,10 +26,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
      */
 	public MultiAgentSimulation2(int agentNum){
 		robot=new AgentRobot2[num];
-		targetList =new Enemy[targetNum];
 
-		for (int i = 0; i < targetNum; i++)
-			targetList[i] = new Enemy();
+		for(int i=0;i<targetNum;i++) {
+			targetList.add(new Enemy());
+		}
 		for(int i=0;i<num;i++)
 			robot[i]=new AgentRobot2(this);
 		multi=new AgentList();
@@ -81,9 +81,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		count=0;
 		this.communication_num =0;
 		huntedTarget=0;
+		targetList.clear();
 
 		for (int i = 0; i < targetNum; i++)
-			targetList[i] = new Enemy();
+			targetList.add(new Enemy());
 		multi.clear();
 		for(int i=0;i<num;i++)
 			robot[i].reset();
@@ -98,13 +99,9 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		g.setColor(Color.BLACK);
 		g.drawRect(startX, startY, length, length);
 
-		for (int i = 0; i < huntedTarget + 1 && i < targetNum; i++) {
-			if (i == huntedTarget)
-				targetList[i].paint(g, true);
-			else
-				targetList[i].paint(g, false);
+		for(Enemy target:targetList){
+			target.paint(g,true);
 		}
-
 		for (int i = 0; i < num; i++)
 			robot[i].paint(g);
 		multi.paint(g);
@@ -146,11 +143,11 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 				// ターゲットの抽出
 				String[] targetStringArray = matcher.group(5).split("T", 0);// [0]は空文字列
-				targetList = new Enemy[targetStringArray.length - 1];
+				targetList.clear();
 				targetNum = targetStringArray.length - 1;
 
 				for (int i = 1; i < targetStringArray.length; i++) {
-					targetList[i - 1] = new Enemy(targetStringArray[i]);
+					targetList.add(new Enemy(targetStringArray[i]));
 				}
 
 				// ロボットの抽出
@@ -178,10 +175,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	public String toString(){
 		String string="";
 		string+=huntedTarget+"|"+ communication_num +"|"+count+"|"+multi+"|";
-		for(int i=0;i < targetNum;i++){
-			string+= targetList[i];
-		}
 
+		for(Enemy target:targetList){
+			string+= target.toString();
+		}
 		string+="|";
 
 		for(Robot r:robot){
