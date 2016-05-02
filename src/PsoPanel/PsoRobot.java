@@ -1,6 +1,7 @@
 package PsoPanel;
 import java.awt.Point;
 
+import SuperPack.Intelligence;
 import SuperPack.Robot;
 
 
@@ -18,9 +19,9 @@ class PsoRobot extends Robot{
 
 	public void setCI() {
 		if (CI == null)
-			CI = new Point(p);
-		if (p.distance(field.targetList[field.huntedTarget].p) < CI.distance(field.targetList[field.huntedTarget].p)) {
-			CI.setLocation(p);
+			CI = new Intelligence(p.x,p.y,field.targetList);
+		if (fitnessFunction(field.targetList) < CI.getFitnessValue()) {
+			CI = new Intelligence(p.x,p.y,field.targetList);
 			for (int i = 0; i < PsoSimulation.num; i++) {
 				if (this != field.robot[i])
 					communication(field.robot[i]);
@@ -29,7 +30,7 @@ class PsoRobot extends Robot{
 	}
 
 	private void communication(Robot r) {
-		r.CI = CI;
+		r.CI = CI; //TODO くさそう
 		field.communication_num++;
 	}
 

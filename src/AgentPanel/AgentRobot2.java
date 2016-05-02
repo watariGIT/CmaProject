@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import PsoPanel.PsoSimulation;
+import SuperPack.Intelligence;
 import SuperPack.SimulationPanel;
 import SuperPack.Robot;
 
@@ -13,7 +14,7 @@ class AgentRobot2 extends Robot{
 
 	AgentRobot2(SimulationPanel as) {
 		super(as);
-		CI=new Point(PI);
+		CI=new Intelligence(PI.x,PI.y,as.targetList);
 	}
 
 	AgentRobot2(SimulationPanel s, String robotString){
@@ -21,9 +22,9 @@ class AgentRobot2 extends Robot{
 	}
 
 	public void move(){
-		double oldPi=PI.distance(field.targetList.get(field.huntedTarget).p); //TODO fitnessFunctionの修正
+		double oldPi=PI.getFitnessValue();
 		super.move();
-		double Pi=PI.distance(field.targetList.get(field.huntedTarget).p); //TODO fitnessFunctionの修正
+		double Pi=PI.getFitnessValue();
 
 		//慣性定数の修正
 		if(Pi > oldPi - 3){
@@ -37,7 +38,7 @@ class AgentRobot2 extends Robot{
 
 	public void reset(){
 		super.reset();
-		CI=new Point(PI);
+		CI=new Intelligence(PI);
 		col=new Color(55,55,155);
 	}
 
@@ -71,10 +72,8 @@ class AgentRobot2 extends Robot{
 	}
 
     public void setCI() {
-        if (p.distance(field.targetList.get(field.huntedTarget).p) <
-                CI.distance(field.targetList.get(field.huntedTarget).p)) {
-			//TODO fitnessFunctionの修正
-            CI.setLocation(p);
+        if (PI.getFitnessValue() < CI.getFitnessValue()) {
+            CI.copy(PI);
         }
     }
 

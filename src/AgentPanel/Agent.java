@@ -8,27 +8,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import PsoPanel.PsoSimulation;
+import SuperPack.Intelligence;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 //FIXME distance -> fitness function
 class Agent {
-    private Point CI;
+    private Intelligence AI;
     public AgentRobot2 arobot;
     private ArrayList<AgentRobot2> logList;
     private final static int range = 200;
 
-    private ArrayList<Point> ciProcess;
+    private ArrayList<Intelligence> ciProcess;
     private ArrayList<Point> agentProcess;
 
     Agent(AgentRobot2 ag) {
-        CI = new Point();
-        CI.setLocation(ag.p);
+        AI = new Intelligence(ag.PI); //TODO 糞
         arobot = ag;
         logList = new ArrayList<>();
         logList.add(ag);
 
         ciProcess = new ArrayList<>();
-        ciProcess.add(new Point(CI));
+        ciProcess.add(new Intelligence(AI));
         agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
     }
@@ -44,16 +44,17 @@ class Agent {
 
         if (agentMatcher.matches()) {
             arobot = new AgentRobot2(s, agentMatcher.group(1));
-            CI = new Point(Integer.parseInt(agentMatcher.group(2)), Integer.parseInt(agentMatcher.group(3)));
+            AI = new Intelligence(Integer.parseInt(agentMatcher.group(2)), Integer.parseInt(agentMatcher.group(3)),s.targetList);
         } else {
+            //TODO 例外処理
             System.out.println("エージェント情報が正しくありません" + agentString);
             arobot = null;
-            CI = new Point();
+            AI = null;
         }
 
         logList = new ArrayList<>();
         ciProcess = new ArrayList<>();
-        ciProcess.add(new Point(CI));
+        ciProcess.add(new Intelligence(AI));
         agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
     }
@@ -66,18 +67,18 @@ class Agent {
         arobot = ag;
     }
 
-    void setCI() {
+    void updateAI() {
         //CIの更新
         //TODO fitnessFunctionの修正
-        if (arobot.CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p)
-                < CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p)) {
-            CI.setLocation(arobot.PI);
+        if (arobot.CI.getFitnessValue()
+                < AI.getFitnessValue()) {
+            AI.copy(arobot.CI);
 
             //ログをリセット
             logList.clear();
             logList.add(arobot);
         } else {
-            arobot.CI.setLocation(CI);
+            arobot.CI.copy(AI);
         }
     }
 
@@ -86,9 +87,9 @@ class Agent {
      * の値を取得
      * @return fitness function
      */
-    double getCI() {
-        //TODO fitnessFunctionの修正
-        return CI.distance(arobot.field.targetList.get(arobot.field.huntedTarget).p);
+    //TODO メソッド名が糞
+    double getAiFitnessValue() {
+        return AI.getFitnessValue();
     }
 
     void agentMove(AgentRobot2 robots[]) {
@@ -96,7 +97,6 @@ class Agent {
 
         //次の行き先の決定
         for (int i = 0; i < SimulationPanel.num; i++) {
-            //TODO fitnessFunctionの修正
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
                 if (next == null
                         || getAngle(robots[i], Math.toRadians(0)) < getAngle(
@@ -120,7 +120,7 @@ class Agent {
             arobot.v.setLocation((int) (Math.random() * Robot.maxv), (int) (Math.random() * Robot.maxv));
         }
 
-        ciProcess.add(new Point(CI));
+        ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
     }
 
@@ -164,6 +164,6 @@ class Agent {
 
     @Override
     public String toString() {
-        return "A" + arobot + "/" + CI.x + "," + CI.y;
+        return "A" + arobot + "/" + AI.x + "," + AI.y;
     }
 }

@@ -3,6 +3,8 @@ package SuperPack;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,19 +18,15 @@ public abstract class Robot {
 	private double c2=2.0;
 	public Point p;
 	public Point v;
-	public Point PI;
-	public Point CI;
+	public Intelligence PI;
+	public Intelligence CI;
 	public double angle;
 	double distance;
 	public SimulationPanel field;
 
 	protected Robot(SimulationPanel s) {
 		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
-		do {
-			p.setLocation((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
-		} while (p.distance(s.targetList[s.huntedTarget].p) < 200);
-
-		PI = new Point(p);
+		PI = new Intelligence(p.x,p.y,s.targetList);
 		v = new Point((int) (Math.random() * maxv), (int) (Math.random() * maxv));
 		field = s;
 		distance = 0;
@@ -43,8 +41,8 @@ public abstract class Robot {
 			
 			v=new Point(Integer.parseInt(robotMatcher.group(3)),Integer.parseInt(robotMatcher.group(4)));
 			
-			PI=new Point(Integer.parseInt(robotMatcher.group(5)),Integer.parseInt(robotMatcher.group(6)));
-			CI=new Point(Integer.parseInt(robotMatcher.group(7)),Integer.parseInt(robotMatcher.group(8)));
+			PI=new Intelligence(Integer.parseInt(robotMatcher.group(5)),Integer.parseInt(robotMatcher.group(6)),s.targetList);
+			CI=new Intelligence(Integer.parseInt(robotMatcher.group(7)),Integer.parseInt(robotMatcher.group(8)),s.targetList);
 			
 			omega=Double.parseDouble(robotMatcher.group(9));
 			
@@ -52,18 +50,8 @@ public abstract class Robot {
 			distance=0;
 			angle=0;
 		}else{
-			p=new Point((int)(Math.random()*PsoSimulation.size),(int)(Math.random()*PsoSimulation.size));
-			do {
-			p.setLocation((int)(Math.random()*PsoSimulation.size),(int)(Math.random()*PsoSimulation.size));
-			}while(p.distance(s.targetList[s.huntedTarget].p)<200);
-			
-			PI=new Point(p);
-			v=new Point((int)(Math.random()*maxv),(int)(Math.random()*maxv));
-			field=s;
-			distance=0;
-			angle=0;
-			
-			System.out.println("robotString"+robotString);
+			//TODO 例外処理
+			System.out.println("Error robotString"+robotString);
 		}
 	}
 	
@@ -88,26 +76,23 @@ public abstract class Robot {
 		if(p.y>SimulationPanel.size)p.y=SimulationPanel.size;
 		
 		distance+=oldP.distance(p); //TODO 	謎の変数
-		
-		if(p.distance(field.targetList[field.huntedTarget].p)<PI.distance(field.targetList[field.huntedTarget].p))
-			PI.setLocation(p);
+
+		if(fitnessFunction(field.targetList)<PI.getFitnessValue())
+			PI= new Intelligence(p.x,p.y,field.targetList);
 		setCI();
 		angle=Math.atan2(dy,dx);
 	}
 	
 	public void copy(Robot robot){
 		p.setLocation(robot.p);
-		PI.setLocation(robot.PI);
-		CI.setLocation(PI);
+		PI.copy(robot.PI);
+		CI.copy(PI);
 		v.setLocation(robot.v);
 	}
 	
 	public void reset(){
-		do {
-			p.setLocation((int)(Math.random()*SimulationPanel.size),(int)(Math.random()*SimulationPanel.size));
-			}while(p.distance(field.targetList[field.huntedTarget].p)<200);
-		
-		PI.setLocation(p);
+		p.setLocation((int)(Math.random()*SimulationPanel.size),(int)(Math.random()*SimulationPanel.size));
+		PI = new Intelligence(p.x,p.y,field.targetList);
 		v.setLocation((int)(Math.random()*maxv),(int)(Math.random()*maxv));
 		CI=null;
 		omega=0.9;
@@ -139,10 +124,25 @@ public abstract class Robot {
 		String string="R";
 		string+=p.x+","+p.y+"/";
 		string+=v.x+","+v.y+"/";
-		string+=PI.x+","+PI.y+"/";
-		string+=CI.x+","+CI.y+"/";
+		string+=PI;
+		string+=CI;
 		string+=omega;
 		return string;
+	}
+
+	/**
+	 * 一番近いターゲットからの距離を得るメソッド
+	 *
+	 * @param tList ターゲットのリスト
+	 * @return 一番近いターゲット
+	 */
+	protected double fitnessFunction(ArrayList<Enemy> tList) {
+		double d = Double.MAX_VALUE;
+		for (Enemy t : tList) {
+			if (p.distance(t.p) < d)
+				d = p.distance(t.p);
+		}
+		return d;
 	}
 
 	/**

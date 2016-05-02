@@ -34,7 +34,7 @@ class AgentList {
 	void agentMove(Robot[] robots){
 		if(agent!=null){
 			agent.agentMove((AgentRobot2[]) robots);
-			agent.setCI();
+			agent.updateAI();
 		}
 		if(next!=null)
 			next.agentMove(robots);
@@ -52,7 +52,7 @@ class AgentList {
 			if (ag == null)
 				return (this);
 
-			if (agent.getCI() < ag.getCI()) {
+			if (agent.getAiFitnessValue() < ag.getAiFitnessValue()) {
 				next = next.delAgent(ag);
 				return (this);
 			} else

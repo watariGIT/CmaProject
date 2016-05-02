@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import SuperPack.Intelligence;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 import SuperPack.Enemy;
@@ -19,7 +20,7 @@ import SuperPack.Enemy;
  */
 public class PsoSimulation extends SimulationPanel {
 
-	private ArrayList<Point> ciProcess;
+	private ArrayList<Intelligence> ciProcess;
 
 	/**
 	 * コンストラクタ
@@ -87,7 +88,7 @@ public class PsoSimulation extends SimulationPanel {
 			for (int i = 0; i < num; i++) {
 				robot[i].move();
 			}
-			ciProcess.add(new Point(robot[0].CI));
+			ciProcess.add(new Intelligence(robot[0].CI));
 			if(getEnd() && huntedTarget < targetNum){
 				huntedTarget++;
 				return true;
@@ -101,6 +102,8 @@ public class PsoSimulation extends SimulationPanel {
 		communication_num = 0;
 		huntedTarget = 0;
 		targetList.clear();
+		for (int i = 0; i < targetNum; i++)
+			targetList.add(new Enemy());
 
 		for (int i = 0; i < num; i++)
 			robot[i].reset();
