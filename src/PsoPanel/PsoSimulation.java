@@ -26,10 +26,9 @@ public class PsoSimulation extends SimulationPanel {
 	 */
 	public PsoSimulation() {
 		robot = new PsoRobot[num];
-		targetList = new Enemy[targetNum];
 
 		for (int i = 0; i < targetNum; i++)
-			targetList[i] = new Enemy();
+			targetList.add(new Enemy());
 		for (int i = 0; i < num; i++)
 			robot[i] = new PsoRobot(this);
 		for (int i = 0; i < num; i++)
@@ -61,11 +60,11 @@ public class PsoSimulation extends SimulationPanel {
 
 				//ターゲットの抽出
 				String[] targetStringArray = matcher.group(4).split("T", 0);//[0]は空文字列
-				targetList = new Enemy[targetStringArray.length-1];
+				targetList.clear();
 				targetNum = targetStringArray.length-1;
 
 				for(int i=1;i<targetStringArray.length;i++){
-					targetList[i-1]= new Enemy(targetStringArray[i]);
+					targetList.add(new Enemy(targetStringArray[i]));
 				}
 
 				//ロボットの抽出
@@ -101,9 +100,8 @@ public class PsoSimulation extends SimulationPanel {
 		count = 0;
 		communication_num = 0;
 		huntedTarget = 0;
+		targetList.clear();
 
-		for (int i = 0; i < targetNum; i++)
-			targetList[i] = new Enemy();
 		for (int i = 0; i < num; i++)
 			robot[i].reset();
 		for (int i = 0; i < num; i++)
