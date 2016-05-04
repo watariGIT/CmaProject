@@ -28,7 +28,7 @@ class AgentRobot2 extends Robot{
 
 		//慣性定数の修正
 		if(Pi > oldPi - 3){
-			omega = 0.3;
+			//omega = 0.3;
 		}else{
 			omega = 0.9;
 		}

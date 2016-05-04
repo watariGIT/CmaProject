@@ -58,7 +58,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 			}
 
 			//捕獲成功次の処理
-			if (getEnd() && huntedTarget < targetNum) {
+			if (isEnd() && huntedTarget < targetNum) {
 				huntedTarget++;
 				//エージェントのログをリセット
 				multi.robotLogReset();

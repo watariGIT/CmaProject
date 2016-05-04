@@ -2,7 +2,6 @@ package PsoPanel;
 
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,7 +88,7 @@ public class PsoSimulation extends SimulationPanel {
 				robot[i].move();
 			}
 			ciProcess.add(new Intelligence(robot[0].CI));
-			if(getEnd() && huntedTarget < targetNum){
+			if(isEnd() && huntedTarget < targetNum){
 				huntedTarget++;
 				return true;
 			}
