@@ -14,6 +14,10 @@ public class Enemy {
 				(int)(Math.random()*SimulationPanel.size));
 	}
 
+	public Enemy(Point point){
+		p=point;
+	}
+
 
 	public Enemy(String targetString){
 		p=new Point();
@@ -26,6 +30,11 @@ public class Enemy {
 					(int)(Math.random()*SimulationPanel.size));
 			System.out.println("ターゲット情報が正しくありません"+targetString);
 		}
+	}
+
+	//TODO 考察の余地あり
+	public Enemy copy(){
+		return new Enemy(new Point(p));
 	}
 
 	/**

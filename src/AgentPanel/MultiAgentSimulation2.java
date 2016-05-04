@@ -2,6 +2,7 @@ package AgentPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,13 +58,8 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 				multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
 			}
 
-			//捕獲成功次の処理
-			if (isEnd() && huntedTarget < targetNum) {
-				huntedTarget++;
-				//エージェントのログをリセット
-				multi.robotLogReset();
-				return true;
-			}
+			//ターゲットの削除
+			deleteCaptureTarget();
 		}
 		return false;
 	}

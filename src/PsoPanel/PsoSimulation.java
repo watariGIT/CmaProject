@@ -3,6 +3,7 @@ package PsoPanel;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,17 +82,21 @@ public class PsoSimulation extends SimulationPanel {
 		}
 	}
 
+	/**
+	 * 毎ステップの処理
+	 * @return ターゲットを捕獲したらTrueを返す
+     */
 	public boolean step() {
-		if(huntedTarget < targetNum){
+		if (huntedTarget < targetNum) {
 			count++;
 			for (int i = 0; i < num; i++) {
 				robot[i].move();
 			}
 			ciProcess.add(new Intelligence(robot[0].CI));
-			if(isEnd() && huntedTarget < targetNum){
-				huntedTarget++;
-				return true;
-			}
+
+			//ターゲットの削除
+			deleteCaptureTarget();
+
 		}
 		return false;
 	}

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.Arrays;
 import javax.swing.JPanel;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 abstract public class SimulationPanel extends JPanel{
@@ -12,7 +13,7 @@ abstract public class SimulationPanel extends JPanel{
 	public static int startY = 10;
 	public final static int length = 250;
 	public final static int size = 1000;
-	public static int num = 100;            //ロボットの初期台数
+	public static int num = 30;            //ロボットの初期台数
 	private final static int maxCount = 10000;//最大の捕獲時間
 
 	//FIXME ここいる？
@@ -38,8 +39,9 @@ abstract public class SimulationPanel extends JPanel{
 			robot[i].copy(s.robot[i]);
 		}
 
-		for (int i = 0; i < targetNum; i++) {
-			targetList = new ArrayList<>(targetList);
+		targetList.clear();
+		for (int i = 0; i < s.targetList.size(); i++) {
+			targetList.add(s.targetList.get(i).copy());
 		}
 	}
 
@@ -76,7 +78,7 @@ abstract public class SimulationPanel extends JPanel{
 				System.out.println("huntedTarget"+huntedTarget);
 
 			}
-			if(huntedTarget==targetNum){
+			if(targetList.size() == 0){
 				break;
 			}
 			if(count>maxCount){
@@ -156,16 +158,20 @@ abstract public class SimulationPanel extends JPanel{
 	}
 
 	/**
-	 * ターゲットを捕獲したかを返すメソッド
-	 * @return true:捕獲完了　false:未捕獲
+	 * 捕獲したターゲットを削除するメソッド
 	 */
-	protected boolean getEnd(){
-		for(int i=0;i<num;i++){
-			if(targetList.size() == 0) {
-				return true;
+	public void deleteCaptureTarget(){
+		//ターゲットの削除
+		Iterator itr = targetList.iterator();
+		for (Robot r : robot) {
+			while (itr.hasNext()) {
+				Enemy t = (Enemy) itr.next();
+				if (r.p.distance(t.p) <= 10.0) {
+					itr.remove();
+				}
 			}
+			itr = targetList.iterator();
 		}
-		return false;
 	}
 
 	abstract public void reset();
