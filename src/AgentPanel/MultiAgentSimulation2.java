@@ -42,7 +42,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	}
 
 	public boolean step() {
-		if (huntedTarget < targetNum) {
+		if (targetList.size() != 0) {
 			count++;
 
 			//ロボットを動かす
@@ -76,7 +76,6 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	public void reset(){
 		count=0;
 		this.communication_num =0;
-		huntedTarget=0;
 		targetList.clear();
 
 		for (int i = 0; i < targetNum; i++)
@@ -95,9 +94,13 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		g.setColor(Color.BLACK);
 		g.drawRect(startX, startY, length, length);
 
-		for(Enemy target:targetList){
-			target.paint(g,true);
+		//ターゲットの描写
+		synchronized (targetList) {
+			for (Enemy target : targetList) {
+				target.paint(g, true);
+			}
 		}
+
 		for (int i = 0; i < num; i++)
 			robot[i].paint(g);
 		multi.paint(g);
@@ -125,7 +128,8 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 				System.out.println("ロボット表現文字列:" + matcher.group(6));
 
 				// 捕獲数・通信回数・ステップ数の読み込み
-				huntedTarget = Integer.parseInt(matcher.group(1));
+				//FiXME 後で修正
+				//huntedTarget = Integer.parseInt(matcher.group(1));
 				communication_num = Integer.parseInt(matcher.group(2));
 				count = Integer.parseInt(matcher.group(3));
 				//エージェントの抽出
@@ -165,12 +169,12 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 	/**
 	 * フィールドの情報を文字列で返すメソッド
-	 * @return 捕獲数|通信回数|ステップ数|エージェントの情報|ターゲットの情報|ロボットの情報|
+	 * @return ターゲットの数|通信回数|ステップ数|エージェントの情報|ターゲットの情報|ロボットの情報|
 	 */
 	@Override
 	public String toString(){
 		String string="";
-		string+=huntedTarget+"|"+ communication_num +"|"+count+"|"+multi+"|";
+		string+=targetList.size()+"|"+ communication_num +"|"+count+"|"+multi+"|";
 
 		for(Enemy target:targetList){
 			string+= target.toString();

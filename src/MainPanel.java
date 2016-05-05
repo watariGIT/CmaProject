@@ -146,10 +146,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		while (true) {
 			if (runFlag) {
 				if (canvas.step()) {
-					System.out.println("PsoHuntTarget"+canvas.huntedTarget+"\n");
+					System.out.println("PsoHuntTarget"+canvas.targetList.size()+"\n");
 				}
 				if (canvas4.step()) {
-					System.out.println("CmaHuntTarget"+canvas4.huntedTarget+"\n");
+					System.out.println("CmaHuntTarget"+canvas4.targetList.size()+"\n");
 				}
 
 				try {

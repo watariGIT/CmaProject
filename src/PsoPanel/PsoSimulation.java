@@ -55,7 +55,8 @@ public class PsoSimulation extends SimulationPanel {
 				System.out.println("ロボット表現文字列:"+matcher.group(5));
 
 				//捕獲数・通信回数・ステップ数の読み込み
-				huntedTarget=Integer.parseInt(matcher.group(1));
+				//FIXME 後で修正
+				//huntedTarget=Integer.parseInt(matcher.group(1));
 				communication_num = Integer.parseInt(matcher.group(2));
 				count = Integer.parseInt(matcher.group(3));
 
@@ -84,10 +85,10 @@ public class PsoSimulation extends SimulationPanel {
 
 	/**
 	 * 毎ステップの処理
-	 * @return ターゲットを捕獲したらTrueを返す
+	 * @return ターゲットを一体でも捕獲したらTrueを返す
      */
 	public boolean step() {
-		if (huntedTarget < targetNum) {
+		if (targetList.size() != 0) {
 			count++;
 			for (int i = 0; i < num; i++) {
 				robot[i].move();
@@ -104,7 +105,6 @@ public class PsoSimulation extends SimulationPanel {
 	public void reset() {
 		count = 0;
 		communication_num = 0;
-		huntedTarget = 0;
 		targetList.clear();
 		for (int i = 0; i < targetNum; i++)
 			targetList.add(new Enemy());

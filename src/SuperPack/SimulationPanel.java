@@ -18,7 +18,6 @@ abstract public class SimulationPanel extends JPanel{
 
 	//FIXME ここいる？
 	protected static int targetNum = 20;        //ターゲットの数
-	public int huntedTarget = 0;                //捕獲したターゲットの数　
 
 
 	public Robot[] robot;
@@ -60,22 +59,25 @@ abstract public class SimulationPanel extends JPanel{
 		g.drawRect(startX,startY,length,length);
 
 		//ターゲットの描写
-		for(Enemy target:targetList){
-			target.paint(g,true);
+		synchronized (targetList) {
+			for (Enemy target : targetList) {
+				target.paint(g, true);
+			}
 		}
 
 		for(int i=0;i<num;i++)
 			robot[i].paint(g);
 	}
 
-
+	//FIXME メソッド名にセンスが無い
 	public Result[] setLog(){
 		Result[] results = new Result[targetNum];
 
 		while(true){
 			if(step()){
-				results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
-				System.out.println("huntedTarget"+huntedTarget);
+				//FiXME 後で修正
+				//results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
+				//System.out.println("huntedTarget"+huntedTarget);
 
 			}
 			if(targetList.size() == 0){
@@ -107,7 +109,7 @@ abstract public class SimulationPanel extends JPanel{
 				if (step())
 					failData = this.toString();
 
-				if (huntedTarget == targetNum)
+				if (targetList.size() == 0)
 					break;
 
 				if (count > maxCount){
@@ -160,17 +162,19 @@ abstract public class SimulationPanel extends JPanel{
 	/**
 	 * 捕獲したターゲットを削除するメソッド
 	 */
-	public void deleteCaptureTarget(){
+	public void deleteCaptureTarget() {
 		//ターゲットの削除
-		Iterator itr = targetList.iterator();
-		for (Robot r : robot) {
-			while (itr.hasNext()) {
-				Enemy t = (Enemy) itr.next();
-				if (r.p.distance(t.p) <= 10.0) {
-					itr.remove();
+		synchronized (targetList) {
+			Iterator itr = targetList.iterator();
+			for (Robot r : robot) {
+				while (itr.hasNext()) {
+					Enemy t = (Enemy) itr.next();
+					if (r.p.distance(t.p) <= 0.0) {
+						itr.remove();
+					}
 				}
+				itr = targetList.iterator();
 			}
-			itr = targetList.iterator();
 		}
 	}
 
@@ -186,12 +190,12 @@ abstract public class SimulationPanel extends JPanel{
 	/**
 	 * フィールドの情報を文字列で返すメソッド
 	 * ex: 0|0|0|T10,10|R424,257/6,3/424,257/424,257/0.9
-	 * @return 捕獲数|通信回数|ステップ数|ターゲットの情報|ロボットの情報|
+	 * @return ターゲットの数|通信回数|ステップ数|ターゲットの情報|ロボットの情報|
 	 */
 	@Override
 	public String toString(){
 		String string="";
-		string+=huntedTarget+"|"+ communication_num +"|"+count+"|";
+		string+=targetList.size()+"|"+ communication_num +"|"+count+"|";
 		for(Enemy target:targetList){
 			string+= target.toString();
 		}
