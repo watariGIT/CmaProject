@@ -71,6 +71,10 @@ class Agent {
     void agentMoveUpdate(AgentRobot2 robots[]) {
         AgentRobot2 next = null;
 
+        if(arobot.isCaptured){
+            AI.copy(arobot.CI);
+        }
+
         //次の行き先の決定
         for (int i = 0; i < SimulationPanel.num; i++) {
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
@@ -99,8 +103,9 @@ class Agent {
         ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
         updateAI();
-        System.out.println(""+AI.getFitnessValue()+","+logList.size());
+        System.out.println(""+AI.getFitnessValue());
     }
+
     /**
      * AgentのAI：ROBOTのCIを更新するメソッド
      */
@@ -112,10 +117,8 @@ class Agent {
             AI.copy(arobot.CI);
 
             //ログをリセット
-            if(AI.getFitnessValue() >1.0){
-                logList.clear();
-                logList.add(arobot);
-            }
+            logList.clear();
+            logList.add(arobot);
         } else {
             arobot.CI.copy(AI);
         }
@@ -155,7 +158,7 @@ class Agent {
         if(logList.isEmpty()){
             AI.copy(arobot.CI);
         }
-        System.out.println(""+logList.size());
+        System.out.println(""+AI.getFitnessValue()+","+logList.size());
     }
 
     /**
@@ -167,7 +170,6 @@ class Agent {
             arobot.CI = new Intelligence(arobot.p.x,arobot.p.y);
         }
         while(logList.remove((AgentRobot2)arobot)){}
-
     }
 
     /**
@@ -178,14 +180,6 @@ class Agent {
     //TODO メソッド名が糞
     double getAiFitnessValue() {
         return AI.getFitnessValue();
-    }
-
-    /**
-     * 捕獲後かどうか
-     * @return 捕獲ならtrue
-     */
-    boolean isCaptured(){
-        return AI.getFitnessValue() <= 0;
     }
 
     /**
@@ -219,7 +213,6 @@ class Agent {
     void paint(Graphics g) {
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g.setColor(new Color(55, 55, 155));
-        if(isCaptured())  g.setColor(new Color(155, 55, 55));
 
         g.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,

@@ -17,7 +17,7 @@ import SuperPack.Enemy;
  *
  */
 public class MultiAgentSimulation2 extends SimulationPanel{
-	private AgentList multi; //エージェントのリスト
+	AgentList multi; //エージェントのリスト
 	private int agentNum;			//エージェントのマック数
 
 	/**
@@ -33,7 +33,6 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		for(int i=0;i<num;i++)
 			robot[i]=new AgentRobot2(this);
 		multi=new AgentList();
-
 		this.agentNum = agentNum;
 		for(int i=0;i<agentNum;i++){
 			multi.addAgent(new Agent((AgentRobot2) robot[i]));
@@ -54,7 +53,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 			//重複しているロボットの削除
 			for (int i = 0; i < num; i++) {
-				multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
+				//multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
 			}
 
 			//ターゲットの削除

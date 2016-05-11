@@ -33,10 +33,7 @@ class AgentList {
      */
 	void agentsMove(Robot[] robots){
 		if(agent!=null){
-			if(agent.isCaptured())
-				agent.agentMoveDelete((AgentRobot2[]) robots);
-			else
-				agent.agentMoveUpdate((AgentRobot2[]) robots);
+			agent.agentMoveUpdate((AgentRobot2[]) robots);
 		}
 
 		if(next!=null)

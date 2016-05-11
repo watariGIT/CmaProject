@@ -13,11 +13,11 @@ abstract public class SimulationPanel extends JPanel{
 	public static int startY = 10;
 	public final static int length = 250;
 	public final static int size = 1000;
-	public static int num = 30;            //ロボットの初期台数
+	public static int num = 10;            //ロボットの初期台数
 	private final static int maxCount = 10000;//最大の捕獲時間
 
 	//FIXME ここいる？
-	protected static int targetNum = 20;        //ターゲットの数
+	protected static int targetNum = 10;        //ターゲットの数
 
 
 	public Robot[] robot;

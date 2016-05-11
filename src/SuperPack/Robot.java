@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import PsoPanel.PsoSimulation;
+import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 
 
 public abstract class Robot {
@@ -24,6 +25,7 @@ public abstract class Robot {
 	double distance;
 	private double oldFitness;
 	public SimulationPanel field;
+	public boolean isCaptured=false;
 
 	protected Robot(SimulationPanel s) {
 		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
@@ -61,6 +63,7 @@ public abstract class Robot {
 	public void move(){
 		double dx,dy;
 		Point oldP = new Point(p);
+		isCaptured = false;
 		dx=v.x*omega+c1*Math.random()*(PI.x-p.x)+c2*Math.random()*(CI.x-p.x);
 		dy=v.y*omega+c1*Math.random()*(PI.y-p.y)+c2*Math.random()*(CI.y-p.y);
 		if(dx>maxv)dx=maxv;
@@ -79,16 +82,18 @@ public abstract class Robot {
 		
 		distance+=oldP.distance(p); //TODO 	謎の変数
 
-		if(fitnessFunction(field.targetList) - oldFitness > 3.0){
+		double f=fitnessFunction(field.targetList);
+		if(f - oldFitness > 10.0){
+			isCaptured = true;
 			PI = new Intelligence(p.x,p.y,field.targetList);
 			CI = new Intelligence(p.x,p.y,field.targetList);
 		}
-		oldFitness = fitnessFunction(field.targetList);
+		oldFitness = f;
 
-		if(fitnessFunction(field.targetList)<PI.getFitnessValue())
-			PI= new Intelligence(p.x,p.y,field.targetList);
+		if (fitnessFunction(field.targetList) < PI.getFitnessValue())
+			PI = new Intelligence(p.x, p.y, field.targetList);
 		setCI();
-		angle=Math.atan2(dy,dx);
+		angle = Math.atan2(dy, dx);
 	}
 	
 	public void copy(Robot robot){
@@ -147,7 +152,7 @@ public abstract class Robot {
 	 */
 	protected double fitnessFunction(ArrayList<Enemy> tList) {
 		double d = Double.MAX_VALUE;
-		for (Enemy t : tList) {
+  		for (Enemy t : tList) {
 			if (p.distance(t.p) < d)
 				d = p.distance(t.p);
 		}
