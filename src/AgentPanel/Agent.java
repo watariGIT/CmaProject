@@ -223,17 +223,26 @@ class Agent {
     }
 
     void paint(Graphics2D g2) {
+
+        //エージェント表示
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g2.setColor(color);
-        g2.setStroke(new BasicStroke(2));
- 
+        g2.setStroke(new BasicStroke(3));
         g2.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,
                 16, 16);
-        /*g.drawOval((int) (arobot.getSwingPoint().x - range * scale),
+        g2.setStroke(new BasicStroke(1));
+
+        //エージェントの範囲表示
+        /*g2.drawOval((int) (arobot.getSwingPoint().x - range * scale),
                 (int) (arobot.getSwingPoint().y - range * scale),
                 (int) (range * scale * 2),
                 (int) (range * scale * 2));*/
+
+        //AIの表示
+        int aiSwingX = (int)(AI.x* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+        int aiSwingY = (int)((PsoSimulation.size - AI.y)* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+        g2.fillOval(aiSwingX - 3, aiSwingY - 3, 6, 6);
     }
 
     @Override

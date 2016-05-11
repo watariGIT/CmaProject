@@ -36,7 +36,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 		//エージェントの生成
 		for(int i=0;i<agentNum;i++){
-			multi.addAgent(new Agent((AgentRobot2) robot[i],new Color(155+(i*15)%100,55+(i*23)%200,100)));
+			multi.addAgent(new Agent((AgentRobot2) robot[i],new Color(105+(i*31)%100,55+(i*23)%200,105+(i*13)%100)));
 		}
 	}
 
@@ -69,7 +69,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		//エージェントの初期化
 		multi.clear();
 		for(int i=0;i<agentNum;i++)
-			multi.addAgent(new Agent((AgentRobot2) robot[i]));
+			multi.addAgent(new Agent((AgentRobot2) robot[i],new Color(105+(i*31)%100,55+(i*23)%200,105+(i*13)%100)));
 	}
 
 	public void reset(){
@@ -83,7 +83,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		for(int i=0;i<num;i++)
 			robot[i].reset();
 		for(int i=0;i<agentNum;i++)
-			multi.addAgent(new Agent((AgentRobot2) robot[i]));
+			multi.addAgent(new Agent((AgentRobot2) robot[i],new Color(105+(i*31)%100,55+(i*23)%200,105+(i*13)%100)));
 	}
 
 	public void paintComponent(Graphics g) {

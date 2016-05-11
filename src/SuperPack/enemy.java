@@ -1,7 +1,5 @@
 package SuperPack;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,13 +65,13 @@ public class Enemy {
 	}
 
 
-	public void paint(Graphics g,Boolean ovalFlag){
-		g.setColor(new Color(200,80,80));
+	public void paint(Graphics2D g2, Boolean ovalFlag){
+		g2.setColor(new Color(200,80,80));
 
 		if(ovalFlag)
-			g.fillOval(getPoint().x,getPoint().y,8,8);
+			g2.fillOval(getPoint().x,getPoint().y,8,8);
 		else
-			g.fillRect(getPoint().x,getPoint().y,8,8);
+			g2.fillRect(getPoint().x,getPoint().y,8,8);
 	}
 
 	private Point getPoint(){
