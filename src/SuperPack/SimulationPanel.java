@@ -1,7 +1,6 @@
 package SuperPack;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Arrays;
 import javax.swing.JPanel;
 import java.util.ArrayList;
@@ -52,21 +51,25 @@ abstract public class SimulationPanel extends JPanel{
 		return true;
 	}
 	public void paintComponent(Graphics g){
-		g.setColor(new Color(255,255,255));
-		g.fillRect(startX,startY,length,length);
+		Graphics2D g2=(Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.setColor(Color.BLACK);
-		g.drawRect(startX,startY,length,length);
+		g2.setColor(new Color(255,255,255));
+		g2.fillRect(startX,startY,length,length);
+
+		g2.setColor(Color.BLACK);
+		g2.drawRect(startX,startY,length,length);
 
 		//ターゲットの描写
 		synchronized (targetList) {
 			for (Enemy target : targetList) {
-				target.paint(g, true);
+				target.paint(g2, true);
 			}
 		}
 
 		for(int i=0;i<num;i++)
-			robot[i].paint(g);
+			robot[i].paint(g2);
 	}
 
 	//FIXME メソッド名にセンスが無い

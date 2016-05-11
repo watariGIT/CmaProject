@@ -1,8 +1,6 @@
 package SuperPack;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -114,13 +112,13 @@ public abstract class Robot {
 		angle=0;
 	}
 	
-	public void paint(Graphics g){
+	public void paint(Graphics2D g2){
 		double scale;
 		scale=(double)(PsoSimulation.length) / (PsoSimulation.size) ;
-		g.setColor(new Color(55,55,155));
-		g.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
-		g.setColor(new Color(255,255,255));
-		g.drawLine(getSwingPoint().x,getSwingPoint().y,
+		g2.setColor(new Color(55,55,155));
+		g2.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
+		g2.setColor(new Color(255,255,255));
+		g2.drawLine(getSwingPoint().x,getSwingPoint().y,
 				getSwingPoint().x+(int)((20)*Math.cos(angle)*scale),
 				getSwingPoint().y-(int)((20)*Math.sin(angle)*scale)
 				);

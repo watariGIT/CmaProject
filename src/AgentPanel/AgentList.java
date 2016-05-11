@@ -1,6 +1,6 @@
 package AgentPanel;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 import SuperPack.Robot;
 
@@ -81,11 +81,11 @@ class AgentList {
 		agent=null;
 		next=null;
 	}
-	void paint(Graphics g){
+	void paint(Graphics2D g2){
 		if(agent!=null)
-		agent.paint(g);
+		agent.paint(g2);
 		if(next!=null)
-			next.paint(g);
+			next.paint(g2);
 		}
 	private AgentList getLast(){
 		if(next==null)

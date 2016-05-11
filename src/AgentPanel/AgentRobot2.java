@@ -1,8 +1,6 @@
 package AgentPanel;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
@@ -42,7 +40,7 @@ class AgentRobot2 extends Robot{
 		col=new Color(55,55,155);
 	}
 
-	public void paint(Graphics g){
+	public void paint(Graphics2D g2){
 		double scale;
 		scale=(double)(PsoSimulation.length) / (PsoSimulation.size) ;
 
@@ -51,10 +49,10 @@ class AgentRobot2 extends Robot{
 		else
 			col = new Color(155,155,155);
 
-		g.setColor(col);
-		g.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
-		g.setColor(new Color(255,255,255));
-		g.drawLine(getSwingPoint().x,getSwingPoint().y,
+		g2.setColor(col);
+		g2.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
+		g2.setColor(new Color(255,255,255));
+		g2.drawLine(getSwingPoint().x,getSwingPoint().y,
 				getSwingPoint().x+(int)((20)*Math.cos(angle)*scale),
 				getSwingPoint().y-(int)((20)*Math.sin(angle)*scale)
 		);

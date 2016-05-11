@@ -1,8 +1,6 @@
 package AgentPanel;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +15,7 @@ class Agent {
     public AgentRobot2 arobot;
     public ArrayList<AgentRobot2> logList;
     private final static int range = 200;
+    private Color color;
 
     private ArrayList<Intelligence> ciProcess;
     private ArrayList<Point> agentProcess;
@@ -26,11 +25,24 @@ class Agent {
         arobot = ag;
         logList = new ArrayList<>();
         logList.add(ag);
-
         ciProcess = new ArrayList<>();
         ciProcess.add(new Intelligence(AI));
         agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
+        color = new Color(55,55,155);
+    }
+
+
+    Agent(AgentRobot2 ag,Color col) {
+        AI = new Intelligence(ag.PI); //TODO 糞
+        arobot = ag;
+        logList = new ArrayList<>();
+        logList.add(ag);
+        ciProcess = new ArrayList<>();
+        ciProcess.add(new Intelligence(AI));
+        agentProcess = new ArrayList<>();
+        agentProcess.add(arobot.p);
+        color = col;
     }
 
     /**
@@ -210,11 +222,12 @@ class Agent {
         return r;
     }
 
-    void paint(Graphics g) {
+    void paint(Graphics2D g2) {
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
-        g.setColor(new Color(55, 55, 155));
-
-        g.drawOval(arobot.getSwingPoint().x - 8,
+        g2.setColor(color);
+        g2.setStroke(new BasicStroke(2));
+ 
+        g2.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,
                 16, 16);
         /*g.drawOval((int) (arobot.getSwingPoint().x - range * scale),

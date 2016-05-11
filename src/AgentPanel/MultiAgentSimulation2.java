@@ -1,7 +1,6 @@
 package AgentPanel;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,8 +33,10 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 			robot[i]=new AgentRobot2(this);
 		multi=new AgentList();
 		this.agentNum = agentNum;
+
+		//エージェントの生成
 		for(int i=0;i<agentNum;i++){
-			multi.addAgent(new Agent((AgentRobot2) robot[i]));
+			multi.addAgent(new Agent((AgentRobot2) robot[i],new Color(155+(i*15)%100,55+(i*23)%200,100)));
 		}
 	}
 
@@ -86,22 +87,26 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(new Color(255, 255, 255));
-		g.fillRect(startX, startY, length, length);
+		Graphics2D g2=(Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.setColor(Color.BLACK);
-		g.drawRect(startX, startY, length, length);
+		g2.setColor(new Color(255, 255, 255));
+		g2.fillRect(startX, startY, length, length);
+
+		g2.setColor(Color.BLACK);
+		g2.drawRect(startX, startY, length, length);
 
 		//ターゲットの描写
 		synchronized (targetList) {
 			for (Enemy target : targetList) {
-				target.paint(g, true);
+				target.paint(g2, true);
 			}
 		}
 
 		for (int i = 0; i < num; i++)
-			robot[i].paint(g);
-		multi.paint(g);
+			robot[i].paint(g2);
+		multi.paint(g2);
 	}
 
 	@Override
