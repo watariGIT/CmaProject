@@ -56,6 +56,7 @@ class AgentList {
 				return (this);
 
 			if (agent.getAiFitnessValue() < ag.getAiFitnessValue()) {
+				agent.logList.addAll(ag.logList);
 				next = next.delAgent(ag);
 				return (this);
 			} else
@@ -95,11 +96,11 @@ class AgentList {
 		return next.getLast();
 	}
 
-	
-	void robotLogReset(){
-		if(agent!=null)
-		agent.logReset();
-		if(next!=null){
+
+	void robotLogReset() {
+		if (agent != null)
+			agent.logReset();
+		if (next != null) {
 			next.robotLogReset();
 		}
 	}

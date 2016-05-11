@@ -60,7 +60,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
 		// シミュレータの初期化
 		canvas = new PsoSimulation();
-		canvas4 = new MultiAgentSimulation2(1);
+		canvas4 = new MultiAgentSimulation2(5);
 		canvas4.copy(canvas);
 
 		GridLayout gl = new GridLayout(1, 2);

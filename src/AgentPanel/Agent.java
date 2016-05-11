@@ -15,7 +15,7 @@ import SuperPack.SimulationPanel;
 class Agent {
     private Intelligence AI;
     public AgentRobot2 arobot;
-    private ArrayList<AgentRobot2> logList;
+    public ArrayList<AgentRobot2> logList;
     private final static int range = 200;
 
     private ArrayList<Intelligence> ciProcess;
@@ -224,10 +224,10 @@ class Agent {
         g.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,
                 16, 16);
-        g.drawOval((int) (arobot.getSwingPoint().x - range * scale),
+        /*g.drawOval((int) (arobot.getSwingPoint().x - range * scale),
                 (int) (arobot.getSwingPoint().y - range * scale),
                 (int) (range * scale * 2),
-                (int) (range * scale * 2));
+                (int) (range * scale * 2));*/
     }
 
     @Override

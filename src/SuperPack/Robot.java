@@ -22,11 +22,13 @@ public abstract class Robot {
 	public Intelligence CI;
 	public double angle;
 	double distance;
+	private double oldFitness;
 	public SimulationPanel field;
 
 	protected Robot(SimulationPanel s) {
 		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
 		PI = new Intelligence(p.x,p.y,s.targetList);
+		oldFitness = fitnessFunction(s.targetList);
 		v = new Point((int) (Math.random() * maxv), (int) (Math.random() * maxv));
 		field = s;
 		distance = 0;
@@ -77,6 +79,12 @@ public abstract class Robot {
 		
 		distance+=oldP.distance(p); //TODO 	謎の変数
 
+		if(fitnessFunction(field.targetList) - oldFitness > 3.0){
+			PI = new Intelligence(p.x,p.y,field.targetList);
+			CI = new Intelligence(p.x,p.y,field.targetList);
+		}
+		oldFitness = fitnessFunction(field.targetList);
+
 		if(fitnessFunction(field.targetList)<PI.getFitnessValue())
 			PI= new Intelligence(p.x,p.y,field.targetList);
 		setCI();
@@ -93,6 +101,7 @@ public abstract class Robot {
 	public void reset(){
 		p.setLocation((int)(Math.random()*SimulationPanel.size),(int)(Math.random()*SimulationPanel.size));
 		PI = new Intelligence(p.x,p.y,field.targetList);
+		oldFitness = fitnessFunction(field.targetList);
 		v.setLocation((int)(Math.random()*maxv),(int)(Math.random()*maxv));
 		CI=null;
 		omega=0.9;
