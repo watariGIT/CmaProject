@@ -2,7 +2,6 @@ package AgentPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,7 +50,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 			}
 
 			//エージェントを動かす
-			multi.agentMove(robot);
+			multi.agentsMove(robot);
 
 			//重複しているロボットの削除
 			for (int i = 0; i < num; i++) {

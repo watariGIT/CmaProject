@@ -31,13 +31,16 @@ class AgentList {
 	 * AgentListのすべてのAgentを移動
 	 * @param robots ロボットの群れ
      */
-	void agentMove(Robot[] robots){
+	void agentsMove(Robot[] robots){
 		if(agent!=null){
-			agent.agentMove((AgentRobot2[]) robots);
-			agent.updateAI();
+			if(agent.isCaptured())
+				agent.agentMoveDelete((AgentRobot2[]) robots);
+			else
+				agent.agentMoveUpdate((AgentRobot2[]) robots);
 		}
+
 		if(next!=null)
-			next.agentMove(robots);
+			next.agentsMove(robots);
 	}
 
 	/**

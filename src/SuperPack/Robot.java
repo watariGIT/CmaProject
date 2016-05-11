@@ -43,7 +43,7 @@ public abstract class Robot {
 			
 			PI=new Intelligence(Integer.parseInt(robotMatcher.group(5)),Integer.parseInt(robotMatcher.group(6)),s.targetList);
 			CI=new Intelligence(Integer.parseInt(robotMatcher.group(7)),Integer.parseInt(robotMatcher.group(8)),s.targetList);
-			
+
 			omega=Double.parseDouble(robotMatcher.group(9));
 			
 			field=s;

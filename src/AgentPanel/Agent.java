@@ -67,32 +67,8 @@ class Agent {
         arobot = ag;
     }
 
-    void updateAI() {
-        //CIの更新
-        //TODO fitnessFunctionの修正
-        if (arobot.CI.getFitnessValue()
-                < AI.getFitnessValue()) {
-            AI.copy(arobot.CI);
 
-            //ログをリセット
-            logList.clear();
-            logList.add(arobot);
-        } else {
-            arobot.CI.copy(AI);
-        }
-    }
-
-    /**
-     * AgentのCIからのfitness function
-     * の値を取得
-     * @return fitness function
-     */
-    //TODO メソッド名が糞
-    double getAiFitnessValue() {
-        return AI.getFitnessValue();
-    }
-
-    void agentMove(AgentRobot2 robots[]) {
+    void agentMoveUpdate(AgentRobot2 robots[]) {
         AgentRobot2 next = null;
 
         //次の行き先の決定
@@ -122,6 +98,94 @@ class Agent {
 
         ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
+        updateAI();
+        System.out.println(""+AI.getFitnessValue()+","+logList.size());
+    }
+    /**
+     * AgentのAI：ROBOTのCIを更新するメソッド
+     */
+    private void updateAI() {
+        //CIの更新
+        //TODO fitnessFunctionの修正
+        if (arobot.CI.getFitnessValue()
+                < AI.getFitnessValue()) {
+            AI.copy(arobot.CI);
+
+            //ログをリセット
+            if(AI.getFitnessValue() >1.0){
+                logList.clear();
+                logList.add(arobot);
+            }
+        } else {
+            arobot.CI.copy(AI);
+        }
+    }
+
+    void agentMoveDelete(AgentRobot2 robots[]) {
+        AgentRobot2 next = null;
+
+        //次の行き先の決定
+        for (int i = 0; i < SimulationPanel.num; i++) {
+            if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
+                if (next == null
+                        || getAngle(robots[i], Math.toRadians(0)) < getAngle(
+                        next, Math.toRadians(0))
+                        && ContainNumInList(logList, arobot) < ContainNumInList(logList, robots[i]))
+                    next = robots[i];
+            }
+        }
+
+        //次のロボットが確定した場合
+        if (next != null) {
+            arobot = next;
+            arobot.field.communication_num++;
+        }
+
+        //ログに現在のロボットを追加
+        arobot.omega = 0.9;
+
+        if (arobot.v.distance(new Point(0, 0)) == 0) {
+            arobot.v.setLocation((int) (Math.random() * Robot.maxv), (int) (Math.random() * Robot.maxv));
+        }
+
+        ciProcess.add(new Intelligence(AI));
+        agentProcess.add(arobot.p);
+        deleteAI();
+
+        if(logList.isEmpty()){
+            AI.copy(arobot.CI);
+        }
+        System.out.println(""+logList.size());
+    }
+
+    /**
+     * ログにいるarobotのInteligenceを初期化し、ログからarobotを削除する
+     */
+    private void deleteAI(){
+        if(logList.indexOf(arobot)!=-1){
+            arobot.PI = new Intelligence(arobot.p.x,arobot.p.y);
+            arobot.CI = new Intelligence(arobot.p.x,arobot.p.y);
+        }
+        while(logList.remove((AgentRobot2)arobot)){}
+
+    }
+
+    /**
+     * AgentのAIからのfitness function
+     * の値を取得
+     * @return fitness function
+     */
+    //TODO メソッド名が糞
+    double getAiFitnessValue() {
+        return AI.getFitnessValue();
+    }
+
+    /**
+     * 捕獲後かどうか
+     * @return 捕獲ならtrue
+     */
+    boolean isCaptured(){
+        return AI.getFitnessValue() <= 0;
     }
 
     /**
@@ -139,6 +203,8 @@ class Agent {
         }
         return n;
     }
+
+
     private double getAngle(AgentRobot2 robot, double angle) {
         double dx = robot.p.x - arobot.p.x;
         double dy = robot.p.y - arobot.p.y;
@@ -153,6 +219,8 @@ class Agent {
     void paint(Graphics g) {
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g.setColor(new Color(55, 55, 155));
+        if(isCaptured())  g.setColor(new Color(155, 55, 55));
+
         g.drawOval(arobot.getSwingPoint().x - 8,
                 arobot.getSwingPoint().y - 8,
                 16, 16);

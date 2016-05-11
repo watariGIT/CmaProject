@@ -85,26 +85,32 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		JButton psoFileOutPutB = new JButton("psoFileOutPut");
 		psoFileOutPutB.addActionListener(this);
 		psoFileOutPutB.setActionCommand("psoFileOutPut");
-		
+		psoFileOutPutB.setEnabled(false); //無効化
+
 		JButton cmaFileOutPutB = new JButton("cmaFileOutPut");
 		cmaFileOutPutB.addActionListener(this);
 		cmaFileOutPutB.setActionCommand("cmaFileOutPut");
+		cmaFileOutPutB.setEnabled(false); //無効化
 		
 		JButton psoFileInPutB = new JButton("psoFileInPut");
 		psoFileInPutB.addActionListener(this);
 		psoFileInPutB.setActionCommand("psoFileInPut");
-		
+		psoFileInPutB.setEnabled(false); //無効化
+
 		JButton cmaFileInPutB = new JButton("cmaFileInPut");
 		cmaFileInPutB.addActionListener(this);
 		cmaFileInPutB.setActionCommand("cmaFileInPut");
-		
+		cmaFileInPutB.setEnabled(false); //無効化
+
 		JButton psoFailOutPutB = new JButton("psoFailOutPut");
 		psoFailOutPutB.addActionListener(this);
 		psoFailOutPutB.setActionCommand("psoFailOutPut");
+		psoFailOutPutB.setEnabled(false); //無効化
 		
 		JButton cmaFailOutPutB = new JButton("cmaFailOutPut");
 		cmaFailOutPutB.addActionListener(this);
 		cmaFailOutPutB.setActionCommand("cmaFailOutPut");
+		cmaFailOutPutB.setEnabled(false); //無効化
 
 		// パネル
 		gl.setHgap(5);
