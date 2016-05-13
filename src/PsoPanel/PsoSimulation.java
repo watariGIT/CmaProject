@@ -1,7 +1,7 @@
 package PsoPanel;
 
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -117,6 +117,12 @@ public class PsoSimulation extends SimulationPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+
 		super.paintComponent(g);
+		//CIの表示
+		g.setColor(Color.ORANGE);
+		int ciSwingX = (int)(robot[0].CI.x* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+		int ciSwingY = (int)((PsoSimulation.size - robot[0].CI.y)* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+		g.fillOval(ciSwingX - 3, ciSwingY - 3, 6, 6);
 	}
 }

@@ -88,6 +88,7 @@ class Agent {
         }
 
         //次の行き先の決定
+        // 前方優先
         for (int i = 0; i < SimulationPanel.num; i++) {
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
                 if (next == null

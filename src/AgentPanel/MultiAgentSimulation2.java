@@ -54,7 +54,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 
 			//重複しているロボットの削除
 			for (int i = 0; i < num; i++) {
-				//multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
+				multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
 			}
 
 			//ターゲットの削除
