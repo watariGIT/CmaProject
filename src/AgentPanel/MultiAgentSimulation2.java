@@ -109,6 +109,7 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 		multi.paint(g2);
 	}
 
+	//fixme マルチエージェント・ターゲットに対応
 	@Override
 	public void readFile(String fileString) {
 		Pattern allPattern = Pattern
