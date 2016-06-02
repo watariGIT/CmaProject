@@ -79,7 +79,6 @@ public class Enemy {
 				(SimulationPanel.size-p.y)*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startY));
 	}
 
-	//fixme マルチターゲットに対応
 	@Override
 	public String toString(){
 		return "T"+p.x+","+p.y;
