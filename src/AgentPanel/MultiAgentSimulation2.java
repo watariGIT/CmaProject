@@ -114,9 +114,9 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	public void readFile(String fileString) {
 		Pattern allPattern = Pattern
 				.compile("^\\d+\\|\\d+\\|\\d+\\|"
-						+"(null:|A(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+(\\.\\d+))/\\d+,\\d+:)+\\|"
+						+"(null:|A(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?)/\\d+(\\.\\d+),\\d+(\\.\\d+):)+\\|"
 						+ "(T\\d+,\\d+)+\\|"
-						+ "(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+(\\.\\d+)?)+$");
+						+ "(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?)+$");
 		// ファイル全体の正規表現チェック
 		if (allPattern.matcher(fileString).matches()) {
 			// 捕獲数と通信回数とステップ数の抽出

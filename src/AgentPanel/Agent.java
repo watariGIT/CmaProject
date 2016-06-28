@@ -9,6 +9,7 @@ import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
+
 //FIXME distance -> fitness function
 class Agent {
     private Intelligence AI;
@@ -29,11 +30,11 @@ class Agent {
         ciProcess.add(new Intelligence(AI));
         agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
-        color = new Color(55,55,155);
+        color = new Color(55, 55, 155);
     }
 
 
-    Agent(AgentRobot2 ag,Color col) {
+    Agent(AgentRobot2 ag, Color col) {
         AI = new Intelligence(ag.PI); //TODO 糞
         arobot = ag;
         logList = new ArrayList<>();
@@ -52,14 +53,14 @@ class Agent {
      * @param agentString 　エージェント情報文字列
      */
     Agent(MultiAgentSimulation2 s, String agentString) {
-        Matcher agentMatcher = Pattern.compile("^AR(\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+,\\d+/\\d+,\\d+/\\d+\\.\\d+)/(\\d+),(\\d+)$").matcher(agentString);
+        Matcher agentMatcher = Pattern.compile("^AR(\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+\\.\\d+,\\d+\\.\\d+/\\d+\\.\\d+,\\d+\\.\\d+/\\d+\\.\\d+)/(\\d+\\.\\d+),(\\d+\\.\\d+)$").matcher(agentString);
 
         if (agentMatcher.matches()) {
             arobot = new AgentRobot2(s, agentMatcher.group(1));
-            AI = new Intelligence(Integer.parseInt(agentMatcher.group(2)), Integer.parseInt(agentMatcher.group(3)),s.targetList);
+            AI = new Intelligence(Double.parseDouble(agentMatcher.group(2)), Double.parseDouble(agentMatcher.group(3)), s.targetList);
         } else {
             //TODO 例外処理
-            System.out.println("エージェント情報が正しくありません" + agentString);
+            System.out.println(getClass().getName() + "エージェント情報が正しくありません" + agentString);
             arobot = null;
             AI = null;
         }
@@ -69,6 +70,7 @@ class Agent {
         ciProcess.add(new Intelligence(AI));
         agentProcess = new ArrayList<>();
         agentProcess.add(arobot.p);
+        color = new Color((int) (105 + 100 * Math.random()), (int) (55 + 200 * Math.random()), (int) (105 + 100 * Math.random()));
     }
 
     void logReset() {
@@ -83,7 +85,7 @@ class Agent {
     void agentMoveUpdate(AgentRobot2 robots[]) {
         AgentRobot2 next = null;
 
-        if(arobot.isCaptured){
+        if (arobot.isCaptured) {
             AI.copy(arobot.CI);
         }
 
@@ -116,7 +118,7 @@ class Agent {
         ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
         updateAI();
-        System.out.println(""+AI.getFitnessValue());
+        System.out.println("" + AI.getFitnessValue());
     }
 
     /**
@@ -168,26 +170,28 @@ class Agent {
         agentProcess.add(arobot.p);
         deleteAI();
 
-        if(logList.isEmpty()){
+        if (logList.isEmpty()) {
             AI.copy(arobot.CI);
         }
-        System.out.println(""+AI.getFitnessValue()+","+logList.size());
+        System.out.println("" + AI.getFitnessValue() + "," + logList.size());
     }
 
     /**
      * ログにいるarobotのInteligenceを初期化し、ログからarobotを削除する
      */
-    private void deleteAI(){
-        if(logList.indexOf(arobot)!=-1){
-            arobot.PI = new Intelligence(arobot.p.x,arobot.p.y);
-            arobot.CI = new Intelligence(arobot.p.x,arobot.p.y);
+    private void deleteAI() {
+        if (logList.indexOf(arobot) != -1) {
+            arobot.PI = new Intelligence(arobot.p.x, arobot.p.y);
+            arobot.CI = new Intelligence(arobot.p.x, arobot.p.y);
         }
-        while(logList.remove((AgentRobot2)arobot)){}
+        while (logList.remove((AgentRobot2) arobot)) {
+        }
     }
 
     /**
      * AgentのAIからのfitness function
      * の値を取得
+     *
      * @return fitness function
      */
     //TODO メソッド名が糞
@@ -198,13 +202,13 @@ class Agent {
     /**
      * リストに含まれる要素数を数えるメソッド
      *
-     * @param l　リスト
-     * @param searchO　検索対象
+     * @param l       　リスト
+     * @param searchO 　検索対象
      * @return リストに含まれる検索対象の数
      */
     private int ContainNumInList(ArrayList<AgentRobot2> l, AgentRobot2 searchO) {
         int n = 0;
-        for (AgentRobot2 o : l){
+        for (AgentRobot2 o : l) {
             if (searchO == o)
                 n++;
         }
@@ -241,8 +245,8 @@ class Agent {
                 (int) (range * scale * 2));*/
 
         //AIの表示
-        int aiSwingX = (int)(AI.x* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
-        int aiSwingY = (int)((PsoSimulation.size - AI.y)* PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+        int aiSwingX = (int) (AI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+        int aiSwingY = (int) ((PsoSimulation.size - AI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
         g2.fillOval(aiSwingX - 3, aiSwingY - 3, 6, 6);
     }
 

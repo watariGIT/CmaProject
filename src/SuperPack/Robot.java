@@ -36,15 +36,15 @@ public abstract class Robot {
 	}
 	
 	protected Robot(SimulationPanel s,String robotString){
-		Matcher robotMatcher=Pattern.compile("^(\\d+),(\\d+)/([-]?\\d+),([-]?\\d+)/(\\d+),(\\d+)/(\\d+),(\\d+)/(\\d+\\.\\d+)$").matcher(robotString);
+		Matcher robotMatcher=Pattern.compile("^(\\d+),(\\d+)/([-]?\\d+),([-]?\\d+)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+\\.\\d+)$").matcher(robotString);
 		
 		if(robotMatcher.matches()){
 			p=new Point(Integer.parseInt(robotMatcher.group(1)),Integer.parseInt(robotMatcher.group(2)));
 			
 			v=new Point(Integer.parseInt(robotMatcher.group(3)),Integer.parseInt(robotMatcher.group(4)));
 			
-			PI=new Intelligence(Integer.parseInt(robotMatcher.group(5)),Integer.parseInt(robotMatcher.group(6)),s.targetList);
-			CI=new Intelligence(Integer.parseInt(robotMatcher.group(7)),Integer.parseInt(robotMatcher.group(8)),s.targetList);
+			PI=new Intelligence(Double.parseDouble(robotMatcher.group(5)),Double.parseDouble(robotMatcher.group(6)),s.targetList);
+			CI=new Intelligence(Double.parseDouble(robotMatcher.group(7)),Double.parseDouble(robotMatcher.group(8)),s.targetList);
 
 			omega=Double.parseDouble(robotMatcher.group(9));
 			

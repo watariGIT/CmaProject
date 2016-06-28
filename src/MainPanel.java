@@ -93,12 +93,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		JButton psoFileInPutB = new JButton("psoFileInPut");
 		psoFileInPutB.addActionListener(this);
 		psoFileInPutB.setActionCommand("psoFileInPut");
-		psoFileInPutB.setEnabled(false); //無効化
 
 		JButton cmaFileInPutB = new JButton("cmaFileInPut");
 		cmaFileInPutB.addActionListener(this);
 		cmaFileInPutB.setActionCommand("cmaFileInPut");
-		cmaFileInPutB.setEnabled(false); //無効化
 
 		JButton psoFailOutPutB = new JButton("psoFailOutPut");
 		psoFailOutPutB.addActionListener(this);
