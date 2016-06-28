@@ -178,13 +178,17 @@ public class MultiAgentSimulation2 extends SimulationPanel{
 	@Override
 	public String toString(){
 		String string="";
+
+		//ターゲットの数|通信回数|ステップ数|エージェントの情報|
 		string+=targetList.size()+"|"+ communication_num +"|"+count+"|"+multi+"|";
 
+		//ターゲットの情報
 		for(Enemy target:targetList){
 			string+= target.toString();
 		}
 		string+="|";
 
+		//ロボットの情報
 		for(Robot r:robot){
 			string+=r;
 		}

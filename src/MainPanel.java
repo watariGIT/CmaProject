@@ -85,12 +85,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		JButton psoFileOutPutB = new JButton("psoFileOutPut");
 		psoFileOutPutB.addActionListener(this);
 		psoFileOutPutB.setActionCommand("psoFileOutPut");
-		psoFileOutPutB.setEnabled(false); //無効化
 
 		JButton cmaFileOutPutB = new JButton("cmaFileOutPut");
 		cmaFileOutPutB.addActionListener(this);
 		cmaFileOutPutB.setActionCommand("cmaFileOutPut");
-		cmaFileOutPutB.setEnabled(false); //無効化
 		
 		JButton psoFileInPutB = new JButton("psoFileInPut");
 		psoFileInPutB.addActionListener(this);
@@ -267,7 +265,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		
 		if (command.equals("psoFileOutPut")){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-			File outFile = new File("pso"+sdf.format(Calendar.getInstance().getTime())+".txt");
+			File outFile = new File("bin\\pso"+sdf.format(Calendar.getInstance().getTime())+".txt");
 			try {
 				FileWriter outFileWriter = new FileWriter(outFile);
 				outFileWriter.write(canvas.toString());
@@ -280,7 +278,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 		
 		if (command.equals("cmaFileOutPut")){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-			File outFile = new File("cma"+sdf.format(Calendar.getInstance().getTime())+".txt");
+			File outFile = new File("bin\\cma"+sdf.format(Calendar.getInstance().getTime())+".txt");
 			try {
 				FileWriter outFileWriter = new FileWriter(outFile);
 				outFileWriter.write(canvas4.toString());

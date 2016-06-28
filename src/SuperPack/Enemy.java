@@ -16,10 +16,13 @@ public class Enemy {
 		p=point;
 	}
 
+	public Enemy(Enemy e){
+		p=new Point();
+		p.setLocation(e.p);
+	}
 
 	public Enemy(String targetString){
 		p=new Point();
-
 		Matcher targetMatcher=Pattern.compile("^(\\d+),(\\d+)$").matcher(targetString);
 		if(targetMatcher.matches()){
 			p.setLocation(Integer.parseInt(targetMatcher.group(1)),Integer.parseInt(targetMatcher.group(2)));
@@ -28,11 +31,6 @@ public class Enemy {
 					(int)(Math.random()*SimulationPanel.size));
 			System.out.println("ターゲット情報が正しくありません"+targetString);
 		}
-	}
-
-	//TODO 考察の余地あり
-	public Enemy copy(){
-		return new Enemy(new Point(p));
 	}
 
 	/**
