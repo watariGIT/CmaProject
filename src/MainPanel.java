@@ -172,7 +172,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
                 target++;
                 if (result != null) {
                     huntCount++;
-                    fw.write("target" + target + "," + result + "\r\n");
+                    fw.write("target" + result + "\r\n");
                 } else {
                     fw.write("NoHunt\r\n");
                 }

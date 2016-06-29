@@ -22,11 +22,12 @@ public class Result implements Comparable {
      */
     public String toString() {
         String s = "";
+        s += huntedTarget+",";
         s += count + ",";
         s += communication_num + ",";
         s += distance + ",";
-        s += density + ",";
-        s += huntedTarget;
+        s += density;
+
         return s;
     }
 
