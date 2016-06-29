@@ -1,8 +1,7 @@
 package SuperPack;
 
+import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
-import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -78,16 +77,14 @@ abstract public class SimulationPanel extends JPanel {
     public Result[] setLog() {
         Result[] results = new Result[targetNum];
 
-        while (true) {
-            if (step()) {
-                //TODO　結果取得
-                //results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
-                //System.out.println("huntedTarget"+huntedTarget);
+        while (!isEnd()) {
+            //1step動かす
+            step();
 
-            }
-            if (targetList.size() == 0) {
-                break;
-            }
+            //TODO　たーげっとを捕獲したときいの結果取得
+            //results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
+            //System.out.println("huntedTarget"+huntedTarget);
+
             if (count > maxCount) {
                 System.out.println("break");
                 return results;
@@ -95,7 +92,6 @@ abstract public class SimulationPanel extends JPanel {
 
         }
         reset();
-        System.out.println(Arrays.toString(results));
         return results;
     }
 
@@ -106,17 +102,15 @@ abstract public class SimulationPanel extends JPanel {
      */
 
     public String getFailData() {
+        //TODO 修正
         boolean failFlag = false;
         String failData = null;
         while (!failFlag) {
             failData = this.toString();
-            while (true) {
-
-                if (step())
-                    failData = this.toString();
-
-                if (targetList.size() == 0)
-                    break;
+            while (!isEnd()) {
+                //1step動かす
+                step();
+                //failData = this.toString(); 失敗した時の状況を文字列化
 
                 if (count > maxCount) {
                     System.out.println(this.toString());
@@ -187,7 +181,19 @@ abstract public class SimulationPanel extends JPanel {
 
     abstract public void reset();
 
-    abstract public boolean step();
+    /**
+     * 1ステップフィールドを動かす
+     */
+    abstract public void step();
+
+    /**
+     * 探索が終了しているか
+     *
+     * @return TRUEなら終了
+     */
+    public boolean isEnd() {
+        return targetList.size() == 0;
+    }
 
     /**
      * 読み込んだファイルから、フィールドを再現するメソッド

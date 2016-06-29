@@ -1,14 +1,14 @@
 package AgentPanel;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //FIXME distance -> fitness function
 class Agent {
@@ -118,7 +118,6 @@ class Agent {
         ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
         updateAI();
-        System.out.println("" + AI.getFitnessValue());
     }
 
     /**
