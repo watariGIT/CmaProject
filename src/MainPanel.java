@@ -26,6 +26,12 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
     private SimulationPanel canvas;
     private SimulationPanel canvas4;
 
+    private final static String DIR = "bin";
+    private final static String EVAL_DIR = DIR + "\\results\\";
+    private final static String FAIL_DIR = DIR + "\\fails\\";
+    private final static String OUTPUT_DIR = DIR + "\\outputs\\";
+
+
     public static void main(String args[]) {
         MainPanel game = new MainPanel();
     }
@@ -91,12 +97,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JButton psoFailOutPutB = new JButton("psoFailOutPut");
         psoFailOutPutB.addActionListener(this);
         psoFailOutPutB.setActionCommand("psoFailOutPut");
-        psoFailOutPutB.setEnabled(false); //無効化
 
         JButton cmaFailOutPutB = new JButton("cmaFailOutPut");
         cmaFailOutPutB.addActionListener(this);
         cmaFailOutPutB.setActionCommand("cmaFailOutPut");
-        cmaFailOutPutB.setEnabled(false); //無効化
 
         // パネル
         gl.setHgap(5);
@@ -214,8 +218,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 
-            File psoFile = new File("bin\\results\\PSOresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
-            File cmaFile = new File("bin\\results\\CMAresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File psoFile = new File(EVAL_DIR + "PSOresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File cmaFile = new File(EVAL_DIR + "CMAresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
 
             canvas.setRobotNum(num);
             canvas4.setRobotNum(num);
@@ -249,7 +253,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         if (command.equals("psoFileOutPut")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-            File outFile = new File("bin\\pso" + sdf.format(Calendar.getInstance().getTime()) + ".txt");
+            File outFile = new File(OUTPUT_DIR + "pso" + sdf.format(Calendar.getInstance().getTime()) + ".txt");
             try {
                 FileWriter outFileWriter = new FileWriter(outFile);
                 outFileWriter.write(canvas.toString());
@@ -262,7 +266,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         if (command.equals("cmaFileOutPut")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-            File outFile = new File("bin\\cma" + sdf.format(Calendar.getInstance().getTime()) + ".txt");
+            File outFile = new File(OUTPUT_DIR + "cma" + sdf.format(Calendar.getInstance().getTime()) + ".txt");
             try {
                 FileWriter outFileWriter = new FileWriter(outFile);
                 outFileWriter.write(canvas4.toString());
@@ -275,7 +279,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         if (command.equals("psoFailOutPut")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-            File outFile = new File("FailPso"
+            File outFile = new File(FAIL_DIR + "FailPso"
                     + sdf.format(Calendar.getInstance().getTime()) + ".txt");
             try {
                 FileWriter outFileWriter = new FileWriter(outFile);
@@ -290,7 +294,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         if (command.equals("cmaFailOutPut")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-            File outFile = new File("FailCma"
+            File outFile = new File(FAIL_DIR + "FailCma"
                     + sdf.format(Calendar.getInstance().getTime()) + ".txt");
             try {
                 FileWriter outFileWriter = new FileWriter(outFile);

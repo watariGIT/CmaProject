@@ -53,8 +53,6 @@ public class PsoSimulation extends SimulationPanel {
                 System.out.println("ロボット表現文字列:" + matcher.group(5));
 
                 //捕獲数・通信回数・ステップ数の読み込み
-                //FIXME 後で修正
-                //huntedTarget=Integer.parseInt(matcher.group(1));
                 communication_num = Integer.parseInt(matcher.group(2));
                 count = Integer.parseInt(matcher.group(3));
 

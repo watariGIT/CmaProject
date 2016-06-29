@@ -96,21 +96,17 @@ abstract public class SimulationPanel extends JPanel {
      *
      * @return 失敗した時のフィールドの状況を表す文字列
      */
-
     public String getFailData() {
-        //TODO 修正
         boolean failFlag = false;
         String failData = null;
         while (!failFlag) {
+            //失敗した時の状況の初期フィールドを文字列化
             failData = this.toString();
             while (!isEnd()) {
                 //1step動かす
                 step();
-                //failData = this.toString(); 失敗した時の状況を文字列化
 
                 if (count > maxCount) {
-                    System.out.println(this.toString());
-                    System.out.println("debug" + failData);
                     failFlag = true;
                     break;
                 }

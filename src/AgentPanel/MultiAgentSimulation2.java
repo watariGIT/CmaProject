@@ -125,8 +125,6 @@ public class MultiAgentSimulation2 extends SimulationPanel {
                 System.out.println("ロボット表現文字列:" + matcher.group(6));
 
                 // 捕獲数・通信回数・ステップ数の読み込み
-                //FiXME 後で修正
-                //huntedTarget = Integer.parseInt(matcher.group(1));
                 communication_num = Integer.parseInt(matcher.group(2));
                 count = Integer.parseInt(matcher.group(3));
                 //エージェントの抽出
