@@ -24,12 +24,12 @@ public class MultiAgentSimulation2 extends SimulationPanel {
      * @param agentNum 　エージェントの数
      */
     public MultiAgentSimulation2(int agentNum) {
-        robot = new AgentRobot2[num];
+        robot = new AgentRobot2[robotsNum];
 
         for (int i = 0; i < targetNum; i++) {
             targetList.add(new Enemy());
         }
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i] = new AgentRobot2(this);
         multi = new AgentList();
         this.agentNum = agentNum;
@@ -44,13 +44,13 @@ public class MultiAgentSimulation2 extends SimulationPanel {
     public void step() {
         count++;
         //ロボットを動かす
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < robotsNum; i++) {
             robot[i].move();
         }
         //エージェントを動かす
         multi.agentsMove(robot);
         //重複しているロボットの削除
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < robotsNum; i++) {
             multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
         }
         //ターゲットの削除
@@ -74,7 +74,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
         for (int i = 0; i < targetNum; i++)
             targetList.add(new Enemy());
         multi.clear();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].reset();
         for (int i = 0; i < agentNum; i++)
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
@@ -98,7 +98,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
             }
         }
 
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].paint(g2);
         multi.paint(g2);
     }
@@ -141,8 +141,6 @@ public class MultiAgentSimulation2 extends SimulationPanel {
                 // ターゲットの抽出
                 String[] targetStringArray = matcher.group(5).split("T", 0);// [0]は空文字列
                 targetList.clear();
-                targetNum = targetStringArray.length - 1;
-
                 for (int i = 1; i < targetStringArray.length; i++) {
                     targetList.add(new Enemy(targetStringArray[i]));
                 }

@@ -24,13 +24,13 @@ public class PsoSimulation extends SimulationPanel {
      * コンストラクタ
      */
     public PsoSimulation() {
-        robot = new PsoRobot[num];
+        robot = new PsoRobot[robotsNum];
 
         for (int i = 0; i < targetNum; i++)
             targetList.add(new Enemy());
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i] = new PsoRobot(this);
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].setCI();
         ciProcess = new ArrayList<>();
     }
@@ -61,8 +61,6 @@ public class PsoSimulation extends SimulationPanel {
                 //ターゲットの抽出
                 String[] targetStringArray = matcher.group(4).split("T", 0);//[0]は空文字列
                 targetList.clear();
-                targetNum = targetStringArray.length - 1;
-
                 for (int i = 1; i < targetStringArray.length; i++) {
                     targetList.add(new Enemy(targetStringArray[i]));
                 }
@@ -89,7 +87,7 @@ public class PsoSimulation extends SimulationPanel {
     @Override
     public void step() {
         count++;
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < robotsNum; i++) {
             robot[i].move();
         }
         ciProcess.add(new Intelligence(robot[0].CI));
@@ -104,9 +102,9 @@ public class PsoSimulation extends SimulationPanel {
         for (int i = 0; i < targetNum; i++)
             targetList.add(new Enemy());
 
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].reset();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].setCI();
         ciProcess = new ArrayList<>();
     }

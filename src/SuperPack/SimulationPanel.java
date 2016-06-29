@@ -11,13 +11,9 @@ abstract public class SimulationPanel extends JPanel {
     public static int startY = 10;
     public final static int length = 250;
     public final static int size = 1000;
-    public static int num = 20;            //ロボットの初期台数
+    public static int robotsNum = 20;            //ロボットの初期台数
+    public static int targetNum = 20;            //ターゲットの初期台数
     private final static int maxCount = 10000;//最大の捕獲時間
-
-    //FIXME ここいる？
-    protected static int targetNum = 5;        //ターゲットの数
-
-
     public Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
 
@@ -33,7 +29,7 @@ abstract public class SimulationPanel extends JPanel {
      * @param s コピー元
      */
     public void copy(SimulationPanel s) {
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < robotsNum; i++) {
             robot[i].copy(s.robot[i]);
         }
 
@@ -44,9 +40,9 @@ abstract public class SimulationPanel extends JPanel {
     }
 
     public boolean setRobotNum(int n) {
-        if (n > num)
+        if (n > robotsNum)
             return false;
-        num = n;
+        robotsNum = n;
         reset();
         return true;
     }
@@ -69,30 +65,30 @@ abstract public class SimulationPanel extends JPanel {
             }
         }
 
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < robotsNum; i++)
             robot[i].paint(g2);
     }
 
-    //FIXME メソッド名にセンスが無い
-    public Result[] setLog() {
-        Result[] results = new Result[targetNum];
-
+    public ArrayList<Result> evaluation() {
+        int tMax = targetList.size();
+        int tNum = tMax;
+        ArrayList<Result> resultList = new ArrayList<>();
         while (!isEnd()) {
             //1step動かす
             step();
 
-            //TODO　たーげっとを捕獲したときいの結果取得
-            //results[huntedTarget-1] = new Result(communication_num, count, distance(),robotDensity(5));
-            //System.out.println("huntedTarget"+huntedTarget);
-
-            if (count > maxCount) {
-                System.out.println("break");
-                return results;
+            if (tNum != targetList.size()) {
+                //たーげっとを捕獲した時の結果
+                tNum = targetList.size();
+                resultList.add(new Result(communication_num, count, distance(), robotDensity(5), tMax - tNum));
             }
+
+            if (count > maxCount)
+                return resultList;
 
         }
         reset();
-        return results;
+        return resultList;
     }
 
     /**

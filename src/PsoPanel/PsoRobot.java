@@ -1,8 +1,9 @@
 package PsoPanel;
-import java.awt.Point;
 
 import SuperPack.Intelligence;
 import SuperPack.Robot;
+
+import java.awt.*;
 
 
 
@@ -22,7 +23,7 @@ class PsoRobot extends Robot{
 			CI = new Intelligence(p.x,p.y,field.targetList);
 		if (fitnessFunction(field.targetList) < CI.getFitnessValue()) {
 			CI = new Intelligence(p.x,p.y,field.targetList);
-			for (int i = 0; i < PsoSimulation.num; i++) {
+			for (int i = 0; i < PsoSimulation.robotsNum; i++) {
 				if (this != field.robot[i])
 					communication(field.robot[i]);
 			}

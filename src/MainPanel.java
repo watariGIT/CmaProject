@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -67,9 +68,9 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         resetb.addActionListener(this);
         resetb.setActionCommand("RESET");
 
-        JButton outputb = new JButton("OutPut");
-        outputb.addActionListener(this);
-        outputb.setActionCommand("OutPut");
+        JButton evaluation = new JButton("Eval");
+        evaluation.addActionListener(this);
+        evaluation.setActionCommand("Evaluation");
 
         JButton psoFileOutPutB = new JButton("psoFileOutPut");
         psoFileOutPutB.addActionListener(this);
@@ -107,7 +108,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         sp.add(logb);
         sp.add(stepb);
         sp.add(resetb);
-        sp.add(outputb);
+        sp.add(evaluation);
         sp.add(psoFileOutPutB);
         sp.add(cmaFileOutPutB);
         sp.add(psoFailOutPutB);
@@ -155,15 +156,15 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
      * 詳細な結果を外部に出力する
      *
      * @param fw      ファイルライタ
-     * @param results 結果の配列
+     * @param resultList 結果の配列
      */
-    private void outputCsv(FileWriter fw, Result[] results) {
+    private void outputCsv(FileWriter fw, ArrayList<Result> resultList) {
         //結果を出力
         try {
             int huntCount = 0;
             int target = 0;
-            fw.write(",step,communication,distance,density\r\n");
-            for (Result result : results) {
+            fw.write(",step,communication,distance,density,huntedTarget\r\n");
+            for (Result result : resultList) {
                 target++;
                 if (result != null) {
                     huntCount++;
@@ -207,44 +208,41 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             Reset();
         }
 
-        if (command.equals("OutPut")) {
+        if (command.equals("Evaluation")) {
             FileWriter psoFW, cmaFW;
-            int num = SimulationPanel.num;
+            int num = SimulationPanel.robotsNum;
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 
-            File psoFile = new File("PSOresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
-            File cmaFile = new File("CMAresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File psoFile = new File("bin\\results\\PSOresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File cmaFile = new File("bin\\results\\CMAresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
 
             canvas.setRobotNum(num);
             canvas4.setRobotNum(num);
             Reset();
-
+            System.out.println("EvalStart");
             for (int count = 0; count < 100; count++) {
                 try {
-                    //TODO 違和感あるから見直し
+                    System.out.println(count + "/100");
                     psoFW = new FileWriter(psoFile, true);
                     cmaFW = new FileWriter(cmaFile, true);
-
-                    Result[] psoResults = null;
-                    Result[] cmaResults = null;
-
-                    psoResults = canvas.setLog();
-                    cmaResults = canvas4.setLog();
+                    ArrayList<Result> psoResults = canvas.evaluation();
+                    ArrayList<Result> cmaResults = canvas4.evaluation();
                     Reset();
 
                     outputCsv(psoFW, psoResults);
                     outputCsv(cmaFW, cmaResults);
 
-                    SimulationPanel.num = num;
+                    SimulationPanel.robotsNum = num;
                     Reset();
+
                     cmaFW.close();
                     psoFW.close();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
-            System.out.println("ターゲットの捕獲終了");
+            System.out.println("EvalEnd");
             System.out.println("PSO　出力:" + psoFile.getAbsolutePath());
             System.out.println("CMA　出力" + cmaFile.getAbsolutePath());
         }

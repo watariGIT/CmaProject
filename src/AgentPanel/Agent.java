@@ -91,7 +91,7 @@ class Agent {
 
         //次の行き先の決定
         // 前方優先
-        for (int i = 0; i < SimulationPanel.num; i++) {
+        for (int i = 0; i < SimulationPanel.robotsNum; i++) {
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
                 if (next == null
                         || getAngle(robots[i], Math.toRadians(0)) < getAngle(
@@ -142,7 +142,7 @@ class Agent {
         AgentRobot2 next = null;
 
         //次の行き先の決定
-        for (int i = 0; i < SimulationPanel.num; i++) {
+        for (int i = 0; i < SimulationPanel.robotsNum; i++) {
             if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
                 if (next == null
                         || getAngle(robots[i], Math.toRadians(0)) < getAngle(
