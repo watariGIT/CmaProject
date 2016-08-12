@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //FIXME distance -> fitness function
-class Agent {
+public class Agent {
     private Intelligence AI;
     public AgentRobot2 arobot;
     public ArrayList<AgentRobot2> logList;
@@ -21,7 +21,7 @@ class Agent {
     private ArrayList<Intelligence> ciProcess;
     private ArrayList<Point> agentProcess;
 
-    Agent(AgentRobot2 ag) {
+    public Agent(AgentRobot2 ag) {
         AI = new Intelligence(ag.PI); //TODO 糞
         arobot = ag;
         logList = new ArrayList<>();
@@ -34,7 +34,7 @@ class Agent {
     }
 
 
-    Agent(AgentRobot2 ag, Color col) {
+    public Agent(AgentRobot2 ag, Color col) {
         AI = new Intelligence(ag.PI); //TODO 糞
         arobot = ag;
         logList = new ArrayList<>();
@@ -52,7 +52,7 @@ class Agent {
      *
      * @param agentString 　エージェント情報文字列
      */
-    Agent(MultiAgentSimulation2 s, String agentString) {
+    public Agent(MultiAgentSimulation2 s, String agentString) {
         Matcher agentMatcher = Pattern.compile("^AR(\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+\\.\\d+,\\d+\\.\\d+/\\d+\\.\\d+,\\d+\\.\\d+/\\d+\\.\\d+)/(\\d+\\.\\d+),(\\d+\\.\\d+)$").matcher(agentString);
 
         if (agentMatcher.matches()) {

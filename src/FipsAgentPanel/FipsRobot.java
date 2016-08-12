@@ -1,0 +1,1 @@
+package FipsAgentPanel;import AgentPanel.AgentRobot2;import SuperPack.SimulationPanel;/** * Created by Ishiwatari on 2016/08/12. */public class FipsRobot extends AgentRobot2 {    FipsRobot(SimulationPanel as) {        super(as);    }    FipsRobot(SimulationPanel s, String robotString) {        super(s, robotString);    }}

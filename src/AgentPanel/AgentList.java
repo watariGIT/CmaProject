@@ -1,15 +1,15 @@
 package AgentPanel;
 
-import java.awt.*;
-
 import SuperPack.Robot;
 
+import java.awt.*;
 
-class AgentList {
+
+public class AgentList {
 	private Agent agent;
 	private AgentList next;
-	
-	AgentList(){
+
+	public AgentList() {
 		agent=null;
 		next=null;
 	}
@@ -23,7 +23,7 @@ class AgentList {
 	 * Agentのついか
 	 * @param agent 追加するAgent
      */
-	void addAgent(Agent agent){
+	public void addAgent(Agent agent) {
 		getLast().next=new AgentList(agent);
 	}
 

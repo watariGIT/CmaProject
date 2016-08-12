@@ -15,8 +15,13 @@ import java.util.regex.Pattern;
  * @author Watari
  */
 public class MultiAgentSimulation2 extends SimulationPanel {
-    AgentList multi; //エージェントのリスト
-    private int agentNum;            //エージェントのマック数
+    protected AgentList multi; //エージェントのリスト
+    protected int agentNum;            //エージェントのマック数
+
+
+    protected MultiAgentSimulation2() {
+        new MultiAgentSimulation2(100);
+    }
 
     /**
      * コンストラクタ
@@ -39,7 +44,6 @@ public class MultiAgentSimulation2 extends SimulationPanel {
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
         }
     }
-
     @Override
     public void step() {
         count++;

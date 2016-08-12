@@ -1,21 +1,21 @@
 package AgentPanel;
 
-import java.awt.*;
-
 import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
-import SuperPack.SimulationPanel;
 import SuperPack.Robot;
+import SuperPack.SimulationPanel;
 
-class AgentRobot2 extends Robot{
+import java.awt.*;
+
+public class AgentRobot2 extends Robot {
 	private Color col=new Color(55,55,155);
 
-	AgentRobot2(SimulationPanel as) {
+	public AgentRobot2(SimulationPanel as) {
 		super(as);
 		CI=new Intelligence(PI.x,PI.y,as.targetList);
 	}
 
-	AgentRobot2(SimulationPanel s, String robotString){
+	public AgentRobot2(SimulationPanel s, String robotString) {
 		super(s,robotString);
 	}
 

@@ -1,13 +1,11 @@
 package SuperPack;
 
+import PsoPanel.PsoSimulation;
+
 import java.awt.*;
-import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import PsoPanel.PsoSimulation;
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 
 
 public abstract class Robot {
@@ -128,7 +126,10 @@ public abstract class Robot {
 	}
 	
 	abstract protected Point getSwingPoint();
-	
+
+	/**
+	 * CIの設定
+	 */
 	abstract public void setCI();
 	
 	@Override
