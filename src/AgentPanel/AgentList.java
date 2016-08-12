@@ -13,8 +13,8 @@ public class AgentList {
 		agent=null;
 		next=null;
 	}
-	
-	private AgentList(Agent a){
+
+	protected AgentList(Agent a) {
 		agent=a;
 		next=null;
 	}
@@ -46,7 +46,7 @@ public class AgentList {
 	 * @param robot　エージェントの配下にあるロボット
 	 * @return 削除後のエージェントのリスト
      */
-	AgentList deleteOverlapAgent(AgentRobot2 robot) {
+	protected AgentList deleteOverlapAgent(AgentRobot2 robot) {
 		if (agent != null && next != null && agent.arobot == robot) {
 			Agent ag = next.getAgent(robot);
 			if (ag == null)

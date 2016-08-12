@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 
 public abstract class Robot {
+	static int idMax = 0;
+	public int id;
 	public final static int maxv=10;
 	public double omega=0.9;
 	private double c1=2.0;
@@ -31,6 +33,8 @@ public abstract class Robot {
 		field = s;
 		distance = 0;
 		angle = 0;
+		id = idMax;
+		idMax++;
 	}
 	
 	protected Robot(SimulationPanel s,String robotString){
@@ -49,6 +53,8 @@ public abstract class Robot {
 			field=s;
 			distance=0;
 			angle=0;
+			id = idMax;
+			idMax++;
 		}else{
 			//TODO 例外処理
 			System.out.println("Error robotString"+robotString);
