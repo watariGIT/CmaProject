@@ -2,6 +2,7 @@ package AgentPanel;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
+import SuperPack.Point2;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
@@ -19,7 +20,7 @@ public class Agent {
     private Color color;
 
     private ArrayList<Intelligence> ciProcess;
-    private ArrayList<Point> agentProcess;
+    private ArrayList<Point2> agentProcess;
 
     public Agent(AgentRobot2 ag) {
         AI = new Intelligence(ag.PI); //TODO 糞
@@ -111,7 +112,7 @@ public class Agent {
         logList.add(arobot);
         arobot.omega = 0.9;
 
-        if (arobot.v.distance(new Point(0, 0)) == 0) {
+        if (arobot.v.distance(new Point2(0, 0)) == 0) {
             arobot.v.setLocation((int) (Math.random() * Robot.maxv), (int) (Math.random() * Robot.maxv));
         }
 

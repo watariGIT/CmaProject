@@ -162,7 +162,7 @@ abstract public class SimulationPanel extends JPanel {
             for (Robot r : robot) {
                 while (itr.hasNext()) {
                     Enemy t = (Enemy) itr.next();
-                    if (r.p.distance(t.p) <= 0.0) {
+                    if (r.p.distance(t.p) <= 1.0) {
                         itr.remove();
                     }
                 }

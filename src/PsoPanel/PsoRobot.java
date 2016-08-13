@@ -36,8 +36,8 @@ class PsoRobot extends Robot{
 	}
 
 	protected Point getSwingPoint() {
-		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startX,
-				(PsoSimulation.size - p.y) * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startY));
+		return (new Point((int) (p.x * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startX),
+				(int) ((PsoSimulation.size - p.y) * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startY)));
 	}
 
 }

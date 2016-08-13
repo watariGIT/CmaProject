@@ -63,10 +63,10 @@ public class AgentRobot2 extends Robot {
      * @return GUI上でのロボットの座標
      */
 	protected Point getSwingPoint() {
-		return (new Point(p.x * PsoSimulation.length / PsoSimulation.size
-				+ SimulationPanel.startX, (PsoSimulation.size - p.y)
+		return (new Point((int) (p.x * PsoSimulation.length / PsoSimulation.size
+				+ SimulationPanel.startX), (int) ((PsoSimulation.size - p.y)
 				* PsoSimulation.length / PsoSimulation.size
-				+ SimulationPanel.startY));
+				+ SimulationPanel.startY)));
 	}
 
 	/**

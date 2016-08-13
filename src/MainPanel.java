@@ -1,4 +1,4 @@
-import AgentPanel.MultiAgentSimulation2;
+import FipsAgentPanel.FipsAgentSimulation;
 import PsoPanel.PsoSimulation;
 import SuperPack.Result;
 import SuperPack.SimulationPanel;
@@ -56,7 +56,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         // シミュレータの初期化
         canvas = new PsoSimulation();
-        canvas4 = new MultiAgentSimulation2(20);
+        canvas4 = new FipsAgentSimulation(20);
         canvas4.copy(canvas);
 
         GridLayout gl = new GridLayout(1, 2);
