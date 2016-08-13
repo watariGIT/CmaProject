@@ -6,8 +6,8 @@ import java.awt.*;
 
 
 public class AgentList {
-	private Agent agent;
-	private AgentList next;
+	protected Agent agent;
+	protected AgentList next;
 
 	public AgentList() {
 		agent=null;
@@ -46,7 +46,7 @@ public class AgentList {
 	 * @param robot　エージェントの配下にあるロボット
 	 * @return 削除後のエージェントのリスト
      */
-	protected AgentList deleteOverlapAgent(AgentRobot2 robot) {
+	public AgentList deleteOverlapAgent(AgentRobot2 robot) {
 		if (agent != null && next != null && agent.arobot == robot) {
 			Agent ag = next.getAgent(robot);
 			if (ag == null)
@@ -67,7 +67,7 @@ public class AgentList {
 	}
 
 
-	private AgentList delAgent(Agent a){
+	public AgentList delAgent(Agent a) {
 		if(a==agent)
 			return next;
 		if(next==null)
@@ -107,7 +107,7 @@ public class AgentList {
 	 * @param robot 検索するrobot
 	 * @return robot上にあるagent
      */
-	Agent getAgent(AgentRobot2 robot){
+	public Agent getAgent(AgentRobot2 robot) {
 		if(agent!=null&&agent.arobot.equals(robot))
 			return agent;
 		if(next==null)

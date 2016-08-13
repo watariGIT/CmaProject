@@ -152,7 +152,7 @@ public class Agent {
      * @return fitness function
      */
     //TODO メソッド名が糞
-    double getAiFitnessValue() {
+    public double getAiFitnessValue() {
         return AI.getFitnessValue();
     }
 

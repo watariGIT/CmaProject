@@ -69,7 +69,10 @@ public class AgentRobot2 extends Robot {
 				+ SimulationPanel.startY));
 	}
 
-    public void setCI() {
+	/**
+	 * CIの更新
+	 */
+	public void setCI() {
         if (PI.getFitnessValue() < CI.getFitnessValue()) {
             CI.copy(PI);
         }

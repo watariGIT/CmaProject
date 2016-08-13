@@ -4,31 +4,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Enemy {
-	public Point p;
+	public Point2 p;
 
 	public Enemy(){
-		p=new Point();
-		p.setLocation((int)(Math.random()*SimulationPanel.size),
-				(int)(Math.random()*SimulationPanel.size));
+		p = new Point2((Math.random() * SimulationPanel.size),
+				(Math.random() * SimulationPanel.size));
 	}
 
-	public Enemy(Point point){
+	public Enemy(Point2 point) {
 		p=point;
 	}
 
 	public Enemy(Enemy e){
-		p=new Point();
-		p.setLocation(e.p);
+		p = new Point2(e.p);
 	}
 
 	public Enemy(String targetString){
-		p=new Point();
+		p = new Point2(0, 0);
 		Matcher targetMatcher=Pattern.compile("^(\\d+),(\\d+)$").matcher(targetString);
 		if(targetMatcher.matches()){
 			p.setLocation(Integer.parseInt(targetMatcher.group(1)),Integer.parseInt(targetMatcher.group(2)));
 		}else{
-			p.setLocation((int)(Math.random()*SimulationPanel.size),
-					(int)(Math.random()*SimulationPanel.size));
+			p.setLocation((Math.random() * SimulationPanel.size),
+					(Math.random() * SimulationPanel.size));
 			System.out.println("ターゲット情報が正しくありません"+targetString);
 		}
 	}
@@ -50,9 +48,9 @@ public class Enemy {
 		if(y > grainSize)
 			y=grainSize;
 
-		p=new Point();
-		p.setLocation((int)(SimulationPanel.size/grainSize*x+Math.random()*SimulationPanel.size/grainSize),
-				(int)(SimulationPanel.size/grainSize*(grainSize-y)-Math.random()*SimulationPanel.size/grainSize));
+		p = new Point2(0, 0);
+		p.setLocation((SimulationPanel.size / grainSize * x + Math.random() * SimulationPanel.size / grainSize),
+				(SimulationPanel.size / grainSize * (grainSize - y) - Math.random() * SimulationPanel.size / grainSize));
 	}
 
 	public void reset(){
@@ -73,8 +71,8 @@ public class Enemy {
 	}
 
 	private Point getPoint(){
-		return (new Point(p.x*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startX,
-				(SimulationPanel.size-p.y)*SimulationPanel.length/SimulationPanel.size+SimulationPanel.startY));
+		return (new Point((int) (p.x * SimulationPanel.length / SimulationPanel.size + SimulationPanel.startX),
+				(int) (SimulationPanel.size - p.y) * SimulationPanel.length / SimulationPanel.size + SimulationPanel.startY));
 	}
 
 	@Override

@@ -15,8 +15,8 @@ public abstract class Robot {
 	public double omega=0.9;
 	private double c1=2.0;
 	private double c2=2.0;
-	public Point p;
-	public Point v;
+	public Point2 p;
+	public Point2 v;
 	public Intelligence PI;
 	public Intelligence CI;
 	public double angle;
@@ -26,10 +26,10 @@ public abstract class Robot {
 	public boolean isCaptured=false;
 
 	protected Robot(SimulationPanel s) {
-		p = new Point((int) (Math.random() * PsoSimulation.size), (int) (Math.random() * PsoSimulation.size));
+		p = new Point2(Math.random() * PsoSimulation.size, Math.random() * PsoSimulation.size);
 		PI = new Intelligence(p.x,p.y,s.targetList);
 		oldFitness = fitnessFunction(s.targetList);
-		v = new Point((int) (Math.random() * maxv), (int) (Math.random() * maxv));
+		v = new Point2(Math.random() * maxv, Math.random() * maxv);
 		field = s;
 		distance = 0;
 		angle = 0;
@@ -41,9 +41,9 @@ public abstract class Robot {
 		Matcher robotMatcher=Pattern.compile("^(\\d+),(\\d+)/([-]?\\d+),([-]?\\d+)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+\\.\\d+)$").matcher(robotString);
 		
 		if(robotMatcher.matches()){
-			p=new Point(Integer.parseInt(robotMatcher.group(1)),Integer.parseInt(robotMatcher.group(2)));
-			
-			v=new Point(Integer.parseInt(robotMatcher.group(3)),Integer.parseInt(robotMatcher.group(4)));
+			p = new Point2(Double.parseDouble(robotMatcher.group(1)), Double.parseDouble(robotMatcher.group(2)));
+
+			v = new Point2(Double.parseDouble(robotMatcher.group(3)), Double.parseDouble(robotMatcher.group(4)));
 			
 			PI=new Intelligence(Double.parseDouble(robotMatcher.group(5)),Double.parseDouble(robotMatcher.group(6)),s.targetList);
 			CI=new Intelligence(Double.parseDouble(robotMatcher.group(7)),Double.parseDouble(robotMatcher.group(8)),s.targetList);
@@ -64,10 +64,13 @@ public abstract class Robot {
 	
 	public void move(){
 		double dx,dy;
-		Point oldP = new Point(p);
+		Point2 oldP = new Point2(p);
 		isCaptured = false;
-		dx=v.x*omega+c1*Math.random()*(PI.x-p.x)+c2*Math.random()*(CI.x-p.x);
-		dy=v.y*omega+c1*Math.random()*(PI.y-p.y)+c2*Math.random()*(CI.y-p.y);
+
+		Point2 dv = calVelocity();
+		dx = dv.x;
+		dy = dv.y;
+
 		if(dx>maxv)dx=maxv;
 		if(dx<-1*maxv)dx=-1*maxv;
 		if(dy>maxv)dy=maxv;
@@ -87,8 +90,7 @@ public abstract class Robot {
 		double f=fitnessFunction(field.targetList);
 		if(f - oldFitness > 10.0){
 			isCaptured = true;
-			PI = new Intelligence(p.x,p.y,field.targetList);
-			CI = new Intelligence(p.x,p.y,field.targetList);
+			captured();
 		}
 		oldFitness = f;
 
@@ -96,6 +98,19 @@ public abstract class Robot {
 			PI = new Intelligence(p.x, p.y, field.targetList);
 		setCI();
 		angle = Math.atan2(dy, dx);
+	}
+
+
+	protected Point2 calVelocity() {
+		return new Point2(v.x * omega + c1 * Math.random() * (PI.x - p.x) + c2 * Math.random() * (CI.x - p.x), v.y * omega + c1 * Math.random() * (PI.y - p.y) + c2 * Math.random() * (CI.y - p.y));
+	}
+
+	/**
+	 * ターゲットを捕獲した時の処理
+	 */
+	protected void captured() {
+		PI = new Intelligence(p.x, p.y, field.targetList);
+		CI = new Intelligence(p.x, p.y, field.targetList);
 	}
 	
 	public void copy(Robot robot){
