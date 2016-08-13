@@ -20,7 +20,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
 
 
     protected MultiAgentSimulation2() {
-        new MultiAgentSimulation2(100);
+        //w MultiAgentSimulation2(100);
     }
 
     /**
