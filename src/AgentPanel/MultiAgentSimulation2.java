@@ -16,11 +16,10 @@ import java.util.regex.Pattern;
  */
 public class MultiAgentSimulation2 extends SimulationPanel {
     protected AgentList multi; //エージェントのリスト
-    protected int agentNum;            //エージェントのマック数
+    protected int agentNum;            //エージェントの最大数
 
 
     protected MultiAgentSimulation2() {
-        //w MultiAgentSimulation2(100);
     }
 
     /**

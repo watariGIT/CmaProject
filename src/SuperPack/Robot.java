@@ -116,7 +116,7 @@ public abstract class Robot {
 	public void copy(Robot robot){
 		p.setLocation(robot.p);
 		PI.copy(robot.PI);
-		CI.copy(PI);
+		CI = new Intelligence(PI);
 		v.setLocation(robot.v);
 	}
 	

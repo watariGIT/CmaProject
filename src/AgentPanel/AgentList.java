@@ -6,8 +6,8 @@ import java.awt.*;
 
 
 public class AgentList {
-	protected Agent agent;
-	protected AgentList next;
+	public Agent agent;
+	public AgentList next;
 
 	public AgentList() {
 		agent=null;
@@ -28,12 +28,16 @@ public class AgentList {
 	}
 
 	/**
-	 * AgentListのすべてのAgentを移動
+	 * AgentListのすべてのAgentを移動&更新
 	 * @param robots ロボットの群れ
      */
 	void agentsMove(Robot[] robots){
 		if(agent!=null){
-			agent.agentMoveUpdate((AgentRobot2[]) robots);
+			//捕獲していたら
+			if (agent.arobot.isCaptured)
+				agent.captured();
+			agent.agentMove((AgentRobot2[]) robots);
+			agent.updateAI();
 		}
 
 		if(next!=null)
@@ -75,7 +79,8 @@ public class AgentList {
 		next=next.delAgent(a);
 		return (this);
 	}
-	void clear(){
+
+	public void clear() {
 		if(next!=null)
 			next.clear();
 		agent=null;
@@ -87,7 +92,8 @@ public class AgentList {
 		if(next!=null)
 			next.paint(g2);
 		}
-	private AgentList getLast(){
+
+	protected AgentList getLast() {
 		if(next==null)
 			return this;
 		return next.getLast();

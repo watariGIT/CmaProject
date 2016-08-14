@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 //FIXME distance -> fitness function
 public class Agent {
-    private Intelligence AI;
+    protected Intelligence AI;
     public AgentRobot2 arobot;
     public ArrayList<AgentRobot2> logList;
     private final static int range = 200;
@@ -83,12 +83,8 @@ public class Agent {
     }
 
 
-    void agentMoveUpdate(AgentRobot2 robots[]) {
+    void agentMove(AgentRobot2 robots[]) {
         AgentRobot2 next = null;
-
-        //捕獲していたら
-        if (arobot.isCaptured)
-            captured();
 
         //次の行き先の決定
         // 前方優先
@@ -118,7 +114,6 @@ public class Agent {
 
         ciProcess.add(new Intelligence(AI));
         agentProcess.add(arobot.p);
-        updateAI();
     }
 
     /**
@@ -132,6 +127,7 @@ public class Agent {
      * AgentのAI：ROBOTのCIを更新するメソッド
      */
     protected void updateAI() {
+
         //CIの更新
         //TODO fitnessFunctionの修正
         if (arobot.CI.getFitnessValue()
