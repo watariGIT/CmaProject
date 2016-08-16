@@ -70,6 +70,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         stepb.addActionListener(this);
         stepb.setActionCommand("STEP");
 
+        JButton stopb = new JButton("STOP");
+        stopb.addActionListener(this);
+        stopb.setActionCommand("STOP");
+
         JButton resetb = new JButton("RESET");
         resetb.addActionListener(this);
         resetb.setActionCommand("RESET");
@@ -106,10 +110,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         gl.setHgap(5);
         mainp.setLayout(gl);
 
-
         sp.setLayout(new FlowLayout((FlowLayout.LEFT)));
 
         sp.add(logb);
+        sp.add(stopb);
         sp.add(stepb);
         sp.add(resetb);
         sp.add(evaluation);
@@ -198,6 +202,12 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         if (command.equals("START")) {
             if (!runFlag) {
                 runFlag = true;
+            }
+        }
+
+        if (command.equals("STOP")) {
+            if (runFlag) {
+                runFlag = false;
             }
         }
 

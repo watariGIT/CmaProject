@@ -94,8 +94,9 @@ public abstract class Robot {
 		}
 		oldFitness = f;
 
-		if (fitnessFunction(field.targetList) < PI.getFitnessValue())
+		if (fitnessFunction(field.targetList) < PI.getFitnessValue()) {
 			PI = new Intelligence(p.x, p.y, field.targetList);
+		}
 		setCI();
 		angle = Math.atan2(dy, dx);
 	}
