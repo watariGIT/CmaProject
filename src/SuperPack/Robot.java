@@ -75,10 +75,10 @@ public abstract class Robot {
 		if(dx<-1*maxv)dx=-1*maxv;
 		if(dy>maxv)dy=maxv;
 		if(dy<-1*maxv)dy=-1*maxv;
-		v.setLocation(Math.round(dx), Math.round(dy));
-		
-		p.x=(int) Math.round(p.x+dx);
-		p.y=(int) Math.round(p.y+dy);
+		v.setLocation(dx, dy);
+
+		p.x = (p.x + dx);
+		p.y = (p.y + dy);
 		
 		if(p.x<0)p.x=0;
 		if(p.x>SimulationPanel.size)p.x=SimulationPanel.size;
