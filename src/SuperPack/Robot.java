@@ -90,7 +90,6 @@ public abstract class Robot {
 		double f=fitnessFunction(field.targetList);
 		if(f - oldFitness > 15.0){
 			System.out.println(this.getClass().getCanonicalName());
-			System.out.println("oldf="+oldFitness+" f="+f);
 			isCaptured = true;
 			captured();
 		}
