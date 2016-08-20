@@ -74,7 +74,7 @@ public class AgentRobot2 extends Robot {
 	 */
 	public void setCI() {
         if (PI.getFitnessValue() < CI.getFitnessValue()) {
-            CI.copy(PI);
+            CI = new Intelligence(PI);
         }
     }
 

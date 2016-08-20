@@ -120,7 +120,7 @@ public class Agent {
      * ターゲットを捕獲した際に行う処理
      */
     protected void captured() {
-        AI.copy(arobot.CI);
+        AI = new Intelligence(arobot.CI);
     }
 
     /**
@@ -132,13 +132,13 @@ public class Agent {
         //TODO fitnessFunctionの修正
         if (arobot.CI.getFitnessValue()
                 < AI.getFitnessValue()) {
-            AI.copy(arobot.CI);
+            AI= new Intelligence(arobot.CI);
 
             //ログをリセット
             logList.clear();
             logList.add(arobot);
         } else {
-            arobot.CI.copy(AI);
+            arobot.CI = new Intelligence(AI);
         }
     }
 
