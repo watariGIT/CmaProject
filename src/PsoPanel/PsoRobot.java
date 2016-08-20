@@ -31,7 +31,7 @@ class PsoRobot extends Robot{
 	}
 
 	private void communication(Robot r) {
-		r.CI = CI; //TODO くさそう
+		r.CI = new Intelligence(CI);
 		field.communication_num++;
 	}
 

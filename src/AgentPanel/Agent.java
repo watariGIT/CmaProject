@@ -23,7 +23,7 @@ public class Agent {
     private ArrayList<Point2> agentProcess;
 
     public Agent(AgentRobot2 ag) {
-        AI = new Intelligence(ag.PI); //TODO 糞
+        AI = new Intelligence(ag.PI);
         arobot = ag;
         logList = new ArrayList<>();
         logList.add(ag);
@@ -129,7 +129,6 @@ public class Agent {
     protected void updateAI() {
 
         //CIの更新
-        //TODO fitnessFunctionの修正
         if (arobot.CI.getFitnessValue()
                 < AI.getFitnessValue()) {
             AI= new Intelligence(arobot.CI);
