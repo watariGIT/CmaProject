@@ -88,7 +88,7 @@ public abstract class Robot {
 		distance+=oldP.distance(p); //TODO 	謎の変数
 
 		double f=fitnessFunction(field.targetList);
-		if(f - oldFitness > 15.0){
+		if (f - oldFitness > 13.0) {
 			System.out.println(this.getClass().getCanonicalName());
 			isCaptured = true;
 			captured();
