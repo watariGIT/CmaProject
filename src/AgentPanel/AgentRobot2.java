@@ -54,10 +54,6 @@ public class AgentRobot2 extends Robot {
         else
             col = new Color(155, 155, 155);
 
-        //FIXME デバック用
-        if (id == 30)
-            col = new Color(55, 155, 155);
-
         g2.setColor(col);
         g2.fillOval(getSwingPoint().x - 5, getSwingPoint().y - 5, 10, 10);
         g2.setColor(new Color(255, 255, 255));

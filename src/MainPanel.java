@@ -31,6 +31,9 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
     private final static String FAIL_DIR = DIR + "\\fails\\";
     private final static String OUTPUT_DIR = DIR + "\\outputs\\";
 
+    JComboBox debugCombo1;
+    JComboBox debugCombo2;
+
 
     public static void main(String args[]) {
         MainPanel game = new MainPanel();
@@ -110,6 +113,24 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         readEnemyB.addActionListener(this);
         readEnemyB.setActionCommand("inputEnemy");
 
+        String[] canvasRobotIds = new String[canvas.robot.length + 1];
+        canvasRobotIds[0] = "NONE";
+        for (int i = 0; i < canvasRobotIds.length - 1; i++) {
+            canvasRobotIds[i + 1] = canvas.robot[i].id + "";
+        }
+
+        debugCombo1 = new JComboBox(canvasRobotIds);
+        debugCombo1.addActionListener(this);
+        debugCombo1.setActionCommand("debugCanvas");
+
+        String[] canvas2RobotIds = new String[canvas4.robot.length + 1];
+        canvas2RobotIds[0] = "NONE";
+        for (int i = 0; i < canvas2RobotIds.length - 1; i++) {
+            canvas2RobotIds[i + 1] = canvas4.robot[i].id + "";
+        }
+        debugCombo2 = new JComboBox(canvas2RobotIds);
+        debugCombo2.addActionListener(this);
+        debugCombo2.setActionCommand("debugCanvas2");
 
         // パネル
         gl.setHgap(5);
@@ -129,6 +150,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         sp.add(psoFileInPutB);
         sp.add(cmaFileInPutB);
         sp.add(readEnemyB);
+        sp.add(debugCombo1);
+        sp.add(debugCombo2);
 
         enp.setLayout(new BorderLayout());
         enp.add(canvas, BorderLayout.CENTER);
@@ -367,6 +390,22 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             System.out.println(str);
             canvas.readEnemyFile(str);
             canvas4.copy(canvas);
+        }
+
+        if (command.equals("debugCanvas")) {
+            if (debugCombo1.getSelectedIndex() == -1 || ((String) debugCombo1.getSelectedItem()).equals("NONE")) {
+                canvas.setDebugMode("-1");
+            } else {
+                canvas.setDebugMode((String) debugCombo1.getSelectedItem());
+            }
+        }
+
+        if (command.equals("debugCanvas2")) {
+            if (debugCombo2.getSelectedIndex() == -1 || ((String) debugCombo2.getSelectedItem()).equals("NONE")) {
+                canvas4.setDebugMode("-1");
+            } else {
+                canvas4.setDebugMode((String) debugCombo2.getSelectedItem());
+            }
         }
     }
 }

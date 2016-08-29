@@ -1,5 +1,6 @@
 package AgentPanel;
 
+import PsoPanel.PsoSimulation;
 import SuperPack.Enemy;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
@@ -43,6 +44,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
         }
     }
+
     @Override
     public void step() {
         count++;
@@ -101,9 +103,37 @@ public class MultiAgentSimulation2 extends SimulationPanel {
             }
         }
 
-        for (int i = 0; i < robotsNum; i++)
-            robot[i].paint(g2);
-        multi.paint(g2);
+        if (debugMode == -1) {
+            for (int i = 0; i < robotsNum; i++)
+                robot[i].paint(g2);
+            multi.paint(g2);
+        } else {
+            //デバック用の描写
+            debugPaint(g2);
+        }
+    }
+
+    /**
+     * デバック用の描写
+     *
+     * @param g2
+     */
+    protected void debugPaint(Graphics2D g2) {
+        for (int i = 0; i < robotsNum; i++) {
+            if (robot[i].id == debugMode) {
+                robot[i].paint(g2);
+                int ciSwingX = (int) (robot[i].CI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+                int ciSwingY = (int) ((PsoSimulation.size - robot[i].CI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+                g2.setColor(Color.GREEN);
+                g2.fillOval(ciSwingX - 3, ciSwingY - 3, 6, 6);
+
+                int piSwingX = (int) (robot[i].PI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+                int piSwingY = (int) ((PsoSimulation.size - robot[i].PI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+                g2.setColor(Color.YELLOW);
+                g2.fillOval(piSwingX - 3, piSwingY - 3, 6, 6);
+                break;
+            }
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ abstract public class SimulationPanel extends JPanel {
     private final static int maxCount = 10000;//最大の捕獲時間
     public Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
+    protected int debugMode = -1;//デバックするロボットのID -1ならデバックしない
     private final String crlf = System.getProperty("line.separator"); //改行コード
 
     public int communication_num = 0;            //通信回数
@@ -211,6 +212,15 @@ abstract public class SimulationPanel extends JPanel {
      * @param fileString 読み込むファイル名
      */
     public abstract void readFile(String fileString);
+
+    /**
+     * デバックするロボットの指定。-1ならデバックしない
+     *
+     * @param id
+     */
+    public void setDebugMode(String id) {
+        debugMode = Integer.parseInt(id);
+    }
 
     /**
      * フィールドの情報を文字列で返すメソッド
