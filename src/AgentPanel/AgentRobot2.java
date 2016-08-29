@@ -49,7 +49,8 @@ public class AgentRobot2 extends Robot {
         double scale;
         scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
 
-        if (omega == 0.9)
+        //FIXME デバック用
+        if (!isCaptured)
             col = new Color(55, 55, 155);
         else
             col = new Color(155, 155, 155);
