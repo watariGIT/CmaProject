@@ -107,6 +107,16 @@ public class MultiAgentSimulation2 extends SimulationPanel {
     }
 
     @Override
+    public void readEnemyFile(String str) {
+        super.readEnemyFile(str);
+        multi.clear();
+        //エージェントの生成
+        for (int i = 0; i < agentNum; i++) {
+            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
+        }
+    }
+
+    @Override
     public void readFile(String fileString) {
         Pattern allPattern = Pattern
                 .compile("^\\d+\\|\\d+\\|\\d+\\|"

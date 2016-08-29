@@ -25,7 +25,7 @@ public class AgentRobot2 extends Robot {
         double Pi = PI.getFitnessValue();
 
         //速度0の時にランダムな速度を与える
-        if((int)v.x==0 && (int)v.y==0){
+        if ((int) v.x == 0 && (int) v.y == 0) {
             v.setLocation(Math.random() * maxv, Math.random() * maxv);
         }
 
@@ -53,6 +53,10 @@ public class AgentRobot2 extends Robot {
             col = new Color(55, 55, 155);
         else
             col = new Color(155, 155, 155);
+
+        //FIXME デバック用
+        if (id == 30)
+            col = new Color(55, 155, 155);
 
         g2.setColor(col);
         g2.fillOval(getSwingPoint().x - 5, getSwingPoint().y - 5, 10, 10);

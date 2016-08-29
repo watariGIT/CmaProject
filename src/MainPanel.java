@@ -106,6 +106,11 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         cmaFailOutPutB.addActionListener(this);
         cmaFailOutPutB.setActionCommand("cmaFailOutPut");
 
+        JButton readEnemyB = new JButton("inputEnemy");
+        readEnemyB.addActionListener(this);
+        readEnemyB.setActionCommand("inputEnemy");
+
+
         // パネル
         gl.setHgap(5);
         mainp.setLayout(gl);
@@ -123,6 +128,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         sp.add(cmaFailOutPutB);
         sp.add(psoFileInPutB);
         sp.add(cmaFileInPutB);
+        sp.add(readEnemyB);
 
         enp.setLayout(new BorderLayout());
         enp.add(canvas, BorderLayout.CENTER);
@@ -163,7 +169,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
     /**
      * 詳細な結果を外部に出力する
      *
-     * @param fw      ファイルライタ
+     * @param fw         ファイルライタ
      * @param resultList 結果の配列
      */
     private void outputCsv(FileWriter fw, ArrayList<Result> resultList) {
@@ -194,6 +200,33 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         canvas4.copy(canvas);
     }
+
+    private String inputFile() {
+        JFileChooser filechooser = new JFileChooser(new File("./"));
+
+        String str = "";
+
+        int selected = filechooser.showOpenDialog(this);
+        StringBuilder builder = new StringBuilder();
+
+        if (selected == JFileChooser.APPROVE_OPTION) {
+            File file = filechooser.getSelectedFile();
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                str = br.readLine();
+                while (str != null) {
+                    builder.append(str + System.getProperty("line.separator"));
+                    str = br.readLine();
+                }
+                br.close();
+            } catch (IOException e1) {
+                System.out.println("ファイルが読み込めません。" + e1.getMessage());
+            }
+        }
+        return builder.toString();
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -318,46 +351,22 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         }
 
         if (command.equals("psoFileInPut")) {
-            JFileChooser filechooser = new JFileChooser(new File("./"));
-
-            int selected = filechooser.showOpenDialog(this);
-            String str = "";
-
-            if (selected == JFileChooser.APPROVE_OPTION) {
-                File file = filechooser.getSelectedFile();
-                BufferedReader br;
-                try {
-                    br = new BufferedReader(new FileReader(file));
-                    str = br.readLine();
-                    br.close();
-                } catch (IOException e1) {
-                    System.out.println("ファイルが読み込めません" + e1.getMessage());
-                }
-            }
-
+            String str = inputFile();
             System.out.println(str);
             canvas.readFile(str);
         }
 
         if (command.equals("cmaFileInPut")) {
-            JFileChooser filechooser = new JFileChooser(new File("./"));
-
-            String str = "";
-
-            int selected = filechooser.showOpenDialog(this);
-            if (selected == JFileChooser.APPROVE_OPTION) {
-                File file = filechooser.getSelectedFile();
-                BufferedReader br;
-                try {
-                    br = new BufferedReader(new FileReader(file));
-                    str = br.readLine();
-                    br.close();
-                } catch (IOException e1) {
-                    System.out.println("ファイルが読み込めません。" + e1.getMessage());
-                }
-            }
+            String str = inputFile();
             System.out.println(str);
             canvas4.readFile(str);
+        }
+
+        if (command.equals("inputEnemy")) {
+            String str = inputFile();
+            System.out.println(str);
+            canvas.readEnemyFile(str);
+            canvas4.copy(canvas);
         }
     }
 }

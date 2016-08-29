@@ -12,10 +12,11 @@ abstract public class SimulationPanel extends JPanel {
     public final static int length = 250;
     public final static int size = 1000;
     public static int robotsNum = 20;            //ロボットの初期台数
-    public static int targetNum = 20;            //ターゲットの初期台数
+    public static int targetNum = 10;            //ターゲットの初期台数
     private final static int maxCount = 10000;//最大の捕獲時間
     public Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
+    private final String crlf = System.getProperty("line.separator"); //改行コード
 
     public int communication_num = 0;            //通信回数
     protected int count = 0;                    //ステップ数
@@ -116,6 +117,23 @@ abstract public class SimulationPanel extends JPanel {
         return failData;
     }
 
+    //ターゲットをファイルから読み込み配置する
+    public void readEnemyFile(String str) {
+        String[] line = str.split(crlf);
+
+        targetNum = line.length;
+        targetList = new ArrayList<>();
+        for (String l : line) {
+            String[] loc = l.split(",");
+            double x = Double.parseDouble(loc[0]);
+            double y = Double.parseDouble(loc[1]);
+            targetList.add(new Enemy(new Point2(x, y)));
+        }
+
+        for (Robot r : robot) {
+            r.reset();
+        }
+    }
 
     private double distance() {
         double d = 0;
