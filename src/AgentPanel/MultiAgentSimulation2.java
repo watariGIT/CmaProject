@@ -96,6 +96,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
 
         g2.setColor(Color.BLACK);
         g2.drawRect(startX, startY, length, length);
+        g2.drawString("STEP:"+this.count,startX+5,startY+length+20);
 
         //ターゲットの描写
         synchronized (targetList) {

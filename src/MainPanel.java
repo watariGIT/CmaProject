@@ -60,8 +60,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new MultiAgentSimulation2(10);
-        canvas4 = new FipsAgentSimulation(10);
+        canvas = new MultiAgentSimulation2(20);
+        canvas4 = new FipsAgentSimulation(20);
         canvas4.copy(canvas);
 
         GridLayout gl = new GridLayout(1, 2);
