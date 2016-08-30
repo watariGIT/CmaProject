@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -58,8 +60,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new MultiAgentSimulation2(20);
-        canvas4 = new FipsAgentSimulation(20);
+        canvas = new MultiAgentSimulation2(10);
+        canvas4 = new FipsAgentSimulation(10);
         canvas4.copy(canvas);
 
         GridLayout gl = new GridLayout(1, 2);
