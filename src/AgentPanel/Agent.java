@@ -8,12 +8,14 @@ import SuperPack.SimulationPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //FIXME distance -> fitness function
 public class Agent {
     protected Intelligence AI;
+    public HashMap<Integer, Intelligence> removeHashMap; //削除する情報
     public AgentRobot2 arobot;
     public ArrayList<AgentRobot2> logList;
     private final static int range = 200;
@@ -24,6 +26,7 @@ public class Agent {
 
     public Agent(AgentRobot2 ag) {
         AI = new Intelligence(ag.PI);
+        removeHashMap = new HashMap<>();
         arobot = ag;
         logList = new ArrayList<>();
         logList.add(ag);
@@ -37,6 +40,7 @@ public class Agent {
 
     public Agent(AgentRobot2 ag, Color col) {
         AI = new Intelligence(ag.PI); //TODO 糞
+        removeHashMap = new HashMap<>();
         arobot = ag;
         logList = new ArrayList<>();
         logList.add(ag);
@@ -120,6 +124,7 @@ public class Agent {
      * ターゲットを捕獲した際に行う処理
      */
     protected void captured() {
+        removeHashMap.put(AI.hashCode(), AI);
         AI = new Intelligence(arobot.CI);
     }
 
@@ -127,11 +132,22 @@ public class Agent {
      * AgentのAI：ROBOTのCIを更新するメソッド
      */
     protected void updateAI() {
+        //削除データのマージ
+        removeHashMap.putAll(arobot.removeHashMap);
+        arobot.removeHashMap = new HashMap<>(removeHashMap);
+
+        //古い情報の削除
+        if (arobot.removeHashMap.get(arobot.CI.hashCode()) != null) {
+            arobot.CI = new Intelligence(AI);
+        }
+        if (arobot.removeHashMap.get(arobot.PI.hashCode()) != null) {
+            arobot.PI = new Intelligence(arobot.p.x, arobot.p.y, arobot.field.targetList);
+        }
 
         //CIの更新
         if (arobot.CI.getFitnessValue()
                 < AI.getFitnessValue()) {
-            AI= new Intelligence(arobot.CI);
+            AI = new Intelligence(arobot.CI);
 
             //ログをリセット
             logList.clear();
@@ -181,7 +197,6 @@ public class Agent {
     }
 
     void paint(Graphics2D g2) {
-
         //エージェント表示
         double scale = (double) (PsoSimulation.length) / (PsoSimulation.size);
         g2.setColor(color);
@@ -190,12 +205,6 @@ public class Agent {
                 arobot.getSwingPoint().y - 8,
                 16, 16);
         g2.setStroke(new BasicStroke(1));
-
-        //エージェントの範囲表示
-        /*g2.drawOval((int) (arobot.getSwingPoint().x - range * scale),
-                (int) (arobot.getSwingPoint().y - range * scale),
-                (int) (range * scale * 2),
-                (int) (range * scale * 2));*/
 
         //AIの表示
         int aiSwingX = (int) (AI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
@@ -207,59 +216,5 @@ public class Agent {
     public String toString() {
         return "A" + arobot + "/" + AI.x + "," + AI.y;
     }
-
-
-
-    /* 未使用のメソッド
-    void agentMoveDelete(AgentRobot2 robots[]) {
-        AgentRobot2 next = null;
-
-        //次の行き先の決定
-        for (int i = 0; i < SimulationPanel.robotsNum; i++) {
-            if (arobot.p.distance(robots[i].p) < range && arobot != robots[i]) {
-                if (next == null
-                        || getAngle(robots[i], Math.toRadians(0)) < getAngle(
-                        next, Math.toRadians(0))
-                        && ContainNumInList(logList, arobot) < ContainNumInList(logList, robots[i]))
-                    next = robots[i];
-            }
-        }
-
-        //次のロボットが確定した場合
-        if (next != null) {
-            arobot = next;
-            arobot.field.communication_num++;
-        }
-
-        //ログに現在のロボットを追加
-        arobot.omega = 0.9;
-
-        if (arobot.v.distance(new Point(0, 0)) == 0) {
-            arobot.v.setLocation((int) (Math.random() * Robot.maxv), (int) (Math.random() * Robot.maxv));
-        }
-
-        ciProcess.add(new Intelligence(AI));
-        agentProcess.add(arobot.p);
-        deleteAI();
-
-        if (logList.isEmpty()) {
-            AI.copy(arobot.CI);
-        }
-        System.out.println("" + AI.getFitnessValue() + "," + logList.size());
-    }
-
-    /**
-     * ログにいるarobotのInteligenceを初期化し、ログからarobotを削除する
-     *
-     *
-     *
-    private void deleteAI() {
-        if (logList.indexOf(arobot) != -1) {
-            arobot.PI = new Intelligence(arobot.p.x, arobot.p.y);
-            arobot.CI = new Intelligence(arobot.p.x, arobot.p.y);
-        }
-        while (logList.remove((AgentRobot2) arobot)) {
-        }
-    }*/
 
 }

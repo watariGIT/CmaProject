@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.*;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -392,6 +390,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             System.out.println(str);
             canvas.readEnemyFile(str);
             canvas4.copy(canvas);
+            runFlag = false;
         }
 
         if (command.equals("debugCanvas")) {

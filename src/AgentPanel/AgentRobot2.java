@@ -6,17 +6,21 @@ import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class AgentRobot2 extends Robot {
     private Color col = new Color(55, 55, 155);
+    public HashMap<Integer, Intelligence> removeHashMap; //削除する情報
 
     public AgentRobot2(SimulationPanel as) {
         super(as);
+        removeHashMap = new HashMap<>();
         CI = new Intelligence(PI.x, PI.y, as.targetList);
     }
 
     public AgentRobot2(SimulationPanel s, String robotString) {
         super(s, robotString);
+        removeHashMap = new HashMap<>();
     }
 
     public void move() {
@@ -43,6 +47,7 @@ public class AgentRobot2 extends Robot {
         super.reset();
         CI = new Intelligence(PI);
         col = new Color(55, 55, 155);
+        removeHashMap.clear();
     }
 
     public void paint(Graphics2D g2) {
@@ -83,6 +88,14 @@ public class AgentRobot2 extends Robot {
         if (PI.getFitnessValue() < CI.getFitnessValue()) {
             CI = new Intelligence(PI);
         }
+    }
+
+    @Override
+    protected void captured() {
+        removeHashMap.put(CI.hashCode(), CI);
+        removeHashMap.put(PI.hashCode(), PI);
+        PI = new Intelligence(p.x, p.y, field.targetList);
+        CI = new Intelligence(p.x, p.y, field.targetList);
     }
 
     /**
