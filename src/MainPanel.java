@@ -58,8 +58,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new MultiAgentSimulation2(50);
-        canvas4 = new FipsAgentSimulation(50);
+        canvas = new MultiAgentSimulation2(20);
+        canvas4 = new FipsAgentSimulation(20);
         canvas4.copy(canvas);
 
         GridLayout gl = new GridLayout(1, 2);
@@ -113,6 +113,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         readEnemyB.addActionListener(this);
         readEnemyB.setActionCommand("inputEnemy");
 
+        JButton readRobotB = new JButton("inputRobot");
+        readRobotB.addActionListener(this);
+        readRobotB.setActionCommand("inputRobot");
+
         String[] canvasRobotIds = new String[canvas.robot.length + 1];
         canvasRobotIds[0] = "NONE";
         for (int i = 0; i < canvasRobotIds.length - 1; i++) {
@@ -150,6 +154,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         sp.add(psoFileInPutB);
         sp.add(cmaFileInPutB);
         sp.add(readEnemyB);
+        sp.add(readRobotB);
         sp.add(debugCombo1);
         sp.add(debugCombo2);
 
@@ -389,6 +394,14 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             String str = inputFile();
             System.out.println(str);
             canvas.readEnemyFile(str);
+            canvas4.copy(canvas);
+            runFlag = false;
+        }
+
+        if (command.equals("inputRobot")) {
+            String str = inputFile();
+            System.out.println(str);
+            canvas.readRobotFile(str);
             canvas4.copy(canvas);
             runFlag = false;
         }

@@ -11,13 +11,13 @@ abstract public class SimulationPanel extends JPanel {
     public static int startY = 10;
     public final static int length = 250;
     public final static int size = 1000;
-    public static int robotsNum = 50;            //ロボットの初期台数
+    public static int robotsNum = 20;            //ロボットの初期台数
     public static int targetNum = 6;            //ターゲットの初期台数
     private final static int maxCount = 10000;//最大の捕獲時間
     public Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
     protected int debugMode = -1;//デバックするロボットのID -1ならデバックしない
-    private final String crlf = System.getProperty("line.separator"); //改行コード
+    protected final String crlf = System.getProperty("line.separator"); //改行コード
 
     public int communication_num = 0;            //通信回数
     protected int count = 0;                    //ステップ数
@@ -31,7 +31,8 @@ abstract public class SimulationPanel extends JPanel {
      * @param s コピー元
      */
     public void copy(SimulationPanel s) {
-        for (int i = 0; i < robotsNum; i++) {
+
+        for (int i = 0; i < s.robot.length; i++) {
             robot[i].copy(s.robot[i]);
         }
 
@@ -119,7 +120,11 @@ abstract public class SimulationPanel extends JPanel {
         return failData;
     }
 
-    //ターゲットをファイルから読み込み配置する
+    /**
+     * ターゲットをファイルから読み込み配置する
+     *
+     * @param str
+     */
     public void readEnemyFile(String str) {
         String[] line = str.split(crlf);
 
@@ -136,6 +141,11 @@ abstract public class SimulationPanel extends JPanel {
             r.reset();
         }
     }
+
+    /**
+     * ロボットをファイルから読み込み配置する
+     */
+    abstract public void readRobotFile(String str) ;
 
     private double distance() {
         double d = 0;

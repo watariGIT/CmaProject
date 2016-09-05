@@ -36,6 +36,18 @@ public abstract class Robot {
 		id = idMax;
 		idMax++;
 	}
+
+	protected Robot(Point2 point, SimulationPanel s) {
+		p = point;
+		PI = new Intelligence(p.x, p.y, s.targetList);
+		oldFitness = fitnessFunction(s.targetList);
+		v = new Point2(Math.random() * maxv, Math.random() * maxv);
+		field = s;
+		distance = 0;
+		angle = 0;
+		id = idMax;
+		idMax++;
+	}
 	
 	protected Robot(SimulationPanel s,String robotString){
 		Matcher robotMatcher=Pattern.compile("^(\\d+),(\\d+)/([-]?\\d+),([-]?\\d+)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+(\\.\\d+)?),(\\d+(\\.\\d+)?)/(\\d+\\.\\d+)$").matcher(robotString);

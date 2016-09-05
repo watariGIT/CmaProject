@@ -1,13 +1,10 @@
 package PsoPanel;
 
 
-import SuperPack.Enemy;
-import SuperPack.Intelligence;
+import SuperPack.*;
 import SuperPack.Robot;
-import SuperPack.SimulationPanel;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,6 +72,21 @@ public class PsoSimulation extends SimulationPanel {
 
         } else {
             System.out.println("PsoSimulationファイルが正しくありません。");
+        }
+    }
+
+    @Override
+    public void readRobotFile(String str) {
+        String[] line = str.split(crlf);
+
+        robotsNum = line.length;
+        robot = new Robot[robotsNum];
+
+        for (int i = 0; i < line.length; i++) {
+            String[] loc = line[i].split(",");
+            double x = Double.parseDouble(loc[0]);
+            double y = Double.parseDouble(loc[1]);
+            robot[i] = new PsoRobot(new Point2(x, y), this);
         }
     }
 

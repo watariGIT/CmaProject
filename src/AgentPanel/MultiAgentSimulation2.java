@@ -2,11 +2,11 @@ package AgentPanel;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.Enemy;
+import SuperPack.Point2;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,7 +96,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
 
         g2.setColor(Color.BLACK);
         g2.drawRect(startX, startY, length, length);
-        g2.drawString("STEP:"+this.count,startX+5,startY+length+20);
+        g2.drawString("STEP:" + this.count, startX + 5, startY + length + 20);
 
         //ターゲットの描写
         synchronized (targetList) {
@@ -106,7 +106,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
         }
 
         if (debugMode == -1) {
-            for (int i = 0; i < robotsNum; i++)
+            for (int i = 0; i < robot.length; i++)
                 robot[i].paint(g2);
             multi.paint(g2);
         } else {
@@ -142,6 +142,33 @@ public class MultiAgentSimulation2 extends SimulationPanel {
     public void readEnemyFile(String str) {
         super.readEnemyFile(str);
         multi.clear();
+        //エージェントの生成
+        for (int i = 0; i < agentNum; i++) {
+            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
+        }
+    }
+
+    /**
+     * ロボットをファイルから読み込み配置する
+     *
+     * @param str
+     */
+    @Override
+    public void readRobotFile(String str) {
+        String[] line = str.split(crlf);
+        robotsNum = line.length;
+        robot = new AgentRobot2[robotsNum];
+
+        for (int i = 0; i < line.length; i++) {
+            String[] loc = line[i].split(",");
+            double x = Double.parseDouble(loc[0]);
+            double y = Double.parseDouble(loc[1]);
+            robot[i] = new AgentRobot2(new Point2(x, y), this);
+        }
+
+        multi.clear();
+        if (robotsNum < agentNum)
+            agentNum = robotsNum;
         //エージェントの生成
         for (int i = 0; i < agentNum; i++) {
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));

@@ -1,6 +1,7 @@
 package PsoPanel;
 
 import SuperPack.Intelligence;
+import SuperPack.Point2;
 import SuperPack.Robot;
 
 import java.awt.*;
@@ -16,6 +17,10 @@ class PsoRobot extends Robot{
 
 	public PsoRobot(PsoSimulation s, String robotString) {
 		super(s, robotString);
+	}
+
+	public PsoRobot(Point2 point, PsoSimulation s) {
+		super(point, s);
 	}
 
 	public void setCI() {

@@ -2,6 +2,7 @@ package AgentPanel;
 
 import PsoPanel.PsoSimulation;
 import SuperPack.Intelligence;
+import SuperPack.Point2;
 import SuperPack.Robot;
 import SuperPack.SimulationPanel;
 
@@ -20,6 +21,11 @@ public class AgentRobot2 extends Robot {
 
     public AgentRobot2(SimulationPanel s, String robotString) {
         super(s, robotString);
+        removeHashMap = new HashMap<>();
+    }
+
+    public AgentRobot2(Point2 point, SimulationPanel s) {
+        super(point, s);
         removeHashMap = new HashMap<>();
     }
 
