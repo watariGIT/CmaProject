@@ -27,6 +27,7 @@ public class AgentRobot2 extends Robot {
     public AgentRobot2(Point2 point, SimulationPanel s) {
         super(point, s);
         removeHashMap = new HashMap<>();
+        CI = new Intelligence(PI.x, PI.y, s.targetList);
     }
 
     public void move() {

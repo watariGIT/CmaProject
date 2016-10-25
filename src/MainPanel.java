@@ -284,13 +284,13 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         }
 
         if (command.equals("Evaluation")) {
-            FileWriter psoFW, cmaFW;
+            FileWriter canvasFW, canvas4FW;
             int num = SimulationPanel.robotsNum;
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 
-            File psoFile = new File(EVAL_DIR + "PSOresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
-            File cmaFile = new File(EVAL_DIR + "CMAresult" + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File canvasFile = new File(EVAL_DIR + canvas.getClass().getName() + sdf.format(Calendar.getInstance().getTime()) + ".csv");
+            File canvas4File = new File(EVAL_DIR + canvas4.getClass().getName() + sdf.format(Calendar.getInstance().getTime()) + ".csv");
 
             canvas.setRobotNum(num);
             canvas4.setRobotNum(num);
@@ -299,27 +299,27 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             for (int count = 0; count < 100; count++) {
                 try {
                     System.out.println(count + "/100");
-                    psoFW = new FileWriter(psoFile, true);
-                    cmaFW = new FileWriter(cmaFile, true);
-                    ArrayList<Result> psoResults = canvas.evaluation();
-                    ArrayList<Result> cmaResults = canvas4.evaluation();
+                    canvasFW = new FileWriter(canvasFile, true);
+                    canvas4FW = new FileWriter(canvas4File, true);
+                    ArrayList<Result> canvasResults = canvas.evaluation();
+                    ArrayList<Result> canvas4Results = canvas4.evaluation();
                     Reset();
 
-                    outputCsv(psoFW, psoResults);
-                    outputCsv(cmaFW, cmaResults);
+                    outputCsv(canvasFW, canvasResults);
+                    outputCsv(canvas4FW, canvas4Results);
 
                     SimulationPanel.robotsNum = num;
                     Reset();
 
-                    cmaFW.close();
-                    psoFW.close();
+                    canvas4FW.close();
+                    canvasFW.close();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
             System.out.println("EvalEnd");
-            System.out.println("PSO　出力:" + psoFile.getAbsolutePath());
-            System.out.println("CMA　出力" + cmaFile.getAbsolutePath());
+            System.out.println("PSO　出力:" + canvasFile.getAbsolutePath());
+            System.out.println("CMA　出力" + canvas4File.getAbsolutePath());
         }
 
         if (command.equals("psoFileOutPut")) {
@@ -402,7 +402,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             String str = inputFile();
             System.out.println(str);
             canvas.readRobotFile(str);
-            canvas4.copy(canvas);
+            canvas4.readRobotFile(str);
             runFlag = false;
         }
 
