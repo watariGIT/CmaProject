@@ -1,8 +1,8 @@
 package PsoPanel;
 
 
-import SuperPack.*;
-import SuperPack.Robot;
+import SuperPack.Panel.*;
+import SuperPack.Panel.Robot;
 
 import java.awt.*;
 import java.util.ArrayList;

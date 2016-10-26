@@ -1,14 +1,13 @@
 package AgentPanel;
 
-import PsoPanel.PsoSimulation;
-import SuperPack.Enemy;
-import SuperPack.Point2;
-import SuperPack.Robot;
-import SuperPack.SimulationPanel;
+import SuperPack.AbstractAgentPanel.Agent;
+import SuperPack.AbstractAgentPanel.AgentList;
+import SuperPack.AbstractAgentPanel.AgentSimulation;
+import SuperPack.Panel.Enemy;
+import SuperPack.Panel.Point2;
+import SuperPack.Panel.SimulationPanel;
 
 import java.awt.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -16,10 +15,7 @@ import java.util.regex.Pattern;
  *
  * @author Watari
  */
-public class MultiAgentSimulation2 extends SimulationPanel {
-    protected AgentList multi; //エージェントのリスト
-    protected int agentNum;            //エージェントの最大数
-
+public class MultiAgentSimulation2 extends AgentSimulation {
 
     protected MultiAgentSimulation2() {
     }
@@ -72,6 +68,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
     }
 
+    @Override
     public void reset() {
         count = 0;
         this.communication_num = 0;
@@ -115,29 +112,6 @@ public class MultiAgentSimulation2 extends SimulationPanel {
         }
     }
 
-    /**
-     * デバック用の描写
-     *
-     * @param g2
-     */
-    protected void debugPaint(Graphics2D g2) {
-        for (int i = 0; i < robotsNum; i++) {
-            if (robot[i].id == debugMode) {
-                robot[i].paint(g2);
-                int ciSwingX = (int) (robot[i].CI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
-                int ciSwingY = (int) ((PsoSimulation.size - robot[i].CI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
-                g2.setColor(Color.GREEN);
-                g2.fillOval(ciSwingX - 3, ciSwingY - 3, 6, 6);
-
-                int piSwingX = (int) (robot[i].PI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
-                int piSwingY = (int) ((PsoSimulation.size - robot[i].PI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
-                g2.setColor(Color.YELLOW);
-                g2.fillOval(piSwingX - 3, piSwingY - 3, 6, 6);
-                break;
-            }
-        }
-    }
-
     @Override
     public void readEnemyFile(String str) {
         super.readEnemyFile(str);
@@ -177,59 +151,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
 
     @Override
     public void readFile(String fileString) {
-        Pattern allPattern = Pattern
-                .compile("^\\d+\\|\\d+\\|\\d+\\|"
-                        + "(null:|A(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?)/\\d+(\\.\\d+),\\d+(\\.\\d+):)+\\|"
-                        + "(T\\d+,\\d+)+\\|"
-                        + "(R\\d+,\\d+/[-]?\\d+,[-]?\\d+/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?,\\d+(\\.\\d+)?/\\d+(\\.\\d+)?)+$");
-        // ファイル全体の正規表現チェック
-        if (allPattern.matcher(fileString).matches()) {
-            // 捕獲数と通信回数とステップ数の抽出
-            Pattern pattern = Pattern
-                    .compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(.*)\\|(.*)\\|(.*)$");
-            Matcher matcher = pattern.matcher(fileString);
-            if (matcher.matches()) {
-                System.out.println("捕獲数:" + matcher.group(1));
-                System.out.println("通信回数:" + matcher.group(2));
-                System.out.println("ステップ数:" + matcher.group(3));
-                System.out.println("エージェント表現文字列:" + matcher.group(4));
-                System.out.println("ターゲット表現文字列:" + matcher.group(5));
-                System.out.println("ロボット表現文字列:" + matcher.group(6));
-
-                // 捕獲数・通信回数・ステップ数の読み込み
-                communication_num = Integer.parseInt(matcher.group(2));
-                count = Integer.parseInt(matcher.group(3));
-                //エージェントの抽出
-                String[] agentStringArray = matcher.group(4).split(":", 0);// [0]は空文字列
-                multi = new AgentList();
-                for (int i = 1; i < agentStringArray.length; i++) {
-                    if (!agentStringArray[i].equals("null")) {
-                        multi.addAgent(new Agent(this, agentStringArray[i]));
-                    }
-                }
-
-                // ターゲットの抽出
-                String[] targetStringArray = matcher.group(5).split("T", 0);// [0]は空文字列
-                targetList.clear();
-                for (int i = 1; i < targetStringArray.length; i++) {
-                    targetList.add(new Enemy(targetStringArray[i]));
-                }
-
-                // ロボットの抽出
-                String[] robotStringArray = matcher.group(6).split("R", 0);// [0]は空文字列
-                robot = new AgentRobot2[robotStringArray.length - 1];
-
-                for (int i = 1; i < robotStringArray.length; i++) {
-                    robot[i - 1] = new AgentRobot2(this, robotStringArray[i]);
-                    Agent agent = multi.getAgent((AgentRobot2) robot[i - 1]);
-                    if (agent != null) {
-                        agent.setRobot((AgentRobot2) robot[i - 1]);
-                    }
-                }
-            }
-        } else {
-            System.out.println("ファイルが正しくありません。");
-        }
+        //TODDO
     }
 
     /**
@@ -239,22 +161,7 @@ public class MultiAgentSimulation2 extends SimulationPanel {
      */
     @Override
     public String toString() {
-        String string = "";
-
-        //ターゲットの数|通信回数|ステップ数|エージェントの情報|
-        string += targetList.size() + "|" + communication_num + "|" + count + "|" + multi + "|";
-
-        //ターゲットの情報
-        for (Enemy target : targetList) {
-            string += target.toString();
-        }
-        string += "|";
-
-        //ロボットの情報
-        for (Robot r : robot) {
-            string += r;
-        }
-
-        return string;
+        //TODO
+        return "HOGE";
     }
 }

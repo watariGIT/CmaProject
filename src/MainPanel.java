@@ -1,7 +1,7 @@
 import AgentPanel.MultiAgentSimulation2;
 import FipsAgentPanel.FipsAgentSimulation;
-import SuperPack.Result;
-import SuperPack.SimulationPanel;
+import SuperPack.Panel.Result;
+import SuperPack.Panel.SimulationPanel;
 
 import javax.swing.*;
 import java.awt.*;

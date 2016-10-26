@@ -1,8 +1,8 @@
 package PsoPanel;
 
-import SuperPack.Intelligence;
-import SuperPack.Point2;
-import SuperPack.Robot;
+import SuperPack.Panel.Intelligence;
+import SuperPack.Panel.Point2;
+import SuperPack.Panel.Robot;
 
 import java.awt.*;
 
