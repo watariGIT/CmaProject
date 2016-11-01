@@ -17,7 +17,8 @@ import java.awt.*;
  */
 public class MultiAgentSimulation2 extends AgentSimulation {
 
-    protected MultiAgentSimulation2() {
+    protected MultiAgentSimulation2(){
+        super();
     }
 
     /**
@@ -81,35 +82,6 @@ public class MultiAgentSimulation2 extends AgentSimulation {
             robot[i].reset();
         for (int i = 0; i < agentNum; i++)
             multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
-    }
-
-    public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g2.setColor(new Color(255, 255, 255));
-        g2.fillRect(startX, startY, length, length);
-
-        g2.setColor(Color.BLACK);
-        g2.drawRect(startX, startY, length, length);
-        g2.drawString("STEP:" + this.count, startX + 5, startY + length + 20);
-
-        //ターゲットの描写
-        synchronized (targetList) {
-            for (Enemy target : targetList) {
-                target.paint(g2, true);
-            }
-        }
-
-        if (debugMode == -1) {
-            for (int i = 0; i < robot.length; i++)
-                robot[i].paint(g2);
-            multi.paint(g2);
-        } else {
-            //デバック用の描写
-            debugPaint(g2);
-        }
     }
 
     @Override

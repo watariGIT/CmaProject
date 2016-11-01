@@ -31,7 +31,6 @@ abstract public class SimulationPanel extends JPanel {
      * @param s コピー元
      */
     public void copy(SimulationPanel s) {
-
         for (int i = 0; i < s.robot.length; i++) {
             robot[i].copy(s.robot[i]);
         }
