@@ -1,5 +1,6 @@
 package AgentPanel;
 
+import PsoPanel.PsoSimulation;
 import SuperPack.AbstractAgentPanel.Agent;
 import SuperPack.AbstractAgentPanel.AgentList;
 import SuperPack.AbstractAgentPanel.AgentSimulation;
@@ -124,6 +125,29 @@ public class MultiAgentSimulation2 extends AgentSimulation {
     @Override
     public void readFile(String fileString) {
         //TODDO
+    }
+
+    /**
+     * デバック用の描写
+     *
+     * @param g2
+     */
+    protected void debugPaint(Graphics2D g2) {
+        for (int i = 0; i < robotsNum; i++) {
+            if (robot[i].id == debugMode) {
+                robot[i].paint(g2);
+                int ciSwingX = (int) (robot[i].CI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+                int ciSwingY = (int) ((PsoSimulation.size - robot[i].CI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+                g2.setColor(Color.GREEN);
+                g2.fillOval(ciSwingX - 3, ciSwingY - 3, 6, 6);
+
+                int piSwingX = (int) (robot[i].PI.x * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startX);
+                int piSwingY = (int) ((PsoSimulation.size - robot[i].PI.y) * PsoSimulation.length / PsoSimulation.size + SimulationPanel.startY);
+                g2.setColor(Color.YELLOW);
+                g2.fillOval(piSwingX - 3, piSwingY - 3, 6, 6);
+                break;
+            }
+        }
     }
 
     /**

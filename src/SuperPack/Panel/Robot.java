@@ -79,10 +79,12 @@ public abstract class Robot {
 		Point2 oldP = new Point2(p);
 		isCaptured = false;
 
+		//速度の決定
 		Point2 dv = calVelocity();
+
+		//maxを超えないように速度の修正
 		dx = dv.x;
 		dy = dv.y;
-
 		if(dx>maxv)dx=maxv;
 		if(dx<-1*maxv)dx=-1*maxv;
 		if(dy>maxv)dy=maxv;
