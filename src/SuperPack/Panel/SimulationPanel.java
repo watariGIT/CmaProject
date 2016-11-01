@@ -13,14 +13,14 @@ abstract public class SimulationPanel extends JPanel {
     public final static int size = 1000;
     public static int robotsNum = 20;            //ロボットの初期台数
     public static int targetNum = 6;            //ターゲットの初期台数
-    private final static int maxCount = 10000;//最大の捕獲時間
+    public final static int maxCount = 500;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
     protected int debugMode = -1;//デバックするロボットのID -1ならデバックしない
     protected final String crlf = System.getProperty("line.separator"); //改行コード
 
     public int communication_num = 0;            //通信回数
-    protected int count = 0;                    //ステップ数
+    public int count = 0;                    //ステップ数
 
     protected SimulationPanel() {
     }

@@ -44,57 +44,6 @@ public class MultiAgentSimulation2 extends AgentSimulation {
         }
     }
 
-    @Override
-    public void step() {
-        count++;
-        //ロボットを動かす
-        for (int i = 0; i < robotsNum; i++) {
-            robot[i].move();
-        }
-        //エージェントを動かす
-        multi.agentsMove(robot);
-        //重複しているロボットの削除
-        for (int i = 0; i < robotsNum; i++) {
-            multi.deleteOverlapAgent((AgentRobot2) (robot[i]));
-        }
-        //ターゲットの削除
-        deleteCaptureTarget();
-    }
-
-    public void copy(SimulationPanel s) {
-        super.copy(s);
-
-        //エージェントの初期化
-        multi.clear();
-        for (int i = 0; i < agentNum; i++)
-            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
-    }
-
-    @Override
-    public void reset() {
-        count = 0;
-        this.communication_num = 0;
-        targetList.clear();
-
-        for (int i = 0; i < targetNum; i++)
-            targetList.add(new Enemy());
-        multi.clear();
-        for (int i = 0; i < robotsNum; i++)
-            robot[i].reset();
-        for (int i = 0; i < agentNum; i++)
-            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
-    }
-
-    @Override
-    public void readEnemyFile(String str) {
-        super.readEnemyFile(str);
-        multi.clear();
-        //エージェントの生成
-        for (int i = 0; i < agentNum; i++) {
-            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
-        }
-    }
-
     /**
      * ロボットをファイルから読み込み配置する
      *
