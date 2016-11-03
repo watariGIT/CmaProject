@@ -12,11 +12,11 @@ abstract public class SimulationPanel extends JPanel {
     public final static int length = 250;
     public final static int size = 1000;
     public static int robotsNum = 20;            //ロボットの初期台数
-    public static int targetNum = 10;            //ターゲットの初期台数
+    protected static int targetNum = 5;            //ターゲットの初期台数
     public final static int maxCount = 500;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
-    protected int debugMode = -1;//デバックするロボットのID -1ならデバックしない
+    public int debugMode = -1;//デバックするロボットのID -1ならデバックしない
     protected final String crlf = System.getProperty("line.separator"); //改行コード
 
     public int communication_num = 0;            //通信回数
@@ -60,6 +60,7 @@ abstract public class SimulationPanel extends JPanel {
         g2.setColor(Color.BLACK);
         g2.drawRect(startX, startY, length, length);
         g2.drawString("STEP:"+this.count,startX+5,startY+length+20);
+        g2.drawString("CLASS:" + this.getClass().getName(), startX + 75, startY + length + 20);
 
         //ターゲットの描写
         synchronized (targetList) {
