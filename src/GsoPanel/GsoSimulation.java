@@ -3,6 +3,7 @@ package GsoPanel;
 import SuperPack.Panel.Enemy;
 import SuperPack.Panel.SimulationPanel;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -38,9 +39,6 @@ public class GsoSimulation extends SimulationPanel{
 
         for (int i = 0; i < robotsNum; i++)
             robot[i].reset();
-        for (int i = 0; i < robotsNum; i++)
-            robot[i].setCI();
-
     }
 
     @Override
@@ -52,6 +50,8 @@ public class GsoSimulation extends SimulationPanel{
         //ターゲットの削除
         deleteCaptureTarget();
     }
+
+
 
     @Override
     public void readFile(String fileString) {

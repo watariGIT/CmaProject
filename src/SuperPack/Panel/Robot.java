@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public abstract class Robot {
 	static int idMax = 0;
 	public int id;
-	public final static int maxv=10;
+	public final static int maxv = 5;
 	public double omega=0.9;
 	protected double c1 = 2.0;
 	protected double c2 = 2.0;

@@ -1,5 +1,6 @@
 package GsoPanel;
 
+import PsoPanel.PsoSimulation;
 import SuperPack.Panel.Point2;
 import SuperPack.Panel.Robot;
 import SuperPack.Panel.SimulationPanel;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class GsoRobot extends Robot {
     //各パラメータをメンバに追加
-    double luciferinLevel;               //l(t)
+    double luciferinLevel;  //l(t)
     double variableRange;  //Rd
     double lIni=5;    //l(t)のしょきち
     double vIni=0.2;  //Rdのしょきち
@@ -50,7 +51,7 @@ public class GsoRobot extends Robot {
         //neighborListの決定
         ArrayList<GsoRobot> neighborList = new ArrayList<>();
         for(Robot r:field.robot){
-            if(r!=this && r.p.distance(p) < variableRange){
+            if(r.id!=this.id && r.p.distance(p) < variableRange){
                 GsoRobot gr=(GsoRobot)r;
                 if(gr.luciferinLevel < luciferinLevel)
                     neighborList.add(gr);
@@ -113,17 +114,22 @@ public class GsoRobot extends Robot {
 
     @Override
     public void copy(Robot robot) {
-        //TODO
+        super.copy(robot);
+        luciferinLevel = lIni;
+        variableRange = vIni;
     }
 
     @Override
     public void reset() {
-        //TODO
+        super.reset();
+        luciferinLevel = lIni;
+        variableRange = vIni;
     }
 
     @Override
     protected Point getSwingPoint() {
-        return null;
+        return (new Point((int) (p.x * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startX),
+                (int) ((PsoSimulation.size - p.y) * PsoSimulation.length / PsoSimulation.size + PsoSimulation.startY)));
     }
 
     @Override
@@ -131,5 +137,5 @@ public class GsoRobot extends Robot {
         //今回は使わない
     }
 
-    //TODO ハッショコードとequalメソッド
+    //ハッショコードとequalメソッド?
 }
