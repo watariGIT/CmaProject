@@ -11,7 +11,7 @@ abstract public class SimulationPanel extends JPanel {
     public static int startY = 10;
     public final static int length = 250;
     public final static int size = 1000;
-    public static int robotsNum = 15;            //ロボットの初期台数
+    public static int robotsNum = 100;            //ロボットの初期台数
     public static int targetNum = 7;            //ターゲットの初期台数
     public final static int maxCount = 500;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
@@ -50,6 +50,7 @@ abstract public class SimulationPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        //FIXME 継承しやすいように修正(ターゲット・ロボットの描写とその他をわける)
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -68,7 +69,6 @@ abstract public class SimulationPanel extends JPanel {
                 target.paint(g2, true);
             }
         }
-
         for (int i = 0; i < robotsNum; i++)
             robot[i].paint(g2);
     }

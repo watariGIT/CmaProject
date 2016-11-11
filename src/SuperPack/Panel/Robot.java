@@ -149,7 +149,10 @@ public abstract class Robot {
 	public void paint(Graphics2D g2){
 		double scale;
 		scale=(double)(PsoSimulation.length) / (PsoSimulation.size) ;
-		g2.setColor(new Color(55,55,155));
+		if (field.debugMode == id)
+			g2.setColor(new Color(55, 155, 155));
+		else
+			g2.setColor(new Color(55, 55, 155));
 		g2.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
 		g2.setColor(new Color(255,255,255));
 		g2.drawLine(getSwingPoint().x,getSwingPoint().y,

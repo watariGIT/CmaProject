@@ -4,12 +4,11 @@ import SuperPack.Panel.Enemy;
 import SuperPack.Panel.SimulationPanel;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by watariMac on 2016/11/10.
  */
-public class GsoSimulation extends SimulationPanel{
+public class GsoSimulation extends SimulationPanel {
 
 
     /**
@@ -51,10 +50,61 @@ public class GsoSimulation extends SimulationPanel{
         deleteCaptureTarget();
     }
 
-
-
     @Override
     public void readFile(String fileString) {
         //todo
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        //FIXME 継承しやすいように修正(ターゲット・ロボットの描写とその他をわける)
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(new Color(255, 255, 255));
+        g2.fillRect(startX, startY, length, length);
+
+        g2.setColor(Color.BLACK);
+        g2.drawRect(startX, startY, length, length);
+        g2.drawString("STEP:" + this.count, startX + 5, startY + length + 20);
+        g2.drawString("CLASS:" + this.getClass().getName(), startX + 75, startY + length + 20);
+
+        //ターゲットの描写
+        if (debugMode == -1) {
+            synchronized (targetList) {
+                for (Enemy target : targetList) {
+                    target.paint(g2, true);
+                }
+            }
+            for (int i = 0; i < robotsNum; i++)
+                robot[i].paint(g2);
+        } else {
+            GsoRobot gr = null;
+            for (int i = 0; i < robotsNum; i++) {
+                if (robot[i].id == debugMode) {
+                    gr = (GsoRobot) robot[i];
+                    break;
+                }
+            }
+
+            synchronized (targetList) {
+                for (Enemy target : targetList) {
+                    target.paint(g2, true);
+                }
+            }
+
+            for (int i = 0; i < robotsNum; i++) {
+                if (robot[i].p.distance(gr.p) <= gr.variableRange) {
+                    robot[i].paint(g2);
+                }
+            }
+            //rdの描写
+            g2.setColor(new Color(55, 155, 155));
+            int rdSwing = (int) Math.round(gr.variableRange * length / size);
+            if (rdSwing != 0) {
+                g2.drawOval(gr.getSwingPoint().x - rdSwing, gr.getSwingPoint().y - rdSwing, rdSwing * 2, rdSwing * 2);
+            }
+        }
     }
 }

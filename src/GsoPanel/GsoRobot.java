@@ -7,8 +7,6 @@ import SuperPack.Panel.SimulationPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by watariMac on 2016/11/10.
@@ -18,11 +16,11 @@ public class GsoRobot extends Robot {
     double luciferinLevel;  //l(t)
     double variableRange;  //Rd
     double lIni=5;    //l(t)のしょきち
-    double vIni=0.2;  //Rdのしょきち
+    double vIni = 250;  //Rdのしょきち
     final static double luciferinDecay = 0.4;       //ρ
     final static double luciferinEnencement = 0.6;  //γ
-    final static double luciferinRange = 1; //Rs
-    final static double stepSize = 0.03; //s
+    final static double luciferinRange = 300; //Rs
+    final static double stepSize = maxv * 1.5; //s
     final static int desieredNeighbors = 5;
 
 
@@ -79,13 +77,21 @@ public class GsoRobot extends Robot {
 
         //速度・位置の決定
         if (j != this) {
-            Point2 v = new Point2(stepSize * (j.p.x - p.x / j.p.distance(p)),
-                    stepSize * (j.p.y - p.y / j.p.distance(p)));
+            Point2 v = new Point2(stepSize * (j.p.x - p.x) / j.p.distance(p),
+                    stepSize * (j.p.y - p.y) / j.p.distance(p));
 
             if (v.x > maxv) v.x = maxv;
             if (v.x < -1 * maxv) v.x = -1 * maxv;
             if (v.y > maxv) v.y = maxv;
             if (v.y < -1 * maxv) v.y = -1 * maxv;
+
+            if (field.debugMode == id) {
+                System.out.println("id:" + id);
+                System.out.println("l=" + luciferinLevel + "/ rd=" + variableRange);
+                System.out.println("N " + neighborList.size());
+                System.out.println("dRd " + 5 * (desieredNeighbors - neighborList.size()));
+                System.out.println("V( " + v.x + ", " + v.y + ")");
+            }
 
             p.x += v.x;
             p.y += v.y;
@@ -94,12 +100,12 @@ public class GsoRobot extends Robot {
             if (p.x > SimulationPanel.size) p.x = SimulationPanel.size;
             if (p.y < 0) p.y = 0;
             if (p.y > SimulationPanel.size) p.y = SimulationPanel.size;
-
+            angle = Math.atan2(v.y, v.x);
         }
 
         //Rdの修正
         variableRange = Math.min(luciferinRange,
-                Math.max(0, variableRange + 0.08 * (desieredNeighbors - neighborList.size())));
+                Math.max(0, variableRange + 5 * (desieredNeighbors - neighborList.size())));
 
 
         luciferinLevel = (1.0 - luciferinDecay) * luciferinLevel
