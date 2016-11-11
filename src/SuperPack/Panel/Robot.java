@@ -102,7 +102,7 @@ public abstract class Robot {
 		distance+=oldP.distance(p); //TODO 	謎の変数
 
 		double f=fitnessFunction(field.targetList);
-		if (f - oldFitness > 15.0) {
+		if (f - oldFitness > 10.0) {
 			isCaptured = true;
 			captured();
 		}
@@ -147,18 +147,19 @@ public abstract class Robot {
 	}
 	
 	public void paint(Graphics2D g2){
+		paint(g2, new Color(55, 55, 155));
+	}
+
+	public void paint(Graphics2D g2, Color c) {
 		double scale;
 		scale=(double)(PsoSimulation.length) / (PsoSimulation.size) ;
-		if (field.debugMode == id)
-			g2.setColor(new Color(55, 155, 155));
-		else
-			g2.setColor(new Color(55, 55, 155));
+		g2.setColor(c);
 		g2.fillOval(getSwingPoint().x-5,getSwingPoint().y-5,10,10);
 		g2.setColor(new Color(255,255,255));
 		g2.drawLine(getSwingPoint().x,getSwingPoint().y,
 				getSwingPoint().x+(int)((20)*Math.cos(angle)*scale),
 				getSwingPoint().y-(int)((20)*Math.sin(angle)*scale)
-				);
+		);
 		/*
 		g.fillArc(getSwingPoint().x-6,getSwingPoint().y-6,15,15,
 				(int)Math.toDegrees(angle-visualAngle/2), (int)Math.toDegrees(visualAngle));*/

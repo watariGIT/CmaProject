@@ -95,10 +95,18 @@ public class GsoSimulation extends SimulationPanel {
             }
 
             for (int i = 0; i < robotsNum; i++) {
-                if (robot[i].p.distance(gr.p) <= gr.variableRange) {
-                    robot[i].paint(g2);
+                if (robot[i].id == gr.id)
+                    robot[i].paint(g2, new Color(55, 155, 155));
+                else {
+                    if (robot[i].p.distance(gr.p) <= gr.variableRange) {
+                        if (((GsoRobot) robot[i]).luciferinLevel < gr.luciferinLevel)
+                            robot[i].paint(g2, new Color(155, 55, 155));
+                        else
+                            robot[i].paint(g2);
+                    }
                 }
             }
+
             //rdの描写
             g2.setColor(new Color(55, 155, 155));
             int rdSwing = (int) Math.round(gr.variableRange * length / size);
