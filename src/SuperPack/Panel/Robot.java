@@ -57,8 +57,8 @@ public abstract class Robot {
 
 			v = new Point2(Double.parseDouble(robotMatcher.group(3)), Double.parseDouble(robotMatcher.group(4)));
 			
-			PI=new Intelligence(Double.parseDouble(robotMatcher.group(5)),Double.parseDouble(robotMatcher.group(6)),s.targetList);
-			CI=new Intelligence(Double.parseDouble(robotMatcher.group(7)),Double.parseDouble(robotMatcher.group(8)),s.targetList);
+			PI = new Intelligence(Double.parseDouble(robotMatcher.group(5)),Double.parseDouble(robotMatcher.group(6)),s.targetList);
+			CI = new Intelligence(Double.parseDouble(robotMatcher.group(7)),Double.parseDouble(robotMatcher.group(8)),s.targetList);
 
 			omega=Double.parseDouble(robotMatcher.group(9));
 			

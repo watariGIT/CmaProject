@@ -13,76 +13,96 @@ import java.util.Map;
  * Created by watariMac on 2016/11/10.
  */
 public class GsoRobot extends Robot {
-    //TODO 各パラメータをメンバに追加
-    double luciferinLevel = 0;               //l(t)
+    //各パラメータをメンバに追加
+    double luciferinLevel;               //l(t)
     double variableRange;  //Rd
-    final static double luciferinDecay = 0.5;       //ρ
-    final static double luciferinEnencement = 10;  //γ
-    final static double luciferinRange = 10; //Rs
-    final static double stepSize=0.5; //s
+    double lIni=5;    //l(t)のしょきち
+    double vIni=0.2;  //Rdのしょきち
+    final static double luciferinDecay = 0.4;       //ρ
+    final static double luciferinEnencement = 0.6;  //γ
+    final static double luciferinRange = 1; //Rs
+    final static double stepSize = 0.03; //s
+    final static int desieredNeighbors = 5;
 
 
     protected GsoRobot(SimulationPanel s) {
         super(s);
-        luciferinLevel = luciferinEnencement * fitnessFunction(field.targetList);
+        luciferinLevel = lIni;
+        variableRange = vIni;
     }
 
     protected GsoRobot(Point2 point, SimulationPanel s) {
         super(point, s);
-        luciferinLevel = luciferinEnencement * fitnessFunction(field.targetList);
+        luciferinLevel = lIni;
+        variableRange = vIni;
     }
 
     protected GsoRobot(SimulationPanel s, String robotString) {
         super(s, robotString);
-        luciferinLevel = luciferinEnencement * fitnessFunction(field.targetList);
+        luciferinLevel = lIni;
+        variableRange = vIni;
     }
 
     @Override
     public void move() {
         //速度を決定
+
+        //neighborListの決定
         ArrayList<GsoRobot> neighborList = new ArrayList<>();
-        //TODO neighborListの決定
+        for(Robot r:field.robot){
+            if(r!=this && r.p.distance(p) < variableRange){
+                GsoRobot gr=(GsoRobot)r;
+                if(gr.luciferinLevel < luciferinLevel)
+                    neighborList.add(gr);
+                field.communication_num++;
+            }
+        }
 
         //確率の計算 jの決定
         //HashMap<Double,GsoRobot> neighborPMap=new HashMap<>();
         double lsum = 0;
         for (GsoRobot gr : neighborList) {
-            lsum += gr.luciferinLevel - luciferinLevel;
+            lsum += luciferinLevel - gr.luciferinLevel;
         }
         double p0 = 0;
         double rand = Math.random();
-        GsoRobot j=this;
+        GsoRobot j = this;
         for (GsoRobot gr : neighborList) {
-            double neighborP = gr.luciferinLevel - luciferinLevel / lsum;
+            double neighborP = luciferinLevel - gr.luciferinLevel / lsum;
             if (p0 < rand && rand <= neighborP) {
                 j = gr;
                 break;
             }
-            p0+=neighborP;
+            p0 += neighborP;
         }
 
         //速度・位置の決定
-        if(j!=this) {
-            Point2 v = new Point2(stepSize*(j.p.x - p.x / j.p.distance(p)),stepSize*(j.p.y - p.y / j.p.distance(p)));
+        if (j != this) {
+            Point2 v = new Point2(stepSize * (j.p.x - p.x / j.p.distance(p)),
+                    stepSize * (j.p.y - p.y / j.p.distance(p)));
 
-            if(v.x>maxv) v.x=maxv;
-            if(v.x<-1*maxv) v.x=-1*maxv;
-            if(v.y>maxv) v.y=maxv;
-            if(v.y<-1*maxv)v.y=-1*maxv;
+            if (v.x > maxv) v.x = maxv;
+            if (v.x < -1 * maxv) v.x = -1 * maxv;
+            if (v.y > maxv) v.y = maxv;
+            if (v.y < -1 * maxv) v.y = -1 * maxv;
 
-            p.x+=v.x;
-            p.y+=v.y;
+            p.x += v.x;
+            p.y += v.y;
 
-            if(p.x<0)p.x=0;
-            if(p.x>SimulationPanel.size)p.x=SimulationPanel.size;
-            if(p.y<0)p.y=0;
-            if(p.y>SimulationPanel.size)p.y=SimulationPanel.size;
+            if (p.x < 0) p.x = 0;
+            if (p.x > SimulationPanel.size) p.x = SimulationPanel.size;
+            if (p.y < 0) p.y = 0;
+            if (p.y > SimulationPanel.size) p.y = SimulationPanel.size;
 
         }
 
-        //TODO Rdの修正
+        //Rdの修正
+        variableRange = Math.min(luciferinRange,
+                Math.max(0, variableRange + 0.08 * (desieredNeighbors - neighborList.size())));
 
-        luciferinLevel = (1.0 - luciferinDecay) * luciferinLevel + luciferinEnencement * fitnessFunction(field.targetList);
+
+        luciferinLevel = (1.0 - luciferinDecay) * luciferinLevel
+                + luciferinEnencement * fitnessFunction(field.targetList);
     }
 
 
@@ -108,7 +128,7 @@ public class GsoRobot extends Robot {
 
     @Override
     public void setCI() {
-        //TODO うまく
+        //今回は使わない
     }
 
     //TODO ハッショコードとequalメソッド
