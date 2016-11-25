@@ -50,7 +50,6 @@ abstract public class SimulationPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        //FIXME 継承しやすいように修正(ターゲット・ロボットの描写とその他をわける)
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -63,15 +62,26 @@ abstract public class SimulationPanel extends JPanel {
         g2.drawString("STEP:"+this.count,startX+5,startY+length+20);
         g2.drawString("CLASS:" + this.getClass().getName(), startX + 75, startY + length + 20);
 
+        paintTargetList(g2);
+        paintRobots(g2);
+
+    }
+
+    protected void paintTargetList(Graphics2D g2) {
         //ターゲットの描写
         synchronized (targetList) {
             for (Enemy target : targetList) {
                 target.paint(g2, true);
             }
         }
+    }
+
+
+    protected void paintRobots(Graphics2D g2) {
         for (int i = 0; i < robotsNum; i++)
             robot[i].paint(g2);
     }
+
 
     public ArrayList<Result> evaluation() {
         int tMax = targetList.size();
