@@ -80,10 +80,10 @@ public class GsoRobot extends Robot {
             Point2 v = new Point2(stepSize * (j.p.x - p.x) / j.p.distance(p),
                     stepSize * (j.p.y - p.y) / j.p.distance(p));
 
-            if (v.x > maxv) v.x = maxv;
-            if (v.x < -1 * maxv) v.x = -1 * maxv;
-            if (v.y > maxv) v.y = maxv;
-            if (v.y < -1 * maxv) v.y = -1 * maxv;
+            if (v.distance() > maxv) {
+                double basis = maxv / v.distance();
+                v.setLocation(v.x * basis, v.y * basis);
+            }
 
             if (field.debugMode == id) {
                 System.out.println("id:" + id);

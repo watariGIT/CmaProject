@@ -80,19 +80,16 @@ public abstract class Robot {
 		isCaptured = false;
 
 		//速度の決定
-		Point2 dv = calVelocity();
+		v = calVelocity();
 
 		//maxを超えないように速度の修正
-		dx = dv.x;
-		dy = dv.y;
-		if(dx>maxv)dx=maxv;
-		if(dx<-1*maxv)dx=-1*maxv;
-		if(dy>maxv)dy=maxv;
-		if(dy<-1*maxv)dy=-1*maxv;
-		v.setLocation(dx, dy);
+		if (v.distance() > maxv) {
+			double basis = maxv / v.distance();
+			v.setLocation(v.x * basis, v.y * basis);
+		}
 
-		p.x = (p.x + dx);
-		p.y = (p.y + dy);
+		p.x = (p.x + v.x);
+		p.y = (p.y + v.y);
 		
 		if(p.x<0)p.x=0;
 		if(p.x>SimulationPanel.size)p.x=SimulationPanel.size;
@@ -112,7 +109,7 @@ public abstract class Robot {
 			PI = new Intelligence(p.x, p.y, field.targetList);
 		}
 		setCI();
-		angle = Math.atan2(dy, dx);
+		angle = Math.atan2(v.y, v.x);
 	}
 
 

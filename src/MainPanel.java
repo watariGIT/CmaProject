@@ -1,5 +1,5 @@
+import AfsPanel.AfsSimulation;
 import ArpsoPanal.ArpsoSimulation;
-import GsoPanel.GsoSimulation;
 import SuperPack.Panel.Result;
 import SuperPack.Panel.SimulationPanel;
 
@@ -58,8 +58,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new GsoSimulation();
-        canvas4 = new ArpsoSimulation(15);
+        canvas = new AfsSimulation();
+        canvas4 = new ArpsoSimulation(30);
         canvas4.copy(canvas);
 
         GridLayout gl = new GridLayout(1, 2);
