@@ -211,7 +211,17 @@ abstract public class SimulationPanel extends JPanel {
         }
     }
 
-    abstract public void reset();
+    public void reset() {
+        count = 0;
+        this.communication_num = 0;
+        targetList.clear();
+
+        for (int i = 0; i < targetNum; i++)
+            targetList.add(new Enemy());
+
+        for (int i = 0; i < robotsNum; i++)
+            robot[i].reset();
+    }
 
     /**
      * 1ステップフィールドを動かす

@@ -107,14 +107,7 @@ public class PsoSimulation extends SimulationPanel {
     }
 
     public void reset() {
-        count = 0;
-        communication_num = 0;
-        targetList.clear();
-        for (int i = 0; i < targetNum; i++)
-            targetList.add(new Enemy());
-
-        for (int i = 0; i < robotsNum; i++)
-            robot[i].reset();
+        super.reset();
         for (int i = 0; i < robotsNum; i++)
             robot[i].setCI();
         ciProcess = new ArrayList<>();
