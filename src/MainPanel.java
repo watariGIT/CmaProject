@@ -285,7 +285,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         if (command.equals("Evaluation")) {
             FileWriter canvasFW, canvas4FW;
-            int num = SimulationPanel.robotsNum;
+            int num = canvas.robotsNum;
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 
@@ -308,7 +308,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
                     outputCsv(canvasFW, canvasResults);
                     outputCsv(canvas4FW, canvas4Results);
 
-                    SimulationPanel.robotsNum = num;
+                    //FIXME SimulationPanel.robotsNum = num;
                     Reset();
 
                     canvas4FW.close();
