@@ -1,8 +1,6 @@
 package OptimizeParam;
 
-import AfsPanel.AfsRobot;
 import AfsPanel.AfsSimulation;
-import SuperPack.Panel.SimulationPanel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +12,9 @@ public class OptimizeMain {
     public static void main(String args[]) {
         ArrayList<Particle> particles = new ArrayList<>();
         Particle globalBest;
-        int experiencedNum=40;
+        int experiencedNum = 30;
         int onlookerNum=20;
-        int scoutNum=40;
+        int scoutNum = 20;
 
 
         for (int i = 0; i < experiencedNum+onlookerNum+scoutNum; i++) {
@@ -34,7 +32,7 @@ public class OptimizeMain {
         globalBest = new Particle(particles.get(0));
         System.out.println(globalBest.toString());
 
-        for (int count = 0; count < 10; count++) {
+        for (int count = 0; count < 1000; count++) {
             //GSOに従った位置の決定
             Particle eBee = particles.get((int) (Math.random() * 40.0));
             for (int i = 0; i < particles.size(); i++) {

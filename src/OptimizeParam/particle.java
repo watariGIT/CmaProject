@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * Created by watariMac on 2016/11/28.
  */
 public class Particle implements Comparable {
-    final static double X_MAX = 100;
-    final static double X_MIN = 0;
+    final static double X_MAX = 1000;
+    final static double X_MIN = 0.0000000000001;
 
     public ArrayList<Double> xlist = new ArrayList<>();
     public ArrayList<Double> pBest = new ArrayList<>(); //personalBest
@@ -32,7 +32,6 @@ public class Particle implements Comparable {
     }
 
     public void setFitness(double val) {
-        if (val < fittness)
             fittness = val;
         if (val < bestFittness) {
             bestFittness = val;
@@ -48,7 +47,6 @@ public class Particle implements Comparable {
             double gb = gBest.pBest.get(i);
             double pb = pBest.get(i);
             double x = xlist.get(i) + Math.random() * 2.0 * (gb - xlist.get(i)) + Math.random() * 2.0 * (pb - xlist.get(i));
-            if (x > X_MAX) x = X_MAX;
             if (x < X_MIN) x = X_MIN;
             xlist.set(i, x);
         }
@@ -61,7 +59,6 @@ public class Particle implements Comparable {
         for (int i = 0; i < xlist.size(); i++) {
             double ep = eBee.pBest.get(i);
             double x = xlist.get(i) + Math.random() * 2.0 * (ep - xlist.get(i));
-            if (x > X_MAX) x = X_MAX;
             if (x < X_MIN) x = X_MIN;
             xlist.set(i, x);
         }
@@ -72,8 +69,7 @@ public class Particle implements Comparable {
      */
     public void scoutBee() {
         for (int i = 0; i < xlist.size(); i++) {
-            double x = xlist.get(i) + 15.0 - Math.random() * 30.0;
-            if (x > X_MAX) x = X_MAX;
+            double x = xlist.get(i) + 150.0 - Math.random() * 300.0;
             if (x < X_MIN) x = X_MIN;
             xlist.set(i, x);
         }
