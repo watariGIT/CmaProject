@@ -18,33 +18,43 @@ public class EvaluationMain {
 
         String resultString = "";
 
-        for (int robotNum = 10; robotNum < 100; robotNum += 10) {
-            simulations[0] = new GsoSimulation();
-            simulations[1] = new AfsSimulation();
-            simulations[2] = new MultiAgentSimulation2(10);
-            simulations[3] = new ArpsoSimulation(10);
+        simulations[0] = new GsoSimulation();
+        simulations[1] = new AfsSimulation();
+        simulations[2] = new MultiAgentSimulation2(30);
+        simulations[3] = new ArpsoSimulation(30);
 
-            for(SimulationPanel sp:simulations){
-                resultString+=sp.getClass().getName()+",";
-            }
-            resultString+=BR;
+
+
+
+        //ロボットの台数を変化させて比較
+        resultString+="robotNUM, ";
+        for(SimulationPanel sp:simulations){
+            resultString+=sp.getClass().getName()+",";
+        }
+        resultString+=BR;
+        for (int robotNum = 30; robotNum < 100; robotNum += 10) {
+
+            double[] results = new double[simulations.length];
 
             //100回実行平均をとる
             for (int count = 0; count < 100; count++) {
-                double[] results = new double[simulations.length];
+
+                simulations[0].setRobotNum(robotNum);
+                simulations[1].copy(simulations[0]);
+                simulations[2].copy(simulations[0]);
+                simulations[3].copy(simulations[0]);
 
                 for (int i = 0; i < simulations.length; i++) {
-                    simulations[i].setRobotNum(robotNum);
                     results[i] += simulations[i].getCapturedStep();
-                    System.out.printf(".");
                 }
-
-                System.out.println("[" + count + "]");
-                for (int i = 0; i < results.length; i++)
-                    resultString += results[i] / 100.0 + ",";
-
-                resultString += BR;
+                System.out.printf(".");
             }
+
+            System.out.println("[" + robotNum + "]");
+            resultString+=robotNum+", ";
+            for (int i = 0; i < results.length; i++)
+                resultString += results[i] / 100.0 + ", ";
+            resultString += BR;
         }
 
         System.out.printf(resultString);
