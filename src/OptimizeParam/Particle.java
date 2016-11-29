@@ -32,7 +32,7 @@ public class Particle implements Comparable {
     }
 
     public void setFitness(double val) {
-            fittness = val;
+        fittness = val;
         if (val < bestFittness) {
             bestFittness = val;
             pBest = new ArrayList<>(xlist);
@@ -151,12 +151,12 @@ public class Particle implements Comparable {
     public String toString() {
         String str = "x[ ";
         for (double x : xlist) {
-            str += x + ", ";
+            str += String.format("%1$.4f, ",x);;
         }
         str += "] val " + fittness + " p[ ";
 
         for (double p : pBest) {
-            str += p + ", ";
+            str += String.format("%1$.4f, ",p);;
         }
         str += "] val " + bestFittness;
         return str;
