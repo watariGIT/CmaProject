@@ -1,8 +1,6 @@
 package OptimizeParam;
 
-import AfsPanel.AfsRobot;
 import AfsPanel.AfsSimulation;
-import SuperPack.Panel.SimulationPanel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +17,7 @@ public class OptimizeMain {
         int scoutNum = 10;
 
 
-        for (int i = 0; i < experiencedNum+onlookerNum+scoutNum; i++) {
+        for (int i = 0; i < experiencedNum + onlookerNum + scoutNum; i++) {
             particles.add(new Particle(4));
             if (i % 10 != 0) {
                 System.out.printf(" ");
@@ -30,7 +28,7 @@ public class OptimizeMain {
         System.out.println("|");
         calsFitness(particles);
 
-       Collections.sort(particles);
+        Collections.sort(particles);
         globalBest = new Particle(particles.get(0));
         System.out.println(globalBest.toString());
 
@@ -42,7 +40,7 @@ public class OptimizeMain {
                 if (i < experiencedNum) {
                     //評価値の高いやつ
                     p.experiencedBee(globalBest);
-                } else if (i < experiencedNum+onlookerNum) {
+                } else if (i < experiencedNum + onlookerNum) {
                     //中位
                     p.onlookerBee(eBee);
                 } else {
@@ -68,12 +66,12 @@ public class OptimizeMain {
 
     private static void calsFitness(ArrayList<Particle> particles) {
         for (Particle p : particles) {
-            double sum=0;
-            for(int i=0;i<10;i++) {
+            double sum = 0;
+            for (int i = 0; i < 10; i++) {
                 AfsSimulation As = new AfsSimulation(100, p.xlist.get(0), p.xlist.get(1), p.xlist.get(2), p.xlist.get(3));
-                sum+=As.getCapturedStep();
+                sum += As.getCapturedStep();
             }
-            p.setFitness(sum/10);
+            p.setFitness(sum / 10);
             System.out.print(":");
         }
         System.out.println("END");

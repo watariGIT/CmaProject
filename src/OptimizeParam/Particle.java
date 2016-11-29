@@ -151,12 +151,14 @@ public class Particle implements Comparable {
     public String toString() {
         String str = "x[ ";
         for (double x : xlist) {
-            str += String.format("%1$.4f, ",x);;
+            str += String.format("%1$.4f, ", x);
+            ;
         }
         str += "] val " + fittness + " p[ ";
 
         for (double p : pBest) {
-            str += String.format("%1$.4f, ",p);;
+            str += String.format("%1$.4f, ", p);
+            ;
         }
         str += "] val " + bestFittness;
         return str;
