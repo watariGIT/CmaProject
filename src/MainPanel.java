@@ -1,6 +1,5 @@
-import AfsPanel.AfsSimulation;
-import AgentPanel.MultiAgentSimulation2;
 import ArpsoPanal.ArpsoSimulation;
+import SuperPack.AbstractAgentPanel.AgentSimulation;
 import SuperPack.Panel.Result;
 import SuperPack.Panel.SimulationPanel;
 
@@ -59,9 +58,10 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new MultiAgentSimulation2(30);
+        canvas = new ArpsoSimulation(30);
         canvas4 = new ArpsoSimulation(30);
         canvas4.copy(canvas);
+        ((AgentSimulation) canvas4).setAgentNum(100);
 
         GridLayout gl = new GridLayout(1, 2);
 
