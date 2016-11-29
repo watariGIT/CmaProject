@@ -83,7 +83,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
 
         JButton evaluation = new JButton("Eval");
         evaluation.addActionListener(this);
-        evaluation.setActionCommand("Evaluation");
+        evaluation.setActionCommand("Bat/Evaluation");
 
         JButton psoFileOutPutB = new JButton("psoFileOutPut");
         psoFileOutPutB.addActionListener(this);
@@ -283,7 +283,7 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             Reset();
         }
 
-        if (command.equals("Evaluation")) {
+        if (command.equals("Bat/Evaluation")) {
             FileWriter canvasFW, canvas4FW;
             int num = canvas.robotsNum;
 

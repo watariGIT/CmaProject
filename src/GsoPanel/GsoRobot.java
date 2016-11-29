@@ -48,9 +48,9 @@ public class GsoRobot extends Robot {
 
         //neighborListの決定
         ArrayList<GsoRobot> neighborList = new ArrayList<>();
-        for(Robot r:field.robot){
-            if(r.id!=this.id && r.p.distance(p) < variableRange){
-                GsoRobot gr=(GsoRobot)r;
+        for(int i=0;i<field.robotsNum;i++){
+            if(field.robot[i].id!=this.id && field.robot[i].p.distance(p) < variableRange){
+                GsoRobot gr=(GsoRobot)field.robot[i];
                 if(gr.luciferinLevel < luciferinLevel)
                     neighborList.add(gr);
                 field.communication_num++;

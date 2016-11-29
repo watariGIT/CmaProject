@@ -1,4 +1,4 @@
-package OptimizeParam;
+package Bat.OptimizeParam;
 
 import AfsPanel.AfsSimulation;
 
@@ -7,6 +7,8 @@ import java.util.Collections;
 
 /**
  * Created by watariMac on 2016/11/28.
+ *ABC用のパラメータ推定用クラス
+ *
  */
 public class OptimizeMain {
     public static void main(String args[]) {

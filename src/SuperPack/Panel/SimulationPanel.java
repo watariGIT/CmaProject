@@ -36,13 +36,14 @@ abstract public class SimulationPanel extends JPanel {
             targetList.add(new Enemy(t));
         }
 
-        for (int i = 0; i < s.robot.length; i++) {
+        robotsNum=s.robotsNum;
+        for (int i = 0; i < s.robotsNum; i++) {
             robot[i].copy(s.robot[i]);
         }
     }
 
     public boolean setRobotNum(int n) {
-        if (n > robotsNum)
+        if (n > robot.length)
             return false;
         robotsNum = n;
         reset();
@@ -106,7 +107,7 @@ abstract public class SimulationPanel extends JPanel {
     }
 
     //探索終了にかかる時間の取得
-    public double getCapturedStep(){
+    public int getCapturedStep(){
         while (!isEnd()) {
             //1step動かす
             step();
@@ -192,7 +193,7 @@ abstract public class SimulationPanel extends JPanel {
 
         for (int y = 0; y < size; y += size / grid) {
             for (int x = 0; x < size; x += size / grid) {
-                for (SuperPack.Panel.Robot aRobot : robot) {
+                for (SuperPack.Panel.Robot aRobot : robot) { //FIXME
                     if (x <= aRobot.p.x && aRobot.p.x < x + size / grid
                             && y <= aRobot.p.y && aRobot.p.y < y + size / grid) {
                         gridCount++;
@@ -212,7 +213,8 @@ abstract public class SimulationPanel extends JPanel {
         //ターゲットの削除
         synchronized (targetList) {
             Iterator itr = targetList.iterator();
-            for (SuperPack.Panel.Robot r : robot) {
+            for (int i=0;i<robotsNum;i++) {
+                Robot r=robot[i];
                 while (itr.hasNext()) {
                     Enemy t = (Enemy) itr.next();
                     if (r.p.distance(t.p) <= 1.0) {

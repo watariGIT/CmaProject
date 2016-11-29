@@ -1,4 +1,4 @@
-package OptimizeParam;
+package Bat.OptimizeParam;
 
 import java.util.ArrayList;
 
@@ -151,7 +151,7 @@ public class Particle implements Comparable {
     public String toString() {
         String str = "x[ ";
         for (double x : xlist) {
-            str += String.format("%1$.4f, ",x);
+            str += String.format("%1$.4f, ", x);
         }
         str += "] val " + fittness + " p[ ";
 
