@@ -29,7 +29,7 @@ public class EvaluationMain {
         simulations[2] = new MultiAgentSimulation2(30);
         simulations[3] = new ArpsoSimulation(30);
 
-        resultString += evalTargetNum(simulations, 100);
+        resultString += evalRobotNum(simulations, 100);
 
         System.out.printf(resultString);
 
@@ -76,7 +76,7 @@ public class EvaluationMain {
         String resultString = "targetNUM, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
-            sp.setRobotNum(100);
+            sp.setRobotNum(50);
         }
         resultString += BR;
         for (int targetNum = 10; targetNum < 110; targetNum += 10) {
@@ -101,6 +101,44 @@ public class EvaluationMain {
 
             System.out.println("[" + targetNum + "]");
             resultString += targetNum + ", ";
+            for (int i = 0; i < results.length; i++)
+                resultString += results[i] / maxcount + ", ";
+            resultString += BR;
+        }
+        return resultString;
+    }
+
+    static String evalFieldSize(SimulationPanel[] simulations, int maxcount) {
+        //ターゲットの台数を変化させて比較
+        String resultString = "targetNUM, ";
+        for (SimulationPanel sp : simulations) {
+            resultString += sp.getClass().getName() + ",";
+            sp.setRobotNum(50);
+            sp.setTargetNum(10);
+        }
+        resultString += BR;
+        for (int fieldSize = 300; fieldSize < 1000; fieldSize += 100) {
+
+            double[] results = new double[simulations.length];
+
+            //100回実行平均をとる
+            for (int count = 0; count < maxcount; count++) {
+
+                simulations[0].setFieldSize(fieldSize);
+                simulations[1].copy(simulations[0]);
+                simulations[2].copy(simulations[0]);
+                ((AgentSimulation) (simulations[2])).setAgentNum(fieldSize);
+                simulations[3].copy(simulations[0]);
+                ((AgentSimulation) (simulations[3])).setAgentNum(fieldSize);
+
+                for (int i = 0; i < simulations.length; i++) {
+                    results[i] += simulations[i].getCapturedStep();
+                }
+                System.out.printf(".");
+            }
+
+            System.out.println("[" + fieldSize + "]");
+            resultString += fieldSize + ", ";
             for (int i = 0; i < results.length; i++)
                 resultString += results[i] / maxcount + ", ";
             resultString += BR;
