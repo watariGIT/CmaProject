@@ -10,9 +10,9 @@ abstract public class SimulationPanel extends JPanel {
     public static int startX = 20;
     public static int startY = 10;
     public final static int length = 250;
-    public final static int size = 1000;
-    public int robotsNum = 100;            //ロボットの初期台数
-    public int targetNum = 10;            //ターゲットの初期台数
+    public static int size = 1000;
+    public int robotsNum = 1000;            //ロボットの使用台数
+    public static int targetNum = 10;            //ターゲットの初期台数
     public final static int maxCount = 1000;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
@@ -39,18 +39,10 @@ abstract public class SimulationPanel extends JPanel {
             targetList.add(new Enemy(t));
         }
 
-        robotsNum=s.robotsNum;
+        robotsNum = s.robotsNum;
         for (int i = 0; i < s.robotsNum; i++) {
             robot[i].copy(s.robot[i]);
         }
-    }
-
-    public boolean setRobotNum(int n) {
-        if (n > robot.length)
-            return false;
-        robotsNum = n;
-        reset();
-        return true;
     }
 
     public void paintComponent(Graphics g) {
@@ -63,7 +55,7 @@ abstract public class SimulationPanel extends JPanel {
 
         g2.setColor(Color.BLACK);
         g2.drawRect(startX, startY, length, length);
-        g2.drawString("STEP:"+this.count,startX+5,startY+length+20);
+        g2.drawString("STEP:" + this.count, startX + 5, startY + length + 20);
         g2.drawString("CLASS:" + this.getClass().getName(), startX + 75, startY + length + 20);
 
         paintTargetList(g2);
@@ -110,12 +102,12 @@ abstract public class SimulationPanel extends JPanel {
     }
 
     //探索終了にかかる時間の取得
-    public int getCapturedStep(){
+    public int getCapturedStep() {
         while (!isEnd()) {
             //1step動かす
             step();
             if (count > maxCount)
-                return maxCount+targetList.size()*10;
+                return maxCount;
 
         }
         return count;
@@ -172,7 +164,7 @@ abstract public class SimulationPanel extends JPanel {
     /**
      * ロボットをファイルから読み込み配置する
      */
-    abstract public void readRobotFile(String str) ;
+    abstract public void readRobotFile(String str);
 
     private double distance() {
         double d = 0;
@@ -216,8 +208,8 @@ abstract public class SimulationPanel extends JPanel {
         //ターゲットの削除
         synchronized (targetList) {
             Iterator itr = targetList.iterator();
-            for (int i=0;i<robotsNum;i++) {
-                Robot r=robot[i];
+            for (int i = 0; i < robotsNum; i++) {
+                Robot r = robot[i];
                 while (itr.hasNext()) {
                     Enemy t = (Enemy) itr.next();
                     if (r.p.distance(t.p) <= 1.0) {
@@ -270,6 +262,41 @@ abstract public class SimulationPanel extends JPanel {
     public void setDebugMode(String id) {
         debugMode = Integer.parseInt(id);
     }
+
+
+    public void setFieldSize(int s) {
+        size = s;
+        reset();
+    }
+
+    /**
+     * ロボット数の変更
+     *
+     * @param n
+     * @return
+     */
+    public boolean setRobotNum(int n) {
+        if (n > robot.length)
+            return false;
+        robotsNum = n;
+        reset();
+        return true;
+    }
+
+    /**
+     * ターゲット数の変更
+     *
+     * @param n
+     * @return
+     */
+    public boolean setTargetNum(int n) {
+        if (n < 0)
+            return false;
+        targetNum = n;
+        reset();
+        return true;
+    }
+
 
     /**
      * フィールドの情報を文字列で返すメソッド

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by watariMac on 2016/11/28.
  */
 public class Particle implements Comparable {
-    final static double X_MAX = 100;
+    final static double X_MAX = 1000;
     final static double X_MIN = 0.0000000000001;
 
     public ArrayList<Double> xlist = new ArrayList<>();

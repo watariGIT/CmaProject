@@ -34,8 +34,8 @@ public class OptimizeMain {
         globalBest = new Particle(particles.get(0));
         System.out.println(globalBest.toString());
 
-        for (int count = 0; count < 10; count++) {
-            //GSOに従った位置の決定
+        for (int count = 0; count < 100; count++) {
+            //ABCに従った位置の決定
             Particle eBee = particles.get((int) (Math.random() * 40.0));
             for (int i = 0; i < particles.size(); i++) {
                 Particle p = particles.get(i);
