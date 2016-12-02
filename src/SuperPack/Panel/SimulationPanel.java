@@ -293,7 +293,7 @@ abstract public class SimulationPanel extends JPanel {
      * @param n
      * @return
      */
-    public boolean setTargetNum(int n) {
+    public boolean setTarget(int n) {
         if (n < 0)
             return false;
         targetNum = n;
@@ -301,6 +301,22 @@ abstract public class SimulationPanel extends JPanel {
         return true;
     }
 
+
+    public boolean setTarget(ArrayList<Point2> points) {
+        count = 0;
+        this.communication_num = 0;
+        targetList.clear();
+        targetNum = points.size();
+
+        for (Point2 p : points) {
+            targetList.add(new Enemy(p));
+        }
+        for (SuperPack.Panel.Robot r : robot) {
+            r.reset();
+        }
+
+        return true;
+    }
 
     /**
      * フィールドの情報を文字列で返すメソッド
