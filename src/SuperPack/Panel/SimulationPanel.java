@@ -145,6 +145,10 @@ abstract public class SimulationPanel extends JPanel {
      * @param str
      */
     public void readEnemyFile(String str) {
+        count = 0;
+        this.communication_num = 0;
+        targetList.clear();
+
         String[] line = str.split(crlf);
 
         targetNum = line.length;

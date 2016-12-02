@@ -29,12 +29,19 @@ public class EvaluationMain {
         simulations[2] = new MultiAgentSimulation2(30);
         simulations[3] = new ArpsoSimulation(30);
 
-        resultString += evalRobotNum(simulations, 100);
+        resultString += evalFieldSize(simulations, 100);
 
         System.out.printf(resultString);
 
     }
 
+    /**
+     * ロボットの数を変化させて評価
+     *
+     * @param simulations
+     * @param maxcount
+     * @return
+     */
     static String evalRobotNum(SimulationPanel[] simulations, int maxcount) {
         //ロボットの台数を変化させて比較
         String resultString = "robotNUM, ";
@@ -59,7 +66,7 @@ public class EvaluationMain {
                 for (int i = 0; i < simulations.length; i++) {
                     results[i] += simulations[i].getCapturedStep();
                 }
-                System.out.printf(".");
+                if (count % 10 == 0) System.out.printf(".");
             }
 
             System.out.println("[" + robotNum + "]");
@@ -71,6 +78,12 @@ public class EvaluationMain {
         return resultString;
     }
 
+    /**
+     * ターゲットの数を変化させて評価を取る」
+     * @param simulations
+     * @param maxcount
+     * @return
+     */
     static String evalTargetNum(SimulationPanel[] simulations, int maxcount) {
         //ターゲットの台数を変化させて比較
         String resultString = "targetNUM, ";
@@ -89,9 +102,9 @@ public class EvaluationMain {
                 simulations[0].setTargetNum(targetNum);
                 simulations[1].copy(simulations[0]);
                 simulations[2].copy(simulations[0]);
-                ((AgentSimulation) (simulations[2])).setAgentNum(targetNum);
+                ((AgentSimulation) (simulations[2])).setAgentNum(50);
                 simulations[3].copy(simulations[0]);
-                ((AgentSimulation) (simulations[3])).setAgentNum(targetNum);
+                ((AgentSimulation) (simulations[3])).setAgentNum(50);
 
                 for (int i = 0; i < simulations.length; i++) {
                     results[i] += simulations[i].getCapturedStep();
@@ -108,16 +121,21 @@ public class EvaluationMain {
         return resultString;
     }
 
+    /**
+     * フィールドのサイズを変更させて比較
+     * @param simulations
+     * @param maxcount
+     * @return
+     */
     static String evalFieldSize(SimulationPanel[] simulations, int maxcount) {
-        //ターゲットの台数を変化させて比較
-        String resultString = "targetNUM, ";
+        String resultString = "FieldSize, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
             sp.setRobotNum(50);
             sp.setTargetNum(10);
         }
         resultString += BR;
-        for (int fieldSize = 300; fieldSize < 1000; fieldSize += 100) {
+        for (int fieldSize = 300; fieldSize <= 1000; fieldSize += 100) {
 
             double[] results = new double[simulations.length];
 
@@ -127,9 +145,9 @@ public class EvaluationMain {
                 simulations[0].setFieldSize(fieldSize);
                 simulations[1].copy(simulations[0]);
                 simulations[2].copy(simulations[0]);
-                ((AgentSimulation) (simulations[2])).setAgentNum(fieldSize);
+                ((AgentSimulation) (simulations[2])).setAgentNum(50);
                 simulations[3].copy(simulations[0]);
-                ((AgentSimulation) (simulations[3])).setAgentNum(fieldSize);
+                ((AgentSimulation) (simulations[3])).setAgentNum(50);
 
                 for (int i = 0; i < simulations.length; i++) {
                     results[i] += simulations[i].getCapturedStep();
