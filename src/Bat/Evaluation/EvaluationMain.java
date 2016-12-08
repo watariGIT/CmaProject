@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by watariMac on 2016/11/29.
@@ -33,7 +32,7 @@ public class EvaluationMain {
         simulations[2] = new MultiAgentSimulation2(30);
         simulations[3] = new ArpsoSimulation(30);
 
-        resultString += evalTargetNum(simulations,100);
+        resultString += evalTargetPoints(simulations, 100);
 
         System.out.printf(resultString);
 
@@ -183,7 +182,7 @@ public class EvaluationMain {
             sp.setTarget(10);
         }
         resultString += BR;
-        for (int sigma = 100; sigma < 500; sigma += 100) {
+        for (int sigma = 100; sigma <= 500; sigma += 100) {
 
             double[] results = new double[simulations.length];
 

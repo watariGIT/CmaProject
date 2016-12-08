@@ -1,8 +1,10 @@
 package PsoPanel;
 
 
-import SuperPack.Panel.*;
+import SuperPack.Panel.Enemy;
+import SuperPack.Panel.Intelligence;
 import SuperPack.Panel.Robot;
+import SuperPack.Panel.SimulationPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -76,18 +78,14 @@ public class PsoSimulation extends SimulationPanel {
     }
 
     @Override
+    /**
+     * ロボットをファイルから読み込み配置する
+     */
     public void readRobotFile(String str) {
-        String[] line = str.split(crlf);
-
-        robotsNum = line.length;
-        robot = new Robot[robotsNum];
-
-        for (int i = 0; i < line.length; i++) {
-            String[] loc = line[i].split(",");
-            double x = Double.parseDouble(loc[0]);
-            double y = Double.parseDouble(loc[1]);
-            robot[i] = new PsoRobot(new Point2(x, y), this);
-        }
+        super.readRobotFile(str);
+        for (int i = 0; i < robotsNum; i++)
+            robot[i].setCI();
+        ciProcess = new ArrayList<>();
     }
 
     /**

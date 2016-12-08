@@ -5,7 +5,6 @@ import SuperPack.AbstractAgentPanel.Agent;
 import SuperPack.AbstractAgentPanel.AgentList;
 import SuperPack.AbstractAgentPanel.AgentSimulation;
 import SuperPack.Panel.Enemy;
-import SuperPack.Panel.Point2;
 import SuperPack.Panel.SimulationPanel;
 
 import java.awt.*;
@@ -44,32 +43,6 @@ public class MultiAgentSimulation2 extends AgentSimulation {
         }
     }
 
-    /**
-     * ロボットをファイルから読み込み配置する
-     *
-     * @param str
-     */
-    @Override
-    public void readRobotFile(String str) {
-        String[] line = str.split(crlf);
-        robotsNum = line.length;
-        robot = new AgentRobot2[robotsNum];
-
-        for (int i = 0; i < line.length; i++) {
-            String[] loc = line[i].split(",");
-            double x = Double.parseDouble(loc[0]);
-            double y = Double.parseDouble(loc[1]);
-            robot[i] = new AgentRobot2(new Point2(x, y), this);
-        }
-
-        multi.clear();
-        if (robotsNum < agentNum)
-            agentNum = robotsNum;
-        //エージェントの生成
-        for (int i = 0; i < agentNum; i++) {
-            multi.addAgent(new Agent((AgentRobot2) robot[i], new Color(105 + (i * 31) % 100, 55 + (i * 23) % 200, 105 + (i * 13) % 100)));
-        }
-    }
 
     @Override
     public void readFile(String fileString) {

@@ -168,7 +168,18 @@ abstract public class SimulationPanel extends JPanel {
     /**
      * ロボットをファイルから読み込み配置する
      */
-    abstract public void readRobotFile(String str);
+    public void readRobotFile(String str) {
+        String[] line = str.split(crlf);
+
+        robotsNum = line.length;
+
+        for (int i = 0; i < line.length; i++) {
+            String[] loc = line[i].split(",");
+            double x = Double.parseDouble(loc[0]);
+            double y = Double.parseDouble(loc[1]);
+            robot[i].reset(x, y);
+        }
+    }
 
     private double distance() {
         double d = 0;

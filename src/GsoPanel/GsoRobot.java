@@ -126,8 +126,8 @@ public class GsoRobot extends Robot {
     }
 
     @Override
-    public void reset() {
-        super.reset();
+    public void reset(double x, double y) {
+        super.reset(x, y);
         luciferinLevel = lIni;
         variableRange = vIni;
     }
