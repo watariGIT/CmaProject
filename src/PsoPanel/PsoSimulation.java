@@ -75,21 +75,6 @@ public class PsoSimulation extends SimulationPanel {
         }
     }
 
-    @Override
-    public void readRobotFile(String str) {
-        String[] line = str.split(crlf);
-
-        robotsNum = line.length;
-        robot = new Robot[robotsNum];
-
-        for (int i = 0; i < line.length; i++) {
-            String[] loc = line[i].split(",");
-            double x = Double.parseDouble(loc[0]);
-            double y = Double.parseDouble(loc[1]);
-            robot[i] = new PsoRobot(new Point2(x, y), this);
-        }
-    }
-
     /**
      * 毎ステップの処理
      *

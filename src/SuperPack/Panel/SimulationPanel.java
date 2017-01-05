@@ -11,8 +11,8 @@ abstract public class SimulationPanel extends JPanel {
     public static int startY = 10;
     public final static int length = 250;
     public static int size = 1000;
-    public int robotsNum = 1000;            //ロボットの使用台数
-    public static int targetNum = 10;            //ターゲットの初期台数
+    public int robotsNum = 30;            //ロボットの使用台数
+    public static int targetNum = 5;            //ターゲットの初期台数
     public final static int maxCount = 1000;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
@@ -156,15 +156,32 @@ abstract public class SimulationPanel extends JPanel {
             targetList.add(new Enemy(new Point2(x, y)));
         }
 
-        for (SuperPack.Panel.Robot r : robot) {
+        for (SuperPack.Panel.Robot r : robot)
             r.reset();
-        }
     }
 
     /**
      * ロボットをファイルから読み込み配置する
      */
-    abstract public void readRobotFile(String str);
+    public void readRobotFile(String str) {
+        count = 0;
+        this.communication_num = 0;
+
+        //ターゲットの再配置
+        targetList.clear();
+        for (int i = 0; i < targetNum; i++)
+            targetList.add(new Enemy());
+
+        //ロボットの再配置
+        String[] line = str.split(crlf);
+        robotsNum = line.length;
+        for (int i = 0; i < line.length; i++) {
+            String[] loc = line[i].split(",");
+            double x = Double.parseDouble(loc[0]);
+            double y = Double.parseDouble(loc[1]);
+            robot[i].reset(new Point2(x, y));
+        }
+    }
 
     private double distance() {
         double d = 0;

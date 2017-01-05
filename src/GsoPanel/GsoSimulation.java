@@ -24,11 +24,6 @@ public class GsoSimulation extends SimulationPanel {
     }
 
     @Override
-    public void readRobotFile(String str) {
-        //todo
-    }
-
-    @Override
     public void step() {
         count++;
         for (int i = 0; i < robotsNum; i++) {
