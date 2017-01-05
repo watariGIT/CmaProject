@@ -1,6 +1,5 @@
 import AgentPanel.MultiAgentSimulation2;
 import ArpsoPanal.ArpsoSimulation;
-import GsoPanel.GsoSimulation;
 import SuperPack.Panel.Result;
 import SuperPack.Panel.SimulationPanel;
 
@@ -59,13 +58,13 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JPanel esp = new JPanel();
 
         // シミュレータの初期化
-        canvas = new ArpsoSimulation(30);
-        canvas.setRobotNum(30);
-        canvas4 = new GsoSimulation();
+        canvas = new ArpsoSimulation(100);
+        canvas.setRobot(100);
+        canvas4 = new MultiAgentSimulation2(100);
         canvas4.copy(canvas);
         /**
          * canvas4.copy(canvas);
-        ((AgentSimulation) canvas4).setAgentNum(100);
+         ((AgentSimulation) canvas4).setAgentNum(100);
          **/
 
         GridLayout gl = new GridLayout(1, 2);
@@ -298,8 +297,8 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
             File canvasFile = new File(EVAL_DIR + canvas.getClass().getName() + sdf.format(Calendar.getInstance().getTime()) + ".csv");
             File canvas4File = new File(EVAL_DIR + canvas4.getClass().getName() + sdf.format(Calendar.getInstance().getTime()) + ".csv");
 
-            canvas.setRobotNum(num);
-            canvas4.setRobotNum(num);
+            canvas.setRobot(num);
+            canvas4.setRobot(num);
             Reset();
             System.out.println("EvalStart");
             for (int count = 0; count < 100; count++) {
@@ -399,17 +398,23 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         if (command.equals("inputEnemy")) {
             String str = inputFile();
             System.out.println(str);
-            canvas.readEnemyFile(str);
-            canvas4.copy(canvas);
-            runFlag = false;
+
+            if (!str.isEmpty()) {
+                canvas.readEnemyFile(str);
+                canvas4.copy(canvas);
+                runFlag = false;
+            }
         }
 
         if (command.equals("inputRobot")) {
             String str = inputFile();
             System.out.println(str);
-            canvas.readRobotFile(str);
-            canvas4.readRobotFile(str);
-            runFlag = false;
+
+            if (!str.isEmpty()) {
+                canvas.readRobotFile(str);
+                canvas4.copy(canvas);
+                runFlag = false;
+            }
         }
 
         if (command.equals("debugCanvas")) {

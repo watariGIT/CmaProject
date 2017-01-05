@@ -11,7 +11,7 @@ abstract public class SimulationPanel extends JPanel {
     public static int startY = 10;
     public final static int length = 250;
     public static int size = 1000;
-    public int robotsNum = 30;            //ロボットの使用台数
+    public int robotsNum = 100;            //ロボットの使用台数
     public static int targetNum = 5;            //ターゲットの初期台数
     public final static int maxCount = 1000;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
@@ -164,23 +164,17 @@ abstract public class SimulationPanel extends JPanel {
      * ロボットをファイルから読み込み配置する
      */
     public void readRobotFile(String str) {
-        count = 0;
-        this.communication_num = 0;
-
-        //ターゲットの再配置
-        targetList.clear();
-        for (int i = 0; i < targetNum; i++)
-            targetList.add(new Enemy());
-
-        //ロボットの再配置
+        ArrayList<Point2> points=new ArrayList<>();
         String[] line = str.split(crlf);
-        robotsNum = line.length;
+
         for (int i = 0; i < line.length; i++) {
             String[] loc = line[i].split(",");
             double x = Double.parseDouble(loc[0]);
             double y = Double.parseDouble(loc[1]);
-            robot[i].reset(new Point2(x, y));
+            points.add(new Point2(x,y));
         }
+
+        setRobot(points);
     }
 
     private double distance() {
@@ -292,13 +286,33 @@ abstract public class SimulationPanel extends JPanel {
      * @param n
      * @return
      */
-    public boolean setRobotNum(int n) {
+    public boolean setRobot(int n) {
         if (n > robot.length)
             return false;
         robotsNum = n;
         reset();
         return true;
     }
+
+    /**
+     * ロボットをファイルから読み込み配置する
+     */
+    public boolean setRobot(ArrayList<Point2> points) {
+        count = 0;
+        this.communication_num = 0;
+
+        //ターゲットの再配置
+        targetList.clear();
+        for (int i = 0; i < targetNum; i++)
+            targetList.add(new Enemy());
+
+        //ロボットの再配置
+        robotsNum = points.size();
+        for (int i = 0; i < points.size(); i++)
+            robot[i].reset(points.get(i));
+        return true;
+    }
+
 
     /**
      * ターゲット数の変更

@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by watariMac on 2016/11/29.
@@ -33,7 +32,7 @@ public class EvaluationMain {
         simulations[2] = new MultiAgentSimulation2(30);
         simulations[3] = new ArpsoSimulation(30);
 
-        resultString += evalTargetNum(simulations,100);
+        resultString += evalRobotPointsPatern1(simulations, 10);
 
         System.out.printf(resultString);
 
@@ -53,7 +52,7 @@ public class EvaluationMain {
             //100回実行平均をとる
             for (int count = 0; count < maxcount; count++) {
 
-                simulations[0].setRobotNum(robotNum);
+                simulations[0].setRobot(robotNum);
                 simulations[1].copy(simulations[0]);
                 simulations[2].copy(simulations[0]);
                 ((AgentSimulation) (simulations[2])).setAgentNum(robotNum);
@@ -80,7 +79,7 @@ public class EvaluationMain {
         String resultString = "targetNUM, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
-            sp.setRobotNum(50);
+            sp.setRobot(50);
         }
         resultString += BR;
         for (int targetNum = 10; targetNum < 110; targetNum += 10) {
@@ -117,7 +116,7 @@ public class EvaluationMain {
         String resultString = "targetNUM, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
-            sp.setRobotNum(50);
+            sp.setRobot(50);
             sp.setTarget(10);
         }
         resultString += BR;
@@ -151,7 +150,54 @@ public class EvaluationMain {
     }
 
     /**
+     * ロボットの初期配置を変化させて評価
+     *
+     * @param simulations
+     * @param maxcount
+     * @return
+     */
+    static String evalRobotPointsPatern1(SimulationPanel[] simulations, int maxcount) {
+        //ターゲットの分散を変化させて比較
+        String resultString = "taeget sigma, ";
+        for (SimulationPanel sp : simulations) {
+            resultString += sp.getClass().getName() + ",";
+            sp.setRobot(40);
+            sp.setTarget(10);
+        }
+        resultString += BR;
+
+        ArrayList<Point2> patern1Points = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            patern1Points.add(new Point2(10 + (int) (i / 5) * 50, 10 + (50 * i) % 250));
+        }
+
+        //maxcount回実行平均をとる
+        for (int s = 0; s < 10; s++) {
+            double[] results = new double[simulations.length];
+
+            simulations[0].setRobot(patern1Points);
+            simulations[1].copy(simulations[0]);
+            simulations[2].copy(simulations[0]);
+            ((AgentSimulation) (simulations[2])).setAgentNum(50);
+            simulations[3].copy(simulations[0]);
+            ((AgentSimulation) (simulations[3])).setAgentNum(50);
+
+            for (int i = 0; i < simulations.length; i++) {
+                results[i] += simulations[i].getCapturedStep();
+            }
+            System.out.printf(".");
+
+            resultString += "patern1, ";
+            for (int i = 0; i < results.length; i++)
+                resultString += results[i] + ", ";
+            resultString += BR;
+        }
+        return resultString;
+    }
+
+    /**
      * ターゲットの配置（分散を変えて評価）
+     *
      * @param simulations
      * @param maxcount
      * @return
@@ -161,7 +207,7 @@ public class EvaluationMain {
         String resultString = "taeget sigma, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
-            sp.setRobotNum(50);
+            sp.setRobot(50);
             sp.setTarget(10);
         }
         resultString += BR;
@@ -172,7 +218,7 @@ public class EvaluationMain {
             //100回実行平均をとる
             for (int count = 0; count < maxcount; count++) {
 
-                simulations[0].setTarget(getGaussianPoints(1000,sigma,10));
+                simulations[0].setTarget(getGaussianPoints(1000, sigma, 10));
                 simulations[1].copy(simulations[0]);
                 simulations[2].copy(simulations[0]);
                 ((AgentSimulation) (simulations[2])).setAgentNum(50);
@@ -198,13 +244,13 @@ public class EvaluationMain {
     static ArrayList<Point2> getGaussianPoints(int max, double sigma, double num) {
         Random randX = new Random();
         Random randY = new Random();
-        ArrayList<Point2> points=new ArrayList();
+        ArrayList<Point2> points = new ArrayList();
 
         for (int n = 0; n < num; ) {
             double x = sigma * randX.nextGaussian() + max / 2;
             double y = sigma * randY.nextGaussian() + max / 2;
             if (x > 0 && x < max && y > 0 && y < max) {
-                points.add(new Point2(x,y));
+                points.add(new Point2(x, y));
                 n++;
             }
         }
