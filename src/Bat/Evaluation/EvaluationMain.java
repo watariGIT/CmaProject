@@ -32,7 +32,7 @@ public class EvaluationMain {
         simulations[2] = new MultiAgentSimulation2(30);
         simulations[3] = new ArpsoSimulation(30);
 
-        resultString += evalRobotPointsPatern1(simulations, 10);
+        resultString += evalFieldSize(simulations, 100);
 
         System.out.printf(resultString);
 
@@ -96,7 +96,7 @@ public class EvaluationMain {
                 simulations[3].copy(simulations[0]);
                 ((AgentSimulation) (simulations[3])).setAgentNum(targetNum);
 
-                for (int i = 0; i < simulations.length; i++) {
+                for (int i = 3; i < simulations.length; i++) {
                     results[i] += simulations[i].getCapturedStep();
                 }
                 System.out.printf(".");
@@ -120,7 +120,7 @@ public class EvaluationMain {
             sp.setTarget(10);
         }
         resultString += BR;
-        for (int fieldSize = 300; fieldSize < 1000; fieldSize += 100) {
+        for (int fieldSize = 300; fieldSize <= 1000; fieldSize += 100) {
 
             double[] results = new double[simulations.length];
 
@@ -130,14 +130,17 @@ public class EvaluationMain {
                 simulations[0].setFieldSize(fieldSize);
                 simulations[1].copy(simulations[0]);
                 simulations[2].copy(simulations[0]);
-                ((AgentSimulation) (simulations[2])).setAgentNum(fieldSize);
+                ((AgentSimulation) (simulations[2])).setAgentNum(50);
                 simulations[3].copy(simulations[0]);
-                ((AgentSimulation) (simulations[3])).setAgentNum(fieldSize);
+                ((AgentSimulation) (simulations[3])).setAgentNum(50);
 
+                System.out.printf(fieldSize+","+count+",");
                 for (int i = 0; i < simulations.length; i++) {
+                    int step=simulations[i].getCapturedStep();
                     results[i] += simulations[i].getCapturedStep();
+                    System.out.printf(step+", ");
                 }
-                System.out.printf(".");
+                System.out.println();
             }
 
             System.out.println("[" + fieldSize + "]");
@@ -158,23 +161,26 @@ public class EvaluationMain {
      */
     static String evalRobotPointsPatern1(SimulationPanel[] simulations, int maxcount) {
         //ターゲットの分散を変化させて比較
-        String resultString = "taeget sigma, ";
+        String resultString = "patern, ";
         for (SimulationPanel sp : simulations) {
             resultString += sp.getClass().getName() + ",";
-            sp.setRobot(40);
+            sp.setRobot(50);
             sp.setTarget(10);
         }
         resultString += BR;
 
         ArrayList<Point2> patern1Points = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
-            patern1Points.add(new Point2(10 + (int) (i / 5) * 50, 10 + (50 * i) % 250));
+
+        for (int i = 0; i < 50; i++) {
+            Point2 p = new Point2(10 + (i / 10) * 40, ((i % 10) * 100));
+            System.out.println(p);
+            patern1Points.add(p);
         }
 
-        //maxcount回実行平均をとる
-        for (int s = 0; s < 10; s++) {
-            double[] results = new double[simulations.length];
 
+        double[] results = new double[simulations.length];
+        //maxcount回実行平均をとる
+        for (int count = 0; count < maxcount; count++) {
             simulations[0].setRobot(patern1Points);
             simulations[1].copy(simulations[0]);
             simulations[2].copy(simulations[0]);
@@ -182,16 +188,16 @@ public class EvaluationMain {
             simulations[3].copy(simulations[0]);
             ((AgentSimulation) (simulations[3])).setAgentNum(50);
 
-            for (int i = 0; i < simulations.length; i++) {
+            for (int i = 2; i < simulations.length; i++) {
                 results[i] += simulations[i].getCapturedStep();
+                System.out.print("-");
             }
-            System.out.printf(".");
-
-            resultString += "patern1, ";
-            for (int i = 0; i < results.length; i++)
-                resultString += results[i] + ", ";
-            resultString += BR;
         }
+
+        resultString += "patern1, ";
+        for (int i = 0; i < results.length; i++)
+            resultString += results[i] / maxcount + ", ";
+        resultString += BR;
         return resultString;
     }
 
@@ -215,7 +221,7 @@ public class EvaluationMain {
 
             double[] results = new double[simulations.length];
 
-            //100回実行平均をとる
+            //maxcount回実行平均をとる
             for (int count = 0; count < maxcount; count++) {
 
                 simulations[0].setTarget(getGaussianPoints(1000, sigma, 10));

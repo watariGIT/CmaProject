@@ -12,7 +12,7 @@ abstract public class SimulationPanel extends JPanel {
     public final static int length = 250;
     public static int size = 1000;
     public int robotsNum = 100;            //ロボットの使用台数
-    public static int targetNum = 5;            //ターゲットの初期台数
+    public static int targetNum = 10;            //ターゲットの初期台数
     public final static int maxCount = 1000;//最大の捕獲時間
     public SuperPack.Panel.Robot[] robot;
     public ArrayList<Enemy> targetList = new ArrayList<Enemy>();
