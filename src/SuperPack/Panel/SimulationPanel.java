@@ -145,6 +145,10 @@ abstract public class SimulationPanel extends JPanel {
      * @param str
      */
     public void readEnemyFile(String str) {
+        count = 0;
+        this.communication_num = 0;
+        targetList.clear();
+
         String[] line = str.split(crlf);
 
         targetNum = line.length;
@@ -156,8 +160,9 @@ abstract public class SimulationPanel extends JPanel {
             targetList.add(new Enemy(new Point2(x, y)));
         }
 
-        for (SuperPack.Panel.Robot r : robot)
+        for (SuperPack.Panel.Robot r : robot) {
             r.reset();
+        }
     }
 
     /**
