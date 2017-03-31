@@ -2,7 +2,7 @@ package Bat.Evaluation;
 
 import AfsPanel.AfsSimulation;
 import AgentPanel.MultiAgentSimulation2;
-import ArpsoPanal.ArpsoSimulation;
+import MaArpsoPanal.MaArpsoSimulation;
 import GsoPanel.GsoSimulation;
 import SuperPack.AbstractAgentPanel.AgentSimulation;
 import SuperPack.Panel.Point2;
@@ -30,7 +30,7 @@ public class EvaluationMain {
         simulations[0] = new AfsSimulation();
         simulations[1] = new GsoSimulation();
         simulations[2] = new MultiAgentSimulation2(30);
-        simulations[3] = new ArpsoSimulation(30);
+        simulations[3] = new MaArpsoSimulation(30);
 
         resultString += evalFieldSize(simulations, 100);
 
