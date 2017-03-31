@@ -93,30 +93,6 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         evaluation.addActionListener(this);
         evaluation.setActionCommand("Bat/Evaluation");
 
-        JButton psoFileOutPutB = new JButton("psoFileOutPut");
-        psoFileOutPutB.addActionListener(this);
-        psoFileOutPutB.setActionCommand("psoFileOutPut");
-
-        JButton cmaFileOutPutB = new JButton("cmaFileOutPut");
-        cmaFileOutPutB.addActionListener(this);
-        cmaFileOutPutB.setActionCommand("cmaFileOutPut");
-
-        JButton psoFileInPutB = new JButton("psoFileInPut");
-        psoFileInPutB.addActionListener(this);
-        psoFileInPutB.setActionCommand("psoFileInPut");
-
-        JButton cmaFileInPutB = new JButton("cmaFileInPut");
-        cmaFileInPutB.addActionListener(this);
-        cmaFileInPutB.setActionCommand("cmaFileInPut");
-
-        JButton psoFailOutPutB = new JButton("psoFailOutPut");
-        psoFailOutPutB.addActionListener(this);
-        psoFailOutPutB.setActionCommand("psoFailOutPut");
-
-        JButton cmaFailOutPutB = new JButton("cmaFailOutPut");
-        cmaFailOutPutB.addActionListener(this);
-        cmaFailOutPutB.setActionCommand("cmaFailOutPut");
-
         JButton readEnemyB = new JButton("inputEnemy");
         readEnemyB.addActionListener(this);
         readEnemyB.setActionCommand("inputEnemy");
@@ -124,6 +100,37 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         JButton readRobotB = new JButton("inputRobot");
         readRobotB.addActionListener(this);
         readRobotB.setActionCommand("inputRobot");
+
+        JButton psoFileOutPutB = new JButton("psoFileOutPut");
+        psoFileOutPutB.addActionListener(this);
+        psoFileOutPutB.setEnabled(false);
+        psoFileOutPutB.setActionCommand("psoFileOutPut");
+
+        JButton cmaFileOutPutB = new JButton("cmaFileOutPut");
+        cmaFileOutPutB.addActionListener(this);
+        cmaFileOutPutB.setEnabled(false);
+        cmaFileOutPutB.setActionCommand("cmaFileOutPut");
+
+        JButton psoFileInPutB = new JButton("psoFileInPut");
+        psoFileInPutB.addActionListener(this);
+        psoFileInPutB.setEnabled(false);
+        psoFileInPutB.setActionCommand("psoFileInPut");
+
+        JButton cmaFileInPutB = new JButton("cmaFileInPut");
+        cmaFileInPutB.addActionListener(this);
+        cmaFileInPutB.setEnabled(false);
+        cmaFileInPutB.setActionCommand("cmaFileInPut");
+
+        JButton psoFailOutPutB = new JButton("psoFailOutPut");
+        psoFailOutPutB.addActionListener(this);
+        psoFailOutPutB.setEnabled(false);
+        psoFailOutPutB.setActionCommand("psoFailOutPut");
+
+        JButton cmaFailOutPutB = new JButton("cmaFailOutPut");
+        cmaFailOutPutB.addActionListener(this);
+        cmaFailOutPutB.setEnabled(false);
+        cmaFailOutPutB.setActionCommand("cmaFailOutPut");
+
 
         String[] canvasRobotIds = new String[canvas.robot.length + 1];
         canvasRobotIds[0] = "NONE";
@@ -155,14 +162,15 @@ class MainPanel extends JFrame implements ActionListener, Runnable {
         sp.add(stepb);
         sp.add(resetb);
         sp.add(evaluation);
+        sp.add(readEnemyB);
+        sp.add(readRobotB);
+
         sp.add(psoFileOutPutB);
         sp.add(cmaFileOutPutB);
         sp.add(psoFailOutPutB);
         sp.add(cmaFailOutPutB);
         sp.add(psoFileInPutB);
         sp.add(cmaFileInPutB);
-        sp.add(readEnemyB);
-        sp.add(readRobotB);
         sp.add(debugCombo1);
         sp.add(debugCombo2);
 
